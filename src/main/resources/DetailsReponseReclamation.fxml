@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="400.0" prefWidth="600.0" spacing="15.0" style="-fx-background-color: #ffffff; -fx-border-color: #ddd; -fx-border-radius: 10; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DetailsReponseReclamationController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <children>
+        <Label fx:id="reclamationIdLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+        <Label fx:id="dateReponseLabel" style="-fx-font-size: 14px; -fx-text-fill: #666;" />
+        <Label text="Message :" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+        <TextArea fx:id="messageArea" editable="false" prefHeight="150.0" wrapText="true" style="-fx-border-color: #ccc; -fx-border-radius: 5;" />
+        <Button fx:id="fermerButton" onAction="#handleFermer" text="Fermer" alignment="CENTER_RIGHT" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" />
+    </children>
+</VBox>

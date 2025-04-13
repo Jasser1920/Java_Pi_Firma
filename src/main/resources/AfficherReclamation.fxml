@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherReclamationController">
+    <children>
+        <Button fx:id="ajouterButton" layoutX="650.0" layoutY="20.0" onAction="#handleAjouter" text="Ajouter une réclamation" style="-fx-background-color: #0288d1; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 25; -fx-padding: 10 20 10 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);" />
+        <Text layoutX="20.0" layoutY="80.0" text="Mes Réclamations" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #01579b; -fx-font-family: 'Segoe UI';" />
+        <ScrollPane fx:id="scrollPane" layoutX="20.0" layoutY="100.0" prefHeight="480.0" prefWidth="760.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+            <content>
+                <VBox fx:id="cardsContainer" spacing="20.0" style="-fx-padding: 20; -fx-background-color: transparent;">
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>

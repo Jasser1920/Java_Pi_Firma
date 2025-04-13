@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="400.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: #ffffff; -fx-border-radius: 15; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterReclamationController">
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
+   <children>
+      <Label text="Titre :" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #333; -fx-font-family: 'Segoe UI';" />
+      <TextField fx:id="titreFx" promptText="Entrez le titre de la réclamation" style="-fx-background-color: #f5f5f5; -fx-border-color: #b0bec5; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Segoe UI';" />
+      <Label text="Description :" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #333; -fx-font-family: 'Segoe UI';" />
+      <TextArea fx:id="descriptionFx" prefHeight="150.0" wrapText="true" promptText="Entrez la description de la réclamation" style="-fx-background-color: #f5f5f5; -fx-border-color: #b0bec5; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Segoe UI';" />
+      <Button onAction="#AjouterReclamation" text="Ajouter" style="-fx-background-color: #0288d1; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 25; -fx-padding: 10 20 10 20; -fx-font-family: 'Segoe UI'; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);" />
+      <Button onAction="#AnnulerReclamation" text="Annuler" style="-fx-background-color: #e57373; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 25; -fx-padding: 10 20 10 20; -fx-font-family: 'Segoe UI'; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);" />
+   </children>
+</VBox>
