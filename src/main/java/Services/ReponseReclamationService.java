@@ -1,6 +1,7 @@
 package Services;
 
 import Models.ReponseReclamation;
+import Models.Reclammation;
 import Utils.MyDatabase;
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class ReponseReclamationService implements IService<ReponseReclamation> {
             ps.executeUpdate();
             System.out.println("Réponse à réclamation ajoutée");
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erreur lors de l'ajout : " + e.getMessage());
         }
     }
 
@@ -36,7 +37,7 @@ public class ReponseReclamationService implements IService<ReponseReclamation> {
             ps.executeUpdate();
             System.out.println("Réponse à réclamation modifiée");
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erreur lors de la modification : " + e.getMessage());
         }
     }
 
@@ -49,7 +50,19 @@ public class ReponseReclamationService implements IService<ReponseReclamation> {
             ps.executeUpdate();
             System.out.println("Réponse à réclamation supprimée");
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erreur lors de la suppression : " + e.getMessage());
+        }
+    }
+
+    public void supprimer(int id) {
+        String req = "DELETE FROM `reponse_reclamation` WHERE `id`=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(req);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            System.out.println("Réponse à réclamation supprimée");
+        } catch (SQLException e) {
+            throw new RuntimeException("Erreur lors de la suppression : " + e.getMessage());
         }
     }
 
@@ -62,13 +75,15 @@ public class ReponseReclamationService implements IService<ReponseReclamation> {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ReponseReclamation reponse = new ReponseReclamation(
-                        rs.getInt("id"), null, // Reclamation set to null
-                        rs.getString("message"), rs.getTimestamp("date_reponse")
+                        rs.getInt("id"),
+                        null,
+                        rs.getString("message"),
+                        rs.getTimestamp("date_reponse")
                 );
                 reponses.add(reponse);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erreur lors de la récupération : " + e.getMessage());
         }
         return reponses;
     }
