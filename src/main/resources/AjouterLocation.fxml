@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<GridPane fx:controller="Controllers.AjouterLocationController" xmlns:fx="http://javafx.com/fxml" alignment="CENTER" hgap="10" vgap="10">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <Label text="Ajouter Location" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+    <Label text="Terrain:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <TextField fx:id="terrainField" GridPane.columnIndex="1" GridPane.rowIndex="1" editable="false"/>
+    <Label text="Date Début:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <DatePicker fx:id="dateDebutPicker" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <Label text="Date Fin:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <DatePicker fx:id="dateFinPicker" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <Label text="Prix Total:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+    <TextField fx:id="prixTotalField" GridPane.columnIndex="1" GridPane.rowIndex="4" editable="false"/>
+    <Label text="Mode Paiement:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+    <ComboBox fx:id="modePaiementComboBox" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+    <HBox spacing="10" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2">
+        <Button fx:id="saveButton" text="Enregistrer" onAction="#handleSave"/>
+        <Button fx:id="cancelButton" text="Annuler" onAction="#handleCancel"/>
+    </HBox>
+</GridPane>

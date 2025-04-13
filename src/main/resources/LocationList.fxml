@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox fx:controller="Controllers.LocationListController" xmlns:fx="http://javafx.com/fxml" spacing="10" alignment="CENTER">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <Button fx:id="createLocationButton" text="Créer Location" onAction="#handleCreateLocation"/>
+    <TableView fx:id="locationTable">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID"/>
+            <TableColumn fx:id="terrainColumn" text="Terrain"/>
+            <TableColumn fx:id="dateDebutColumn" text="Date Début"/>
+            <TableColumn fx:id="dateFinColumn" text="Date Fin"/>
+            <TableColumn fx:id="prixTotalColumn" text="Prix Total"/>
+            <TableColumn fx:id="modePaiementColumn" text="Mode Paiement"/>
+            <TableColumn fx:id="actionColumn" text="Actions"/>
+        </columns>
+    </TableView>
+</VBox>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox fx:controller="Controllers.TerrainListController" xmlns:fx="http://javafx.com/fxml" spacing="10" alignment="CENTER">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <Button fx:id="createTerrainButton" text="Créer Terrain" onAction="#handleCreateTerrain"/>
+    <TableView fx:id="terrainTable">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID"/>
+            <TableColumn fx:id="descriptionColumn" text="Description"/>
+            <TableColumn fx:id="superficieColumn" text="Superficie"/>
+            <TableColumn fx:id="latitudeColumn" text="Latitude"/>
+            <TableColumn fx:id="longitudeColumn" text="Longitude"/>
+            <TableColumn fx:id="prixLocationColumn" text="Prix Location"/>
+            <TableColumn fx:id="disponibiliteColumn" text="Disponibilité"/>
+            <TableColumn fx:id="dateCreationColumn" text="Date Création"/>
+            <TableColumn fx:id="actionColumn" text="Actions"/>
+        </columns>
+    </TableView>
+</VBox>

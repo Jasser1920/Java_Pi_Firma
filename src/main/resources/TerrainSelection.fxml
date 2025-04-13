@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox fx:controller="Controllers.TerrainSelectionController" xmlns:fx="http://javafx.com/fxml" spacing="10" alignment="CENTER">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <Label text="Sélectionner un Terrain pour Location" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+    <TableView fx:id="terrainTable">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID"/>
+            <TableColumn fx:id="descriptionColumn" text="Description"/>
+            <TableColumn fx:id="superficieColumn" text="Superficie"/>
+            <TableColumn fx:id="prixLocationColumn" text="Prix Location"/>
+            <TableColumn fx:id="disponibiliteColumn" text="Disponibilité"/>
+            <TableColumn fx:id="actionColumn" text="Actions"/>
+        </columns>
+    </TableView>
+    <Button fx:id="cancelButton" text="Annuler" onAction="#handleCancel"/>
+</VBox>
