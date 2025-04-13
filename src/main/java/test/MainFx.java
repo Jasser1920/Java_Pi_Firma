@@ -2,34 +2,23 @@ package test;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class MainFx extends Application {
-    @Override
-    public void start(Stage stage) throws Exception {
-        try {
-            // Debug: Check if the stylesheet resource exists
-            java.net.URL stylesheetUrl = getClass().getResource("/css/styles.css");
-            if (stylesheetUrl == null) {
-                System.err.println("Stylesheet /css/styles.css not found in classpath!");
-            } else {
-                System.out.println("Stylesheet found at: " + stylesheetUrl);
-            }
+import java.io.IOException;
 
-            Parent root = FXMLLoader.load(getClass().getResource("/AjouterUtilisateur.fxml"));
-            Scene scene = new Scene(root, 1280, 860);
-            // Load the stylesheet programmatically
-            scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-            stage.setScene(scene);
-            stage.setWidth(1280);
-            stage.setHeight(860);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
+public class MainFX extends Application {
+    @Override
+    public void start(Stage stage) throws IOException {
+        // Charger AfficherReclamation.fxml depuis src/main/resources/
+        FXMLLoader fxmlLoader = new FXMLLoader(MainFX.class.getResource("/AjouterReponseReclamation.fxml"));
+        if (fxmlLoader.getLocation() == null) {
+            throw new IOException("Cannot find /AjouterReponseReclamation.fxml");
         }
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        stage.setTitle("Firma - Mes Réclamations");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {
