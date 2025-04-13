@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.net.URL?>
+
+<AnchorPane prefWidth="1280" prefHeight="860" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterUtilisateurController">
+    <stylesheets>
+        <URL value="@css/styles.css" />
+    </stylesheets>
+
+    <VBox spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+        <!-- Title and Breadcrumb -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Utilisateurs" />
+
+            <Label text="|" />
+            <Hyperlink text="Ajouter Utilisateur" />
+        </HBox>
+
+        <!-- Form Title -->
+        <Text style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Ajouter un Nouvel Utilisateur" />
+
+        <!-- Form Container -->
+        <GridPane styleClass="form-container" hgap="30" vgap="15">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50" />
+                <ColumnConstraints percentWidth="50" />
+            </columnConstraints>
+
+            <!-- Left Column -->
+            <VBox GridPane.columnIndex="0" spacing="10">
+                <Label text="Nom" styleClass="form-label" />
+                <TextField fx:id="nomTF" styleClass="form-field" promptText="Entrez le nom"
+                           onKeyReleased="#validateForm" />
+                <Label fx:id="nomError" styleClass="error-label" />
+
+                <Label text="Prénom" styleClass="form-label" />
+                <TextField fx:id="prenomTF" styleClass="form-field" promptText="Entrez le prénom"
+                           onKeyReleased="#validateForm" />
+                <Label fx:id="prenomError" styleClass="error-label" />
+
+                <Label text="Email" styleClass="form-label" />
+                <TextField fx:id="emailTF" styleClass="form-field" promptText="Entrez l'email"
+                           onKeyReleased="#validateForm" />
+                <Label fx:id="emailError" styleClass="error-label" />
+
+                <Label text="Mot de passe" styleClass="form-label" />
+                <PasswordField fx:id="motdepasseTF" styleClass="form-field" promptText="Entrez le mot de passe"
+                               onKeyReleased="#validateForm" />
+                <Label fx:id="motdepasseError" styleClass="error-label" />
+            </VBox>
+
+            <!-- Right Column -->
+            <VBox GridPane.columnIndex="1" spacing="10">
+                <Label text="Téléphone" styleClass="form-label" />
+                <TextField fx:id="telephoneTF" styleClass="form-field" promptText="Entrez le téléphone"
+                           onKeyReleased="#validateForm" />
+                <Label fx:id="telephoneError" styleClass="error-label" />
+
+                <Label text="Adresse" styleClass="form-label" />
+                <TextField fx:id="adresseTF" styleClass="form-field" promptText="Entrez l'adresse"
+                           onKeyReleased="#validateForm" />
+                <Label fx:id="adresseError" styleClass="error-label" />
+
+                <Label text="Rôle" styleClass="form-label" />
+                <ChoiceBox fx:id="roleCB" styleClass="form-field" onAction="#validateForm" />
+                <Label fx:id="roleError" styleClass="error-label" />
+
+                <Label text="Photo de profil" styleClass="form-label" />
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="profilePictureTF" styleClass="form-field" editable="false"
+                               promptText="Aucun fichier sélectionné" />
+                    <Button text="Choisir" styleClass="secondary-button" onAction="#uploadPicture" />
+                </HBox>
+                <Label fx:id="profilePictureError" styleClass="error-label" />
+            </VBox>
+        </GridPane>
+
+        <!-- Form Buttons -->
+        <HBox spacing="15" alignment="CENTER_RIGHT">
+            <Button text="Annuler" styleClass="secondary-button" onAction="#afficherUtilisateurs" />
+            <Button fx:id="ajouterBtn" text="Ajouter" styleClass="primary-button"
+                    onAction="#ajouterUtilisateur" disable="true" />
+        </HBox>
+    </VBox>
+</AnchorPane>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<?import java.net.URL?>
+<AnchorPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="860.0" prefWidth="1280.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ModifierUtilisateurController">
+    <stylesheets>
+        <URL value="@css/styles.css" />
+    </stylesheets>
+    <children>
+        <!-- Title -->
+        <Text style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #333333;" text="Modifier un Utilisateur" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="40.0" />
+
+        <!-- Form Fields -->
+        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Nom" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="100.0" />
+        <TextField fx:id="nomTF" onKeyReleased="#validateForm" promptText="Entrez le nom" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="880.0" AnchorPane.topAnchor="130.0" />
+
+        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Prénom" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="180.0" />
+        <TextField fx:id="prenomTF" onKeyReleased="#validateForm" promptText="Entrez le prénom" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="880.0" AnchorPane.topAnchor="210.0" />
+
+        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Email" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="260.0" />
+        <TextField fx:id="emailTF" onKeyReleased="#validateForm" promptText="Entrez l'email" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="880.0" AnchorPane.topAnchor="290.0" />
+
+        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Mot de passe" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="340.0" />
+        <TextField fx:id="motdepasseTF" onKeyReleased="#validateForm" promptText="Entrez le mot de passe" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="880.0" AnchorPane.topAnchor="370.0" />
+
+        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Téléphone" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="420.0" />
+        <TextField fx:id="telephoneTF" onKeyReleased="#validateForm" promptText="Entrez le numéro de téléphone" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="880.0" AnchorPane.topAnchor="450.0" />
+
+        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Adresse" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="500.0" />
+        <TextField fx:id="adresseTF" onKeyReleased="#validateForm" promptText="Entrez l'adresse" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="880.0" AnchorPane.topAnchor="530.0" />
+
+        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Rôle" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="580.0" />
+        <ChoiceBox fx:id="roleCB" onAction="#validateForm" prefWidth="200.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="610.0" />
+
+        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Photo de profil" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="660.0" />
+        <TextField fx:id="profilePictureTF" editable="false" promptText="Chemin de la photo de profil" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="980.0" AnchorPane.topAnchor="690.0" />
+        <Button mnemonicParsing="false" onAction="#uploadPicture" styleClass="secondary-button" text="Choisir une photo" AnchorPane.leftAnchor="310.0" AnchorPane.topAnchor="690.0" />
+
+        <!-- Buttons -->
+        <Button fx:id="enregistrerBtn" disable="true" mnemonicParsing="false" onAction="#enregistrerModifications" styleClass="primary-button" text="Enregistrer" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="177.8" />
+        <Button mnemonicParsing="false" onAction="#retourAfficher" styleClass="secondary-button" text="Retour" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="40.0" />
+    </children>
+</AnchorPane>
