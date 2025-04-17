@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import Models.StatutLivraison?>
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LivraisonController">
+    <VBox layoutX="14.0" layoutY="14.0" spacing="10.0">
+        <Label text="Gestion des Livraisons" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+        <!-- Champs de saisie -->
+        <Label text="Nom Société :" />
+        <TextField fx:id="nomSocieteField" />
+        <Label text="Adresse Livraison :" />
+        <TextField fx:id="adresseField" />
+        <Label text="Date Livraison :" />
+        <DatePicker fx:id="dateLivraisonPicker" />
+        <Label text="Statut :" />
+        <ComboBox fx:id="statutCombo" promptText="Choisir un statut" />
+
+        <!-- Boutons d'action -->
+        <HBox spacing="10.0">
+            <Button fx:id="btnAjouter" onAction="#ajouterLivraison" text="Ajouter" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
+            <Button fx:id="btnModifier" onAction="#modifierLivraison" text="Modifier" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
+            <Button fx:id="btnSupprimer" onAction="#supprimerLivraison" text="Supprimer" style="-fx-background-color: #F44336; -fx-text-fill: white;" />
+            <Button fx:id="btnRetour" onAction="#goToAfficherCommande" text="Retour" style="-fx-background-color: #757575; -fx-text-fill: white;" />
+        </HBox>
+
+        <!-- Tableau pour afficher les livraisons -->
+        <TableView fx:id="livraisonsTable" prefHeight="200.0" prefWidth="572.0">
+            <columns>
+                <TableColumn text="ID" prefWidth="50" fx:id="idColumn" />
+                <TableColumn text="Nom Société" prefWidth="150" fx:id="nomSocieteColumn" />
+                <TableColumn text="Adresse" prefWidth="150" fx:id="adresseColumn" />
+                <TableColumn text="Date" prefWidth="100" fx:id="dateColumn" />
+                <TableColumn text="Statut" prefWidth="100" fx:id="statutColumn" />
+            </columns>
+        </TableView>
+    </VBox>
+</AnchorPane>

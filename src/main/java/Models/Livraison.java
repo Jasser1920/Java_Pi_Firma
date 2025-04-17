@@ -7,10 +7,9 @@ public class Livraison {
     private String nomSociete;
     private String adresseLivraison;
     private Date dateLivraison;
-    private String statut;
+    private StatutLivraison statut; // Changé de String à StatutLivraison
 
-    // Constructor
-    public Livraison(int id, String nomSociete, String adresseLivraison, Date dateLivraison, String statut) {
+    public Livraison(int id, String nomSociete, String adresseLivraison, Date dateLivraison, StatutLivraison statut) {
         this.id = id;
         this.nomSociete = nomSociete;
         this.adresseLivraison = adresseLivraison;
@@ -18,7 +17,6 @@ public class Livraison {
         this.statut = statut;
     }
 
-    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     public String getNomSociete() { return nomSociete; }
@@ -27,6 +25,6 @@ public class Livraison {
     public void setAdresseLivraison(String adresseLivraison) { this.adresseLivraison = adresseLivraison; }
     public Date getDateLivraison() { return dateLivraison; }
     public void setDateLivraison(Date dateLivraison) { this.dateLivraison = dateLivraison; }
-    public String getStatut() { return statut; }
-    public void setStatut(String statut) { this.statut = statut; }
+    public StatutLivraison getStatut() { return statut; }
+    public void setStatut(StatutLivraison statut) { this.statut = statut; }
 }
