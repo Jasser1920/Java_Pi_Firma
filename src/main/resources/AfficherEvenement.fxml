@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherEvenementController">
+
+    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="93.0" layoutY="24.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="897.0" />
+
+        <!-- Filtres -->
+        <Label layoutX="115.0" layoutY="179.0" text="Titre:" />
+        <TextField fx:id="titreField" layoutX="166.0" layoutY="174.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px; -fx-border-color: #85C20A;" />
+
+        <Label layoutX="326.0" layoutY="179.0" text="Date min:" />
+        <DatePicker fx:id="dateMinPicker" layoutX="391.0" layoutY="174.0" prefWidth="120.0" style="-fx-background-color: transparent;" />
+
+        <Label layoutX="526.0" layoutY="179.0" text="Date max:" />
+        <DatePicker fx:id="dateMaxPicker" layoutX="596.0" layoutY="174.0" prefWidth="120.0" style="-fx-background-color: transparent;" />
+
+        <Label layoutX="116.0" layoutY="214.0" text="Lieu:" />
+        <TextField fx:id="lieuxField" layoutX="166.0" layoutY="209.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85c20a;" />
+
+        <Button fx:id="btnFiltrer" layoutX="746.0" layoutY="174.0" prefHeight="27.0" prefWidth="81.0" style="-fx-background-color: #f8f8f8; -fx-background-radius: 20; -fx-border-color: #45595b; -fx-border-radius: 20;" text="Filtrer" />
+        <Button fx:id="btnReset" layoutX="746.0" layoutY="209.0" prefHeight="27.0" prefWidth="82.0" style="-fx-background-color: #f8f8f8; -fx-background-radius: 20; -fx-border-color: #45595b; -fx-border-radius: 20;" text="Réinitialiser" />
+
+        <!-- Tableau -->
+        <TableView fx:id="evenementTable" layoutX="163.0" layoutY="254.0" prefHeight="280.0" prefWidth="666.0">
+            <columns>
+                <TableColumn fx:id="titreColumn" prefWidth="207.20001220703125" text="Titre" />
+                <TableColumn fx:id="descriptionColumn" prefWidth="200.0" text="Description" />
+                <TableColumn fx:id="dateColumn" prefWidth="106.4000244140625" text="Date" />
+                <TableColumn fx:id="lieuxColumn" prefWidth="150.39999999999998" text="Lieux" />
+            </columns>
+        </TableView>
+
+        <!-- Boutons d’action -->
+        <Button fx:id="btnAjouter" layoutX="576.0" layoutY="554.0" prefWidth="80.0" style="-fx-background-color: #ffb524; -fx-background-radius: 20;" text="Ajouter" textFill="#45595b" />
+        <Button fx:id="btnVoir" layoutX="666.0" layoutY="554.0" prefWidth="80.0" style="-fx-background-color: #45595b; -fx-background-radius: 20;" text="Voir" textFill="#ffb524" />
+        <Button fx:id="btnSupprimer" layoutX="756.0" layoutY="554.0" prefWidth="80.0" style="-fx-background-color: #ff6b6b; -fx-background-radius: 20;" text="Supprimer" textFill="#f8f8f8" />
+        <Button fx:id="btnDons" layoutX="116.0" layoutY="554.0" prefWidth="100.0" style="-fx-background-color: #f8f8f8; -fx-background-radius: 20; -fx-border-color: #45595b; -fx-border-radius: 20;" text="Dons" textFill="#45595b" />
+      <Label layoutX="118.0" layoutY="31.0" text="Liste des évènements" textFill="#f8f8f8">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="30.0" />
+         </font>
+      </Label>
+      <Button fx:id="homeFX" layoutX="27.0" layoutY="24.0" mnemonicParsing="false" onAction="#ouvrirHome" prefHeight="49.0" prefWidth="57.0" style="-fx-background-color: #85c20a; -fx-background-radius: 100;" text="🏠" textFill="#f8f8f8">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="23.0" />
+         </font>
+      </Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="26.0" layoutY="675.0" stroke="#45595b" strokeType="INSIDE" width="1000.0" />
+    </children>
+
+</AnchorPane>

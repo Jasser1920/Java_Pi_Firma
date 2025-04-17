@@ -1,6 +1,7 @@
 package Services;
 
 import Models.Don;
+import Models.Evenemment;
 import Utils.MyDatabase;
 import java.sql.*;
 import java.util.ArrayList;
@@ -59,15 +60,30 @@ public class DonService implements IService<Don> {
 
     @Override
     public List<Don> rechercher() {
-        String req = "SELECT * FROM `don`";
+        String req = "SELECT d.*, e.titre FROM `don` d LEFT JOIN evenemment e ON d.evenement_id = e.id";
         List<Don> dons = new ArrayList<>();
+
         try {
             PreparedStatement ps = connection.prepareStatement(req);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                Evenemment evenement = new Evenemment(
+                        rs.getInt("evenement_id"),
+                        null,
+                        rs.getString("titre"),  // titre seulement
+                        "",                     // description vide
+                        rs.getDate("date"),     // on pourrait ignorer
+                        "",                     // lieux vide
+                        ""                      // image vide
+                );
+
                 Don don = new Don(
-                        rs.getInt("id"), null, null, // Evenement and DonsUser set to null
-                        rs.getString("donateur"), rs.getString("description"), rs.getDate("date")
+                        rs.getInt("id"),
+                        evenement,
+                        null,
+                        rs.getString("donateur"),
+                        rs.getString("description"),
+                        rs.getDate("date")
                 );
                 dons.add(don);
             }
@@ -76,4 +92,5 @@ public class DonService implements IService<Don> {
         }
         return dons;
     }
+
 }

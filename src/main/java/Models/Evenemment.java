@@ -37,4 +37,8 @@ public class Evenemment {
     public void setLieux(String lieux) { this.lieux = lieux; }
     public String getImage() { return image; }
     public void setImage(String image) { this.image = image; }
+    @Override
+    public String toString() {
+        return titre;
+    }
 }
