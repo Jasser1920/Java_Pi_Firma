@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DetailDonController">
+
+    <children>
+
+        <Label layoutX="30.0" layoutY="70.0" text="Donateur:" />
+        <TextField fx:id="donateurField" layoutX="150.0" layoutY="65.0" prefWidth="300.0" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px; -fx-border-color: #85c20a;" />
+
+        <Label layoutX="30.0" layoutY="120.0" text="Description:" />
+        <TextArea fx:id="descriptionArea" layoutX="150.0" layoutY="115.0" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: transparent;" wrapText="true" />
+
+        <Label layoutX="30.0" layoutY="230.0" text="Date du don:" />
+        <DatePicker fx:id="datePicker" layoutX="150.0" layoutY="225.0" style="-fx-background-color: transparent;" />
+
+        <Label layoutX="30.0" layoutY="280.0" text="Événement associé:" />
+        <ComboBox fx:id="evenementComboBox" layoutX="150.0" layoutY="275.0" prefWidth="300.0" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px; -fx-border-color: #85c20a;" />
+
+        <Button fx:id="btnModifier" layoutX="139.0" layoutY="338.0" onAction="#modifierDon" prefWidth="90.0" style="-fx-background-color: #ffb524; -fx-background-radius: 20;" text="Modifier" textFill="#45595b" />
+        <Button fx:id="btnSupprimer" layoutX="239.0" layoutY="338.0" onAction="#supprimerDon" prefWidth="90.0" style="-fx-background-color: #ff6b6b; -fx-background-radius: 20;" text="Supprimer" textFill="#f8f8f8" />
+        <Button fx:id="btnRetour" layoutX="339.0" layoutY="338.0" onAction="#retourner" prefWidth="90.0" style="-fx-background-color: #45595b; -fx-background-radius: 20;" text="Retour" textFill="#ffb524" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="33.0" layoutX="74.0" layoutY="24.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 30;" width="516.0" />
+      <Label layoutX="89.0" layoutY="29.0" text="Détail du don" textFill="#f8f8f8">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="retourFX" layoutX="30.0" layoutY="25.0" mnemonicParsing="false" onAction="#retour" style="-fx-background-color: #85c20a; -fx-background-radius: 100;" text="⬅" textFill="#f8f8f8">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="15.0" layoutY="385.0" stroke="#45595b" strokeType="INSIDE" width="605.0" />
+
+    </children>
+
+</AnchorPane>

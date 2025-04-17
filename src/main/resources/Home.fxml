@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HomeController">
+
+    <children>
+        <!-- Barre verte -->
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="16.0" layoutY="14.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="964.0" />
+
+        <!-- Logo -->
+        <ImageView fitHeight="54.0" fitWidth="58.0" layoutX="28.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+            <image><Image url="@Images/logoblanc2.png" /></image>
+        </ImageView>
+
+        <!-- Titre -->
+        <Label layoutX="80.0" layoutY="25.0" text="Firma" textFill="WHITE">
+            <font><Font name="Arial Rounded MT Bold" size="23.0" /></font>
+        </Label>
+
+        <!-- Hyperlinks avec fx:id -->
+        <Hyperlink fx:id="produitLink" layoutX="159.0" layoutY="28.0" text="Produit" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="13.0" />
+            </font></Hyperlink>
+        <Hyperlink fx:id="categorieLink" layoutX="224.0" layoutY="28.0" text="Catégorie" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="13.0" />
+            </font></Hyperlink>
+        <Hyperlink fx:id="evenementLink" layoutX="304.0" layoutY="28.0" text="Evènement" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="13.0" />
+            </font></Hyperlink>
+        <Hyperlink fx:id="donLink" layoutX="399.0" layoutY="28.0" text="Don" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="13.0" />
+            </font></Hyperlink>
+        <Hyperlink layoutX="454.0" layoutY="28.0" text="Réclamation" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="13.0" />
+            </font></Hyperlink>
+        <Hyperlink layoutX="549.0" layoutY="28.0" text="Réponse" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="13.0" />
+            </font></Hyperlink>
+        <Hyperlink layoutX="629.0" layoutY="28.0" text="Commande" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="13.0" />
+            </font></Hyperlink>
+        <Hyperlink layoutX="709.0" layoutY="28.0" text="Terrain" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="13.0" />
+            </font></Hyperlink>
+        <Hyperlink layoutX="769.0" layoutY="28.0" text="Livraison" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="13.0" />
+            </font></Hyperlink>
+        <Hyperlink layoutX="839.0" layoutY="28.0" text="Location" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="13.0" />
+            </font></Hyperlink>
+        <Hyperlink layoutX="909.0" layoutY="28.0" text="User" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="13.0" />
+            </font></Hyperlink>
+
+        <!-- BANNIÈRE large -->
+        <ImageView fitHeight="308.0" fitWidth="1000.0" layoutY="109.0" pickOnBounds="true" preserveRatio="false">
+            <image><Image url="@Images/ban.jpg" /></image>
+        </ImageView>
+
+        <!-- Texte gauche -->
+        <Label layoutX="39.0" layoutY="180.0" text="Frais. Local. Solidaire" textFill="#ffb323">
+            <font><Font name="Arial Rounded MT Bold" size="20.0" /></font>
+        </Label>
+
+        <Label layoutX="39.0" layoutY="200.0" text="Vos produits agricoles," textFill="#85c20a">
+            <font><Font name="Arial Rounded MT Bold" size="36.0" /></font>
+        </Label>
+
+        <Label layoutX="39.0" layoutY="235.0" text="à portée de main" textFill="#85c20a">
+            <font><Font name="Arial Rounded MT Bold" size="36.0" /></font>
+        </Label>
+
+        <Label layoutX="39.0" layoutY="280.0" text="Firma facilite les échanges, valorise les productions locales," textFill="#46585a">
+            <font><Font name="Arial Rounded MT Bold" size="13.0" /></font>
+        </Label>
+
+        <Label layoutX="39.0" layoutY="295.0" text="et lutte contre le gaspillage alimentaire." textFill="#46585a">
+            <font><Font name="Arial Rounded MT Bold" size="13.0" /></font>
+        </Label>
+
+        <!-- Rectangle jaune et image fruits (à droite) -->
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffb524" height="277.0" layoutX="556.0" layoutY="124.0" stroke="#ffb524" width="413.0" />
+        <ImageView fitHeight="286.0" fitWidth="399.0" layoutX="563.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
+            <image><Image url="@Images/fruits.png" /></image>
+        </ImageView>
+
+        <!-- Bandeau bas bleu -->
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="89.0" layoutY="611.0" stroke="#45595b" strokeType="INSIDE" strokeWidth="2.0" width="1000.0" />
+        <Circle fill="#ffb524" layoutX="229.0" layoutY="516.0" radius="67.0" stroke="#ffb524" strokeType="INSIDE" />
+        <Circle fill="#ffb524" layoutX="500.0" layoutY="516.0" radius="67.0" stroke="#ffb524" strokeType="INSIDE" />
+        <Circle fill="#ffb524" layoutX="770.0" layoutY="516.0" radius="67.0" stroke="#ffb524" strokeType="INSIDE" />
+        <Label layoutX="14.0" layoutY="621.0" text="Firma" textFill="#85c20a">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="42.0" />
+            </font>
+        </Label>
+        <Label layoutX="16.0" layoutY="663.0" text="Produits frais" textFill="#ffb323">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="15.0" />
+            </font>
+        </Label>
+        <Label layoutX="764.0" layoutY="646.0" text="Email : firmaprojectpi@gmail.com" textFill="#d3d3d3">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="13.0" />
+            </font>
+        </Label>
+        <Label layoutX="764.0" layoutY="668.0" text="Adresse : Esprit " textFill="#d3d3d3">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="13.0" />
+            </font>
+        </Label>
+        <Label layoutX="669.0" layoutY="628.0" text="Contact" textFill="#f8f8f8">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="16.0" />
+            </font>
+        </Label>
+        <ImageView fitHeight="108.0" fitWidth="121.0" layoutX="178.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@Images/sdg1.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="108.0" fitWidth="121.0" layoutX="445.0" layoutY="468.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@Images/sdg2.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="108.0" fitWidth="121.0" layoutX="719.0" layoutY="469.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@Images/sdg3.png" />
+            </image>
+        </ImageView>
+        <Label layoutX="764.0" layoutY="628.0" text="Phone : 28 742 873" textFill="#d3d3d3">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="13.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

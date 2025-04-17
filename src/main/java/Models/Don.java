@@ -20,6 +20,8 @@ public class Don {
         this.date = date;
     }
 
+
+
     // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
