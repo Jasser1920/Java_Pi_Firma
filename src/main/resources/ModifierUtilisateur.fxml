@@ -1,49 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import java.net.URL?>
-<AnchorPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="860.0" prefWidth="1280.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ModifierUtilisateurController">
+<AnchorPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="1000" prefWidth="700" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ModifierUtilisateurController">
     <stylesheets>
         <URL value="@css/styles.css" />
     </stylesheets>
     <children>
-        <!-- Title -->
-        <Text style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #333333;" text="Modifier un Utilisateur" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="40.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="1000.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1000.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="25.0" layoutY="24.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="58.0" />
+        <Button layoutX="34.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: #85c20a; -fx-border-radius: 50;" text="🏠" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="17.0" />
+            </font>
+        </Button>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="93.0" layoutY="24.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 30;" width="897.0" />
+        <Text fill="WHITE" layoutX="124.8" layoutY="60.188671875" text="Modifier Utilisateur" AnchorPane.leftAnchor="124.8" AnchorPane.topAnchor="31.799999999999997">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="30.0" />
+            </font>
+        </Text>
 
-        <!-- Form Fields -->
-        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Nom" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="100.0" />
-        <TextField fx:id="nomTF" onKeyReleased="#validateForm" promptText="Entrez le nom" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="880.0" AnchorPane.topAnchor="130.0" />
+        <GridPane hgap="30" layoutX="43.2" layoutY="110.0" prefHeight="786.0" prefWidth="917.0" styleClass="form-container" vgap="15" AnchorPane.leftAnchor="43.0" AnchorPane.rightAnchor="40.0">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50" />
+                <ColumnConstraints percentWidth="50" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints />
+            </rowConstraints>
+            <children>
+                <VBox prefHeight="725.0" prefWidth="422.0" spacing="10" GridPane.columnIndex="0">
+                    <children>
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="Nom" />
+                        <Label fx:id="nomError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" visible="false" />
+                        <TextField fx:id="nomTF" onKeyReleased="#validateForm" promptText="Entrez le nom" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
 
-        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Prénom" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="180.0" />
-        <TextField fx:id="prenomTF" onKeyReleased="#validateForm" promptText="Entrez le prénom" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="880.0" AnchorPane.topAnchor="210.0" />
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="Prénom" />
+                        <Label fx:id="prenomError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" visible="false" />
+                        <TextField fx:id="prenomTF" onKeyReleased="#validateForm" promptText="Entrez le prénom" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
 
-        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Email" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="260.0" />
-        <TextField fx:id="emailTF" onKeyReleased="#validateForm" promptText="Entrez l'email" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="880.0" AnchorPane.topAnchor="290.0" />
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="Email" />
+                        <Label fx:id="emailError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" visible="false" />
+                        <TextField fx:id="emailTF" onKeyReleased="#validateForm" promptText="Entrez l'email" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
 
-        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Mot de passe" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="340.0" />
-        <TextField fx:id="motdepasseTF" onKeyReleased="#validateForm" promptText="Entrez le mot de passe" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="880.0" AnchorPane.topAnchor="370.0" />
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="Mot de passe" />
+                        <Label fx:id="motdepasseError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" visible="false" />
+                        <TextField fx:id="motdepasseTF" onKeyReleased="#validateForm" promptText="Entrez le mot de passe" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
+                    </children>
+                </VBox>
+                <VBox spacing="10" GridPane.columnIndex="1">
+                    <children>
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="Téléphone" />
+                        <Label fx:id="telephoneError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" visible="false" />
+                        <TextField fx:id="telephoneTF" onKeyReleased="#validateForm" promptText="Entrez le numéro de téléphone" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
 
-        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Téléphone" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="420.0" />
-        <TextField fx:id="telephoneTF" onKeyReleased="#validateForm" promptText="Entrez le numéro de téléphone" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="880.0" AnchorPane.topAnchor="450.0" />
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="Adresse" />
+                        <Label fx:id="adresseError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" visible="false" />
+                        <TextField fx:id="adresseTF" onKeyReleased="#validateForm" promptText="Entrez l'adresse" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
 
-        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Adresse" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="500.0" />
-        <TextField fx:id="adresseTF" onKeyReleased="#validateForm" promptText="Entrez l'adresse" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="880.0" AnchorPane.topAnchor="530.0" />
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="Rôle" />
+                        <Label fx:id="roleError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" visible="false" />
+                        <ChoiceBox fx:id="roleCB" onAction="#validateForm" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" />
 
-        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Rôle" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="580.0" />
-        <ChoiceBox fx:id="roleCB" onAction="#validateForm" prefWidth="200.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="610.0" />
-
-        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Photo de profil" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="660.0" />
-        <TextField fx:id="profilePictureTF" editable="false" promptText="Chemin de la photo de profil" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="980.0" AnchorPane.topAnchor="690.0" />
-        <Button mnemonicParsing="false" onAction="#uploadPicture" styleClass="secondary-button" text="Choisir une photo" AnchorPane.leftAnchor="310.0" AnchorPane.topAnchor="690.0" />
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="Photo de profil" />
+                        <TextField fx:id="profilePictureTF" editable="false" promptText="Chemin de la photo de profil" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" visible="false" />
+                        <Button mnemonicParsing="false" onAction="#uploadPicture" style="-fx-background-color: #85C20A; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Choisir une photo" textFill="#dc2525">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Button>
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <children>
+                                <Label fx:id="profilePictureError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" visible="false" />
+                                <ImageView fx:id="imagePreview" fitHeight="150" fitWidth="150" preserveRatio="true" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-width: 1px; -fx-border-radius: 4px;" visible="false" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </GridPane>
 
         <!-- Buttons -->
-        <Button fx:id="enregistrerBtn" disable="true" mnemonicParsing="false" onAction="#enregistrerModifications" styleClass="primary-button" text="Enregistrer" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="177.8" />
-        <Button mnemonicParsing="false" onAction="#retourAfficher" styleClass="secondary-button" text="Retour" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="40.0" />
+        <Button fx:id="enregistrerBtn" disable="true" mnemonicParsing="false" onAction="#enregistrerModifications" style="-fx-background-color: #85C20A; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Enregistrer" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="177.8">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Button>
+        <Button mnemonicParsing="false" onAction="#retourAfficher" style="-fx-background-color: #ffb524; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Annuler" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="40.0">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Button>
     </children>
 </AnchorPane>

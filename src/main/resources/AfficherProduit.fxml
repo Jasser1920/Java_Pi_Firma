@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="tableauFX" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #F8F8F8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherProduitController">
+
+    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="93.0" layoutY="24.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="897.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="26.0" layoutY="675.0" stroke="#45595b" strokeType="INSIDE" width="1000.0" />
+        <Label layoutX="118.0" layoutY="31.0" text="Liste des Produits" textFill="#f8f8f8">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="30.0" />
+            </font>
+        </Label>
+
+        <!-- Zone de recherche -->
+        <Label layoutX="20.0" layoutY="137.0" text="Nom:" />
+        <TextField fx:id="nomField" layoutX="56.0" layoutY="132.0" prefHeight="18.0" prefWidth="155.0" style="-fx-background-color: transparent; -fx-border-color: #85C20A; -fx-border-width: 0px 0px 1px 0px;" />
+
+        <Label layoutX="535.0" layoutY="139.0" text="Quantité:" />
+        <TextField fx:id="quantiteMinField" layoutX="595.0" layoutY="134.0" prefWidth="60.0" promptText="Min" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A;" />
+        <TextField fx:id="quantiteMaxField" layoutX="671.0" layoutY="134.0" prefWidth="60.0" promptText="Max" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A;" />
+
+        <Label layoutX="775.0" layoutY="139.0" text="Prix:" />
+        <TextField fx:id="prixMinField" layoutX="829.0" layoutY="134.0" prefWidth="60.0" promptText="Min" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A;" />
+        <TextField fx:id="prixMaxField" layoutX="905.0" layoutY="134.0" prefWidth="60.0" promptText="Max" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A;" />
+
+        <Label layoutX="255.0" layoutY="137.0" text="Catégorie:" />
+        <ComboBox fx:id="categorieComboBox" layoutX="322.0" layoutY="132.0" prefHeight="26.0" prefWidth="155.0" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A;" />
+
+        <Button fx:id="btnFiltrer" layoutX="806.0" layoutY="182.0" prefWidth="60.0" style="-fx-background-color: #ffb524; -fx-background-radius: 20;" text="Filtrer" textFill="#45595b" />
+        <Button fx:id="btnReset" layoutX="885.0" layoutY="182.0" prefWidth="80.0" style="-fx-background-color: #45595b; -fx-background-radius: 20;" text="Réinitialiser" textFill="#ffb524" />
+
+        <!-- Table -->
+        <TableView fx:id="tabFX" layoutX="22.0" layoutY="238.0" prefHeight="352.0" prefWidth="957.0">
+            <columns>
+                <TableColumn fx:id="colidFX" prefWidth="40" text="ID" />
+                <TableColumn fx:id="colnomFX" prefWidth="151.0" text="Nom" />
+                <TableColumn fx:id="colprixFX" text="Prix" />
+                <TableColumn fx:id="coldescriptionFX" prefWidth="190.0" text="Description" />
+                <TableColumn fx:id="colimageFX" prefWidth="125.0" text="Image" />
+                <TableColumn fx:id="colquantiteFX" prefWidth="73.0" text="Quantité" />
+                <TableColumn fx:id="coldateFX" prefWidth="130.0" text="Date d'expiration" />
+                <TableColumn fx:id="colcategorieFX" prefWidth="167.0" text="Catégorie" />
+            </columns>
+        </TableView>
+
+        <Button fx:id="btnVoirFX" layoutX="924.0" layoutY="606.0" prefHeight="25.0" prefWidth="49.0" style="-fx-background-color: #45595b; -fx-background-radius: 20;" text="Voir" textFill="#ffb524" />
+        <Button fx:id="btnajouterFX" layoutX="850.0" layoutY="606.0" style="-fx-background-color: #ffb524; -fx-background-radius: 20;" text="Ajouter" textFill="#45595b" />
+        <Button fx:id="btnCategorieFX" layoutX="19.0" layoutY="606.0" style="-fx-background-color: #f8f8f8; -fx-background-radius: 20; -fx-border-color: #45595b; -fx-border-radius: 20;" text="Catégories" textFill="#45595b" />
+      <Button fx:id="homeFX" layoutX="27.0" layoutY="24.0" mnemonicParsing="false" onAction="#ouvrirHome" prefHeight="50.0" prefWidth="60.0" style="-fx-background-color: #85c20a; -fx-background-radius: 100;" text="🏠" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="23.0" />
+         </font>
+      </Button>
+    </children>
+</AnchorPane>

@@ -1,88 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefWidth="1280" prefHeight="860" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterUtilisateurController">
+<AnchorPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="1000" prefWidth="700" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterUtilisateurController">
     <stylesheets>
         <URL value="@css/styles.css" />
     </stylesheets>
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="1000.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1000.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="25.0" layoutY="24.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="58.0" />
+        <Button layoutX="34.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: #85c20a; -fx-border-radius: 50;" text="🏠" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="17.0" />
+            </font>
+        </Button>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="93.0" layoutY="24.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 30;" width="897.0" />
+        <Text fill="WHITE" layoutX="124.8" layoutY="60.188671875" text="Ajouter un Nouvel Utilisateur" AnchorPane.leftAnchor="124.8" AnchorPane.topAnchor="31.799999999999997">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="30.0" />
+            </font>
+        </Text>
 
-    <VBox spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
-        <!-- Title and Breadcrumb -->
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Utilisateurs" />
+        <VBox spacing="20" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="110.0">
+            <!-- Form Container -->
+            <GridPane hgap="30" prefHeight="802.0" prefWidth="916.0" styleClass="form-container" vgap="15">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50" />
+                    <ColumnConstraints percentWidth="50" />
+                </columnConstraints>
 
-            <Label text="|" />
-            <Hyperlink text="Ajouter Utilisateur" />
-        </HBox>
+                <!-- Left Column -->
+                <VBox prefHeight="730.0" prefWidth="426.0" spacing="10" GridPane.columnIndex="0">
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Nom" />
+                    <TextField fx:id="nomTF" onKeyReleased="#validateForm" promptText="Entrez le nom" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
+                    <Label fx:id="nomError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
 
-        <!-- Form Title -->
-        <Text style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Ajouter un Nouvel Utilisateur" />
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Prénom" />
+                    <TextField fx:id="prenomTF" onKeyReleased="#validateForm" promptText="Entrez le prénom" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
+                    <Label fx:id="prenomError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
 
-        <!-- Form Container -->
-        <GridPane styleClass="form-container" hgap="30" vgap="15">
-            <columnConstraints>
-                <ColumnConstraints percentWidth="50" />
-                <ColumnConstraints percentWidth="50" />
-            </columnConstraints>
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Email" />
+                    <TextField fx:id="emailTF" onKeyReleased="#validateForm" promptText="Entrez l'email" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
+                    <Label fx:id="emailError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
 
-            <!-- Left Column -->
-            <VBox GridPane.columnIndex="0" spacing="10">
-                <Label text="Nom" styleClass="form-label" />
-                <TextField fx:id="nomTF" styleClass="form-field" promptText="Entrez le nom"
-                           onKeyReleased="#validateForm" />
-                <Label fx:id="nomError" styleClass="error-label" />
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Mot de passe" />
+                    <PasswordField fx:id="motdepasseTF" onKeyReleased="#validateForm" promptText="Entrez le mot de passe" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
+                    <Label fx:id="motdepasseError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
+                </VBox>
 
-                <Label text="Prénom" styleClass="form-label" />
-                <TextField fx:id="prenomTF" styleClass="form-field" promptText="Entrez le prénom"
-                           onKeyReleased="#validateForm" />
-                <Label fx:id="prenomError" styleClass="error-label" />
+                <!-- Right Column -->
+                <VBox spacing="10" GridPane.columnIndex="1">
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Téléphone" />
+                    <TextField fx:id="telephoneTF" onKeyReleased="#validateForm" promptText="Entrez le téléphone" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
+                    <Label fx:id="telephoneError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
 
-                <Label text="Email" styleClass="form-label" />
-                <TextField fx:id="emailTF" styleClass="form-field" promptText="Entrez l'email"
-                           onKeyReleased="#validateForm" />
-                <Label fx:id="emailError" styleClass="error-label" />
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Adresse" />
+                    <TextField fx:id="adresseTF" onKeyReleased="#validateForm" promptText="Entrez l'adresse" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
+                    <Label fx:id="adresseError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
 
-                <Label text="Mot de passe" styleClass="form-label" />
-                <PasswordField fx:id="motdepasseTF" styleClass="form-field" promptText="Entrez le mot de passe"
-                               onKeyReleased="#validateForm" />
-                <Label fx:id="motdepasseError" styleClass="error-label" />
-            </VBox>
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Rôle" />
+                    <ChoiceBox fx:id="roleCB" onAction="#validateForm" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
+                    <Label fx:id="roleError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
 
-            <!-- Right Column -->
-            <VBox GridPane.columnIndex="1" spacing="10">
-                <Label text="Téléphone" styleClass="form-label" />
-                <TextField fx:id="telephoneTF" styleClass="form-field" promptText="Entrez le téléphone"
-                           onKeyReleased="#validateForm" />
-                <Label fx:id="telephoneError" styleClass="error-label" />
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Photo de profil" />
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Button onAction="#uploadPicture" style="-fx-background-color: #85C20A; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Choisir Image">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Button>
+                        <TextField fx:id="profilePictureTF" editable="false" promptText="Aucun fichier sélectionné" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" visible="false" />
+                    </HBox>
+                    <Label fx:id="profilePictureError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
+                    <ImageView fx:id="imagePreview" fitHeight="150" fitWidth="150" preserveRatio="true" visible="false">
+                        <VBox.margin>
+                            <Insets top="10" />
+                        </VBox.margin>
+                    </ImageView>
+                </VBox>
+                <rowConstraints>
+                    <RowConstraints />
+                </rowConstraints>
+            </GridPane>
 
-                <Label text="Adresse" styleClass="form-label" />
-                <TextField fx:id="adresseTF" styleClass="form-field" promptText="Entrez l'adresse"
-                           onKeyReleased="#validateForm" />
-                <Label fx:id="adresseError" styleClass="error-label" />
-
-                <Label text="Rôle" styleClass="form-label" />
-                <ChoiceBox fx:id="roleCB" styleClass="form-field" onAction="#validateForm" />
-                <Label fx:id="roleError" styleClass="error-label" />
-
-                <Label text="Photo de profil" styleClass="form-label" />
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <TextField fx:id="profilePictureTF" styleClass="form-field" editable="false"
-                               promptText="Aucun fichier sélectionné" />
-                    <Button text="Choisir" styleClass="secondary-button" onAction="#uploadPicture" />
-                </HBox>
-                <Label fx:id="profilePictureError" styleClass="error-label" />
-            </VBox>
-        </GridPane>
-
-        <!-- Form Buttons -->
-        <HBox spacing="15" alignment="CENTER_RIGHT">
-            <Button text="Annuler" styleClass="secondary-button" onAction="#afficherUtilisateurs" />
-            <Button fx:id="ajouterBtn" text="Ajouter" styleClass="primary-button"
-                    onAction="#ajouterUtilisateur" disable="true" />
-        </HBox>
-    </VBox>
+            <!-- Form Buttons -->
+            <HBox alignment="CENTER_RIGHT" spacing="15">
+                <Button fx:id="ajouterBtn" disable="true" onAction="#ajouterUtilisateur" style="-fx-background-color: #85C20A; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Ajouter">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Button>
+                <Button onAction="#afficherUtilisateurs" style="-fx-background-color: #ffb524; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Annuler">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Button>
+            </HBox>
+        </VBox>
+    </children>
 </AnchorPane>

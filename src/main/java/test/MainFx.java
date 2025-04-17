@@ -7,11 +7,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainFX extends Application {
+public class MainFx extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Charger AfficherReclamation.fxml depuis src/main/resources/
-        FXMLLoader fxmlLoader = new FXMLLoader(MainFX.class.getResource("/AjouterReponseReclamation.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainFx.class.getResource("/Home.fxml"));
         if (fxmlLoader.getLocation() == null) {
             throw new IOException("Cannot find /AjouterReponseReclamation.fxml");
         }

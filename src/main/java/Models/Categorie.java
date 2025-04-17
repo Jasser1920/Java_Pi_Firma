@@ -15,4 +15,5 @@ public class Categorie {
     public void setId(int id) { this.id = id; }
     public String getNomCategorie() { return nomCategorie; }
     public void setNomCategorie(String nomCategorie) { this.nomCategorie = nomCategorie; }
+    public String toString() { return nomCategorie; }
 }
