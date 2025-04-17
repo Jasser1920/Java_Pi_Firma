@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CommandeController">
+    <VBox layoutX="14.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0" spacing="10.0">
+        <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Ajouter une Commande" />
+
+        <Label text="Sélectionner un Produit" />
+        <ComboBox fx:id="produitCombo" prefWidth="200.0" promptText="Choisir un produit" />
+        <HBox spacing="10.0">
+            <Label text="Quantité :" />
+            <TextField fx:id="quantiteField" prefWidth="100.0" promptText="Quantité" />
+            <Button onAction="#ajouterProduit" style="-fx-background-color: #44595b; -fx-background-radius: 20;" text="Ajouter Produit" textFill="#ffb524" />
+        </HBox>
+
+        <Label text="Produits Sélectionnés" />
+        <TableView fx:id="produitsSelectionnesTable" prefHeight="150.0" prefWidth="572.0">
+            <columns>
+                <TableColumn fx:id="produitColumn" prefWidth="150.0" text="Produit" />
+                <TableColumn fx:id="quantiteColumn" prefWidth="100.0" text="Quantité" />
+                <TableColumn fx:id="prixUnitaireColumn" prefWidth="100.0" text="Prix Unitaire" />
+                <TableColumn fx:id="prixTotalColumn" prefWidth="100.0" text="Prix Total" />
+                <TableColumn fx:id="actionCommandeColumn" prefWidth="100.0" text="Action" /> <!-- Updated fx:id -->
+            </columns>
+        </TableView>
+
+        <HBox spacing="10.0">
+            <Label text="Total de la Commande :" />
+            <TextField fx:id="totalField" prefWidth="100.0" editable="false" text="0.0" />
+        </HBox>
+
+<!--        <HBox spacing="10.0">-->
+<!--            <Label text="Statut de la Commande :" />-->
+<!--            <ComboBox fx:id="statutCombo" prefWidth="200.0" promptText="Choisir un statut" />-->
+<!--        </HBox>-->
+
+        <HBox spacing="10.0">
+            <Button onAction="#ajouterCommande" style="-fx-background-color: #45595b; -fx-background-radius: 20;" text="Valider Commande" textFill="#ffb524" />
+            <Button onAction="#goToAfficherCommande" style="-fx-background-color: #ffb524; -fx-background-radius: 20;" text="Retour" textFill="#45595b" />
+        </HBox>
+    </VBox>
+</AnchorPane>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LivraisonController">
+    <VBox spacing="10.0" layoutX="14.0" layoutY="14.0">
+        <Label text="Liste des Livraisons" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+        <TableView fx:id="livraisonsTable">
+            <columns>
+                <TableColumn fx:id="idColumn" prefWidth="50.0" text="ID" />
+                <TableColumn fx:id="nomSocieteColumn" prefWidth="150.0" text="Nom Société" />
+                <TableColumn fx:id="adresseColumn" prefWidth="150.0" text="Adresse" />
+                <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Date" />
+                <TableColumn fx:id="statutColumn" prefWidth="100.0" text="Statut" />
+                <TableColumn fx:id="actionColumn" prefWidth="150.0" text="Actions" />
+            </columns>
+        </TableView>
+        <HBox spacing="10.0">
+            <Button fx:id="btnAjouter" onAction="#goToAjouterLivraison" text="Ajouter une Livraison" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
+            <Button fx:id="btnRetour" onAction="#goToAfficherCommande" text="Retour aux Commandes" style="-fx-background-color: #757575; -fx-text-fill: white;" />
+        </HBox>
+    </VBox>
+</AnchorPane>

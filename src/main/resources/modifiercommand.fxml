@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CommandeController">
+    <VBox layoutX="14.0" layoutY="14.0" spacing="10.0">
+        <Label text="Modifier une Commande" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+        <Label text="Sélectionner un Produit" />
+        <ComboBox fx:id="produitCombo" promptText="Choisir un produit" prefWidth="200.0" />
+        <HBox spacing="10.0">
+            <Label text="Quantité :" />
+            <TextField fx:id="quantiteField" promptText="Quantité" prefWidth="100.0" />
+            <Button onAction="#ajouterProduit" text="Ajouter Produit" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
+        </HBox>
+
+        <Label text="Produits Sélectionnés" />
+        <TableView fx:id="produitsSelectionnesTable" prefHeight="150.0" prefWidth="572.0">
+            <columns>
+                <TableColumn fx:id="nomProduitColumn" prefWidth="200.0" text="Produit" />
+                <TableColumn fx:id="quantiteColumn" prefWidth="100.0" text="Quantité" />
+                <TableColumn fx:id="prixUnitaireColumn" prefWidth="100.0" text="Prix Unitaire" />
+                <TableColumn fx:id="prixTotalColumn" prefWidth="100.0" text="Prix Total" />
+                <TableColumn fx:id="actionProduitColumn" prefWidth="100.0" text="Action" />
+            </columns>
+        </TableView>
+
+        <HBox spacing="10.0">
+            <Label text="Total de la Commande :" />
+            <Label fx:id="totalLabel" text="0.0" />
+        </HBox>
+
+<!--        <Label text="Statut de la Commande" />-->
+<!--        <ComboBox fx:id="statutCombo" promptText="Statut Commande" />-->
+
+        <HBox spacing="10.0">
+            <Button onAction="#updateCommande" text="Modifier Commande" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
+            <Button onAction="#goToAfficherCommande" text="Retour" style="-fx-background-color: #757575; -fx-text-fill: white;" />
+        </HBox>
+    </VBox>
+</AnchorPane>
