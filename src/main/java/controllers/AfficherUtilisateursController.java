@@ -9,8 +9,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -118,6 +120,21 @@ public class AfficherUtilisateursController {
             tableView.getScene().setRoot(root);
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        }
+    }
+    @FXML private Button homeFX;
+    @FXML
+    private void ouvrirHome() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Home.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) homeFX.getScene().getWindow(); // remplace la scène actuelle
+            stage.setScene(new Scene(root));
+            stage.setTitle("Accueil");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+
         }
     }
 }

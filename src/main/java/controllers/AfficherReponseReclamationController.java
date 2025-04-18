@@ -61,7 +61,7 @@ public class AfficherReponseReclamationController {
     private VBox createReponseCard(ReponseReclamation reponse) {
         VBox card = new VBox(10);
         card.setPadding(new Insets(10));
-        card.setStyle("-fx-background-color: #f0f0f0; -fx-border-color: #85c20a; -fx-border-radius: 10; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);");
+        card.setStyle("-fx-background-color: #454545; -fx-border-color: #85c20a; -fx-border-radius: 10; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);");
 
         Label idLabel = new Label("Réclamation ID: " + (reponse.getReclamation() != null ? reponse.getReclamation().getId() : "N/A"));
         idLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-font-family: 'Arial Rounded MT Bold';");
@@ -186,5 +186,20 @@ public class AfficherReponseReclamationController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    @FXML private Button homeFX;
+    @FXML
+    private void ouvrirHome() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Home.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) homeFX.getScene().getWindow(); // remplace la scène actuelle
+            stage.setScene(new Scene(root));
+            stage.setTitle("Accueil");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
     }
 }

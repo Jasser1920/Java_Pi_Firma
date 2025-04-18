@@ -32,9 +32,9 @@ public class HomeController {
         reclamationLink.setOnAction(event -> ouvrirPage("/AfficherReclamation.fxml", "Réclamations"));
         reponseLink.setOnAction(event -> ouvrirPage("/AfficherReponseReclamation.fxml", "Réponses"));
         commandeLink.setOnAction(event -> ouvrirPage("/affichercommand.fxml", "Commandes"));
-         //terrainLink.setOnAction(event -> ouvrirPage("/AfficherTerrain.fxml", "Terrains"));
+         terrainLink.setOnAction(event -> ouvrirPage("/TerrainList.fxml", "Terrains"));
          livraisonLink.setOnAction(event -> ouvrirPage("/afficherlivraison.fxml", "Livraisons"));
-        // locationLink.setOnAction(event -> ouvrirPage("/Affich<?xml version="1.0" encoding="UTF-8"?>
+        locationLink.setOnAction(event -> ouvrirPage("/LocationList.fxml", "Terrains"));
         //
         //<?import javafx.scene.shape.Rectangle?>
         //

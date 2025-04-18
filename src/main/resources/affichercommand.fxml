@@ -26,7 +26,7 @@
             <Font name="Arial Rounded MT Bold" size="30.0" />
         </font>
     </Label>
-    <Button layoutX="14.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #85c20a; -fx-background-radius: 100;" text="🏠" textFill="WHITE">
+    <Button fx:id="homeFX" layoutX="27.0" layoutY="24.0" mnemonicParsing="false" onAction="#ouvrirHome" prefHeight="49.0" prefWidth="57.0" style="-fx-background-color: #85c20a; -fx-background-radius: 100;" text="🏠" textFill="#f8f8f8">
         <font>
             <Font name="Arial Rounded MT Bold" size="23.0" />
         </font>

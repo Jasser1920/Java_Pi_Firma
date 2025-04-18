@@ -381,4 +381,19 @@ public class LivraisonController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    @FXML private Button homeFX;
+    @FXML
+    private void ouvrirHome() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Home.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) homeFX.getScene().getWindow(); // remplace la scène actuelle
+            stage.setScene(new Scene(root));
+            stage.setTitle("Accueil");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
 }

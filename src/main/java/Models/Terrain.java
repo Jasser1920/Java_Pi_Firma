@@ -46,4 +46,9 @@ public class Terrain {
     public void setDisponibilite(boolean disponibilite) { this.disponibilite = disponibilite; }
     public Date getDateCreation() { return dateCreation; }
     public void setDateCreation(Date dateCreation) { this.dateCreation = dateCreation; }
+
+    @Override
+    public String toString() {
+        return "Terrain ID: " + id + " (" + description + ")";
+    }
 }

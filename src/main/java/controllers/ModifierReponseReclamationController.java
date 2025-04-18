@@ -37,14 +37,12 @@ public class ModifierReponseReclamationController {
 
     private final ReponseReclamationService reponseService = new ReponseReclamationService();
     private ReponseReclamation reponseToEdit;
-    private static final int MIN_MESSAGE_LENGTH = 10;
 
     @FXML
     public void initialize() {
         if (reponseToEdit != null) {
-            reclamationIdFx.setText(String.valueOf(reponseToEdit.getId()));
+            reclamationIdFx.setText(String.valueOf(reponseToEdit.getReclamation() != null ? reponseToEdit.getReclamation().getId() : ""));
             messageFx.setText(reponseToEdit.getMessage());
-            validateForm();
         }
     }
 
@@ -52,11 +50,6 @@ public class ModifierReponseReclamationController {
     public void ModifierReponse(ActionEvent actionEvent) {
         String reclamationIdText = reclamationIdFx.getText().trim();
         String message = messageFx.getText().trim();
-
-        if (!validateForm()) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez corriger les erreurs dans le formulaire.");
-            return;
-        }
 
         try {
             int reclamationId = Integer.parseInt(reclamationIdText);
@@ -84,42 +77,6 @@ public class ModifierReponseReclamationController {
     }
 
     @FXML
-    public boolean validateForm() {
-        String reclamationIdText = reclamationIdFx.getText().trim();
-        String message = messageFx.getText().trim();
-        boolean isValid = true;
-
-        // Validate reclamation ID
-        if (reclamationIdText.isEmpty()) {
-            reclamationIdError.setText("L'ID de réclamation est requis.");
-            isValid = false;
-        } else {
-            try {
-                Integer.parseInt(reclamationIdText);
-                reclamationIdError.setText("");
-            } catch (NumberFormatException e) {
-                reclamationIdError.setText("L'ID de réclamation doit être un nombre valide.");
-                isValid = false;
-            }
-        }
-
-        // Validate message
-        if (message.isEmpty()) {
-            messageError.setText("Le message est requis.");
-            isValid = false;
-        } else if (message.length() < MIN_MESSAGE_LENGTH) {
-            messageError.setText("Le message doit contenir au moins " + MIN_MESSAGE_LENGTH + " caractères.");
-            isValid = false;
-        } else {
-            messageError.setText("");
-        }
-
-        // Enable/disable Modifier button
-        modifierBtn.setDisable(!isValid);
-        return isValid;
-    }
-
-    @FXML
     public void navigateHome(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainDashboard.fxml"));
@@ -136,9 +93,8 @@ public class ModifierReponseReclamationController {
     public void setReponse(ReponseReclamation reponse) {
         this.reponseToEdit = reponse;
         if (reponse != null) {
-            reclamationIdFx.setText(String.valueOf(reponse.getId()));
+            reclamationIdFx.setText(String.valueOf(reponse.getReclamation() != null ? reponse.getReclamation().getId() : ""));
             messageFx.setText(reponse.getMessage());
-            validateForm();
         }
     }
 

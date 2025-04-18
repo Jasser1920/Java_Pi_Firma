@@ -29,7 +29,7 @@
 
         <HBox spacing="20">
             <children>
-                <Button text="Modifier" onAction="#ModifierReponse"
+                <Button fx:id="modifierBtn" text="Modifier" onAction="#ModifierReponse"
                         style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 25; -fx-padding: 10 20; -fx-font-family: 'Segoe UI'; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);" />
                 <Button text="Annuler" onAction="#AnnulerReponse"
                         style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 25; -fx-padding: 10 20; -fx-font-family: 'Segoe UI'; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);" />
