@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="400.0" prefWidth="600.0" spacing="20.0"
+      style="-fx-background-color: #ffffff; -fx-border-radius: 15; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);"
+      xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.ModifierReponseReclamationController">
+    <padding>
+        <Insets top="25.0" right="25.0" bottom="25.0" left="25.0" />
+    </padding>
+    <children>
+        <Label text="ID de Réclamation :" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #333; -fx-font-family: 'Segoe UI';" />
+        <TextField fx:id="reclamationIdFx" promptText="Entrez l'ID de la réclamation"
+                   style="-fx-background-color: #f5f5f5; -fx-border-color: #b0bec5; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Segoe UI';" />
+        <Label fx:id="reclamationIdError" style="-fx-text-fill: #f44336; -fx-font-size: 12px; -fx-font-family: 'Segoe UI';" />
+
+        <Label text="Message :" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #333; -fx-font-family: 'Segoe UI';" />
+        <TextArea fx:id="messageFx" prefHeight="150.0" promptText="Entrez le message de la réponse"
+                  wrapText="true"
+                  style="-fx-background-color: #f5f5f5; -fx-border-color: #b0bec5; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Segoe UI';" />
+        <Label fx:id="messageError" style="-fx-text-fill: #f44336; -fx-font-size: 12px; -fx-font-family: 'Segoe UI';" />
+
+        <HBox spacing="20">
+            <children>
+                <Button text="Modifier" onAction="#ModifierReponse"
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 25; -fx-padding: 10 20; -fx-font-family: 'Segoe UI'; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);" />
+                <Button text="Annuler" onAction="#AnnulerReponse"
+                        style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 25; -fx-padding: 10 20; -fx-font-family: 'Segoe UI'; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);" />
+            </children>
+        </HBox>
+    </children>
+</VBox>

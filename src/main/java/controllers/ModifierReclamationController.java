@@ -15,9 +15,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.util.Date;
 
-public class AjouterReclamationController {
+public class ModifierReclamationController {
 
     @FXML
     private TextField titreFx;
@@ -26,7 +25,7 @@ public class AjouterReclamationController {
     private TextArea descriptionFx;
 
     @FXML
-    private Button ajouterBtn;
+    private Button modifierBtn;
 
     @FXML
     private Button homeButton;
@@ -47,12 +46,12 @@ public class AjouterReclamationController {
         if (reclamationToEdit != null) {
             titreFx.setText(reclamationToEdit.getTitre());
             descriptionFx.setText(reclamationToEdit.getDescription());
+            validateForm(); // Initial validation
         }
-        validateForm(); // Initial validation
     }
 
     @FXML
-    public void AjouterReclamation(ActionEvent actionEvent) {
+    public void ModifierReclamation(ActionEvent actionEvent) {
         String titre = titreFx.getText().trim();
         String description = descriptionFx.getText().trim();
 
@@ -67,17 +66,13 @@ public class AjouterReclamationController {
                 reclamationToEdit.setDescription(description);
                 reclammationService.modifier(reclamationToEdit);
                 showAlert(Alert.AlertType.INFORMATION, "Succès", "Réclamation modifiée avec succès !");
+                Stage stage = (Stage) titreFx.getScene().getWindow();
+                stage.close();
             } else {
-                Reclammation reclammation = new Reclammation(
-                        0, null, titre, description, new Date(), Statut.enattente
-                );
-                reclammationService.ajouter(reclammation);
-                showAlert(Alert.AlertType.INFORMATION, "Succès", "Réclamation ajoutée avec succès !");
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Aucune réclamation à modifier.");
             }
-            Stage stage = (Stage) titreFx.getScene().getWindow();
-            stage.close();
         } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de sauvegarder la réclamation : " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de modifier la réclamation : " + e.getMessage());
         }
     }
 
@@ -115,8 +110,8 @@ public class AjouterReclamationController {
             descriptionError.setText("");
         }
 
-        // Enable/disable Ajouter button
-        ajouterBtn.setDisable(!isValid);
+        // Enable/disable Modifier button
+        modifierBtn.setDisable(!isValid);
         return isValid;
     }
 

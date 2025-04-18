@@ -11,11 +11,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AfficherReponseReclamationController {
 
@@ -25,8 +27,18 @@ public class AfficherReponseReclamationController {
     @FXML
     private Button ajouterButton;
 
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private Button refreshButton;
+
+    @FXML
+    private Button homeButton;
+
     private final ReponseReclamationService reponseService = new ReponseReclamationService();
     private static final int MAX_PREVIEW_LENGTH = 50;
+    private List<ReponseReclamation> allReponses;
 
     @FXML
     public void initialize() {
@@ -36,8 +48,8 @@ public class AfficherReponseReclamationController {
     private void loadReponses() {
         cardsContainer.getChildren().clear();
         try {
-            List<ReponseReclamation> reponses = reponseService.rechercher();
-            for (ReponseReclamation reponse : reponses) {
+            allReponses = reponseService.rechercher();
+            for (ReponseReclamation reponse : allReponses) {
                 VBox card = createReponseCard(reponse);
                 cardsContainer.getChildren().add(card);
             }
@@ -49,24 +61,24 @@ public class AfficherReponseReclamationController {
     private VBox createReponseCard(ReponseReclamation reponse) {
         VBox card = new VBox(10);
         card.setPadding(new Insets(10));
-        card.setStyle("-fx-background-color: #ffffff; -fx-border-color: #ddd; -fx-border-radius: 10; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);");
+        card.setStyle("-fx-background-color: #f0f0f0; -fx-border-color: #85c20a; -fx-border-radius: 10; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);");
 
         Label idLabel = new Label("Réclamation ID: " + (reponse.getReclamation() != null ? reponse.getReclamation().getId() : "N/A"));
-        idLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+        idLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-font-family: 'Arial Rounded MT Bold';");
 
         String messagePreview = reponse.getMessage().length() > MAX_PREVIEW_LENGTH
                 ? reponse.getMessage().substring(0, MAX_PREVIEW_LENGTH) + "..."
                 : reponse.getMessage();
         Label messageLabel = new Label(messagePreview);
-        messageLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #666;");
+        messageLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #cccccc; -fx-font-family: 'Arial';");
 
         HBox actionsBox = new HBox(10);
         Button modifierButton = new Button("Modifier");
-        modifierButton.setStyle("-fx-background-color: #FFC107; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;");
+        modifierButton.setStyle("-fx-background-color: #ffb524; -fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-font-size: 12px; -fx-background-radius: 5; -fx-padding: 5 10 5 10; -fx-font-family: 'Arial Rounded MT Bold';");
         modifierButton.setOnAction(event -> handleModifier(reponse));
 
         Button supprimerButton = new Button("Supprimer");
-        supprimerButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;");
+        supprimerButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-font-size: 12px; -fx-background-radius: 5; -fx-padding: 5 10 5 10; -fx-font-family: 'Arial Rounded MT Bold';");
         supprimerButton.setOnAction(event -> handleSupprimer(reponse));
 
         actionsBox.getChildren().addAll(modifierButton, supprimerButton);
@@ -76,7 +88,6 @@ public class AfficherReponseReclamationController {
     }
 
     @FXML
-    @SuppressWarnings("unused")
     private void handleAjouter(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterReponseReclamation.fxml"));
@@ -91,15 +102,52 @@ public class AfficherReponseReclamationController {
         }
     }
 
-    private void handleModifier(ReponseReclamation reponse) {
+    @FXML
+    private void filterReponses() {
+        String searchText = searchField.getText().toLowerCase();
+        cardsContainer.getChildren().clear();
+        List<ReponseReclamation> filteredReponses = allReponses.stream()
+                .filter(r -> r.getMessage().toLowerCase().contains(searchText))
+                .collect(Collectors.toList());
+        for (ReponseReclamation reponse : filteredReponses) {
+            VBox card = createReponseCard(reponse);
+            cardsContainer.getChildren().add(card);
+        }
+    }
+
+    @FXML
+    private void refreshList(ActionEvent event) {
+        searchField.clear();
+        loadReponses();
+    }
+
+    @FXML
+    private void navigateHome(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterReponseReclamation.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainDashboard.fxml"));
             Parent root = loader.load();
-            AjouterReponseReclamationController controller = loader.getController();
+            Stage stage = (Stage) homeButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Tableau de Bord");
+            stage.show();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Erreur de Navigation", "Impossible de retourner au tableau de bord : " + e.getMessage());
+        }
+    }
+
+    private void handleModifier(ReponseReclamation reponse) {
+        if (reponse == null) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Aucune réponse sélectionnée.");
+            return;
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierReponseReclamation.fxml"));
+            Parent root = loader.load();
+            ModifierReponseReclamationController controller = loader.getController();
             controller.setReponse(reponse);
             Stage stage = new Stage();
             stage.setTitle("Modifier Réponse");
-            stage.setScene(new Scene(root, 600, 400));
+            stage.setScene(new Scene(root));
             stage.showAndWait();
             loadReponses();
         } catch (IOException e) {

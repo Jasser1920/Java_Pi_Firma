@@ -1,20 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherReclamationController">
+<AnchorPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="885.0" prefWidth="986.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherReclamationController">
+    <stylesheets>
+        <URL value="@css/styles.css" />
+    </stylesheets>
     <children>
-        <Button fx:id="ajouterButton" layoutX="650.0" layoutY="20.0" onAction="#handleAjouter" text="Ajouter une réclamation" style="-fx-background-color: #0288d1; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 25; -fx-padding: 10 20 10 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);" />
-        <Text layoutX="20.0" layoutY="80.0" text="Mes Réclamations" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #01579b; -fx-font-family: 'Segoe UI';" />
-        <ScrollPane fx:id="scrollPane" layoutX="20.0" layoutY="100.0" prefHeight="480.0" prefWidth="760.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+        <!-- Background Rectangle -->
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="866.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1000.0" />
+
+        <!-- Header Green Rectangles -->
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="25.0" layoutY="24.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="58.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="93.0" layoutY="24.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 30;" width="897.0" />
+
+        <!-- Home Button -->
+        <Button layoutX="34.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: #85c20a; -fx-border-radius: 50;" text="🏠" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="17.0" />
+            </font>
+        </Button>
+
+        <!-- Centered Title -->
+        <Text fill="WHITE" layoutX="117.0" layoutY="59.0" text="Liste des Réclamations" textAlignment="CENTER" AnchorPane.leftAnchor="117.0" AnchorPane.rightAnchor="545.3974609375" AnchorPane.topAnchor="30.611328125">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="30.0" />
+            </font>
+        </Text>
+
+        <!-- Search Bar with Black Text -->
+        <TextField fx:id="searchField" onKeyReleased="#filterReclamations" prefWidth="200.0" promptText="Rechercher par titre..." style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #000000;" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="110.0" />
+
+        <!-- Buttons -->
+        <Button fx:id="refreshButton" layoutX="663.0" layoutY="110.0" mnemonicParsing="false" onAction="#refreshList" style="-fx-background-color: #ffb524; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Rafraîchir" AnchorPane.rightAnchor="242.6025390625001" AnchorPane.topAnchor="110.0">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Button>
+        <Button fx:id="ajouterButton" mnemonicParsing="false" onAction="#handleAjouter" style="-fx-background-color: #ffb524; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Ajouter Réclamation" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="110.0">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Button>
+
+        <!-- ScrollPane with Cards -->
+        <ScrollPane fx:id="scrollPane" prefHeight="658.0" prefWidth="919.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" AnchorPane.bottomAnchor="67.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="160.0">
             <content>
-                <VBox fx:id="cardsContainer" spacing="20.0" style="-fx-padding: 20; -fx-background-color: transparent;">
-                </VBox>
+                <VBox fx:id="cardsContainer" spacing="20.0" style="-fx-padding: 20; -fx-background-color: transparent;" />
             </content>
         </ScrollPane>
     </children>

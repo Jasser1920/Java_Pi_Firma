@@ -15,13 +15,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="486.0" prefWidth="1002.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterReponseReclamationController">
+<AnchorPane maxHeight="Infinity" maxWidth="Infinity"  style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ModifierReclamationController">
     <stylesheets>
         <URL value="@css/styles.css" />
     </stylesheets>
     <children>
         <!-- Background Rectangle -->
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="490.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1002.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="482.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1000.0" />
 
         <!-- Header Green Rectangles -->
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="25.0" layoutY="24.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="58.0" />
@@ -35,7 +35,7 @@
         </Button>
 
         <!-- Centered Title -->
-        <Text fill="WHITE" layoutX="112.0" layoutY="59.0" text="Ajouter une Réponse" textAlignment="CENTER" AnchorPane.leftAnchor="112.0" AnchorPane.rightAnchor="582.9169921875" AnchorPane.topAnchor="30.611328125">
+        <Text fill="WHITE" layoutX="129.0" layoutY="59.0" text="Modifier une Réclamation" textAlignment="CENTER" AnchorPane.leftAnchor="129.0" AnchorPane.rightAnchor="500.6" AnchorPane.topAnchor="30.611328125">
             <font>
                 <Font name="Arial Rounded MT Bold" size="30.0" />
             </font>
@@ -43,18 +43,18 @@
 
         <!-- Form Container -->
         <VBox spacing="20" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="110.0">
-            <GridPane hgap="30" prefHeight="50.0" prefWidth="921.0" styleClass="form-container" vgap="15">
+            <GridPane hgap="30" prefHeight="94.0" prefWidth="906.0" styleClass="form-container" vgap="15">
                 <columnConstraints>
                     <ColumnConstraints percentWidth="100" />
                 </columnConstraints>
-                <VBox prefHeight="362.0" prefWidth="854.0" spacing="10">
-                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" styleClass="form-label" text="ID de Réclamation" />
-                    <TextField fx:id="reclamationIdFx" onKeyReleased="#validateForm" promptText="Entrez l'ID de la réclamation" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #000000;" styleClass="form-field" />
-                    <Label fx:id="reclamationIdError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
+                <VBox prefHeight="362.0" prefWidth="878.0" spacing="10">
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" styleClass="form-label" text="Titre" />
+                    <TextField fx:id="titreFx" onKeyReleased="#validateForm" promptText="Entrez le titre de la réclamation" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #000000;" styleClass="form-field" />
+                    <Label fx:id="titreError" styleClass="error-label" />
 
-                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" styleClass="form-label" text="Message" />
-                    <TextArea fx:id="messageFx" onKeyReleased="#validateForm" prefHeight="150.0" promptText="Entrez le message de la réponse" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #000000;" styleClass="form-field" wrapText="true" />
-                    <Label fx:id="messageError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" styleClass="form-label" text="Description" />
+                    <TextArea fx:id="descriptionFx" onKeyReleased="#validateForm" prefHeight="150.0" promptText="Entrez la description de la réclamation" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A;" styleClass="form-field" wrapText="true" />
+                    <Label fx:id="descriptionError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
                 </VBox>
             <rowConstraints>
                <RowConstraints />
@@ -63,12 +63,12 @@
 
             <!-- Form Buttons -->
             <HBox alignment="CENTER_RIGHT" spacing="15">
-                <Button fx:id="ajouterBtn" disable="true" onAction="#AjouterReponse" style="-fx-background-color: #85C20A; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Ajouter">
+                <Button fx:id="modifierBtn" disable="true" onAction="#ModifierReclamation" style="-fx-background-color: #85C20A; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Enregistrer">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
                 </Button>
-                <Button onAction="#AnnulerReponse" style="-fx-background-color: #ffb524; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Annuler">
+                <Button onAction="#AnnulerReclamation" style="-fx-background-color: #ffb524; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Annuler">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>

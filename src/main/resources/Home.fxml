@@ -16,8 +16,8 @@
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="16.0" layoutY="14.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="964.0" />
 
         <!-- Logo -->
-        <ImageView fitHeight="54.0" fitWidth="58.0" layoutX="28.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
-            <image><Image url="@../../../../../../PIJava/Java_Pi_Firma/src/main/resources/Images/logoblanc2.png" /></image>
+        <ImageView fitHeight="50.0" fitWidth="46.0" layoutX="28.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+            <image><Image url="@Images/logoblanc.png" /></image>
         </ImageView>
 
         <!-- Titre -->
@@ -42,15 +42,15 @@
          <font>
             <Font name="Arial Rounded MT Bold" size="13.0" />
          </font></Hyperlink>
-        <Hyperlink layoutX="454.0" layoutY="28.0" text="Réclamation" textFill="WHITE">
+        <Hyperlink fx:id="reclamationLink" layoutX="454.0" layoutY="28.0" text="Réclamation" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="13.0" />
          </font></Hyperlink>
-        <Hyperlink layoutX="549.0" layoutY="28.0" text="Réponse" textFill="WHITE">
+        <Hyperlink fx:id="reponseLink" layoutX="549.0" layoutY="28.0" text="Réponse" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="13.0" />
          </font></Hyperlink>
-        <Hyperlink layoutX="629.0" layoutY="28.0" text="Commande" textFill="WHITE">
+        <Hyperlink fx:id="commandeLink" layoutX="629.0" layoutY="28.0" text="Commande" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="13.0" />
          </font></Hyperlink>
@@ -58,7 +58,7 @@
          <font>
             <Font name="Arial Rounded MT Bold" size="13.0" />
          </font></Hyperlink>
-        <Hyperlink layoutX="769.0" layoutY="28.0" text="Livraison" textFill="WHITE">
+        <Hyperlink fx:id="livraisonLink" layoutX="769.0" layoutY="28.0" text="Livraison" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="13.0" />
          </font></Hyperlink>
@@ -66,7 +66,7 @@
          <font>
             <Font name="Arial Rounded MT Bold" size="13.0" />
          </font></Hyperlink>
-        <Hyperlink layoutX="909.0" layoutY="28.0" text="User" textFill="WHITE">
+        <Hyperlink fx:id="userLink" layoutX="909.0" layoutY="28.0" text="User" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="13.0" />
          </font></Hyperlink>

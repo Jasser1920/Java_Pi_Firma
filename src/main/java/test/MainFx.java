@@ -15,7 +15,7 @@ public class MainFx extends Application {
         if (fxmlLoader.getLocation() == null) {
             throw new IOException("Cannot find /AjouterReponseReclamation.fxml");
         }
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Firma - Mes Réclamations");
         stage.setScene(scene);
         stage.show();

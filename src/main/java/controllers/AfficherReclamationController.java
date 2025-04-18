@@ -1,7 +1,6 @@
 package controllers;
 
 import Models.Reclammation;
-import Models.ReponseReclamation;
 import Services.ReclammationService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,11 +11,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AfficherReclamationController {
 
@@ -26,8 +27,18 @@ public class AfficherReclamationController {
     @FXML
     private Button ajouterButton;
 
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private Button refreshButton;
+
+    @FXML
+    private Button homeButton;
+
     private final ReclammationService reclammationService = new ReclammationService();
     private static final int MAX_PREVIEW_LENGTH = 50;
+    private List<Reclammation> allReclamations;
 
     @FXML
     public void initialize() {
@@ -37,8 +48,8 @@ public class AfficherReclamationController {
     private void loadReclamations() {
         cardsContainer.getChildren().clear();
         try {
-            List<Reclammation> reclamations = reclammationService.rechercher();
-            for (Reclammation reclamation : reclamations) {
+            allReclamations = reclammationService.rechercher();
+            for (Reclammation reclamation : allReclamations) {
                 VBox card = createReclamationCard(reclamation);
                 cardsContainer.getChildren().add(card);
             }
@@ -50,30 +61,30 @@ public class AfficherReclamationController {
     private VBox createReclamationCard(Reclammation reclamation) {
         VBox card = new VBox(10);
         card.setPadding(new Insets(15));
-        card.setStyle("-fx-background-color: #ffffff; -fx-border-color: #e9ecef; -fx-border-radius: 10; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3);");
+        card.setStyle("-fx-background-color: #fd8e4d; -fx-border-color: #85c20a; -fx-border-radius: 10; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);");
 
         Label titreLabel = new Label(reclamation.getTitre());
-        titreLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #343a40; -fx-font-family: 'Segoe UI';");
+        titreLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-font-family: 'Arial Rounded MT Bold';");
 
         String descriptionPreview = reclamation.getDescription().length() > MAX_PREVIEW_LENGTH
                 ? reclamation.getDescription().substring(0, MAX_PREVIEW_LENGTH) + "..."
                 : reclamation.getDescription();
         Label descriptionLabel = new Label(descriptionPreview);
-        descriptionLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #6c757d; -fx-font-family: 'Segoe UI';");
+        descriptionLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #ffffff; -fx-font-family: 'Arial';");
 
         Label dateLabel = new Label("2025-03-03"); // Placeholder pour la date
-        dateLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #6c757d; -fx-font-family: 'Segoe UI';");
+        dateLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #ffffff; -fx-font-family: 'Arial';");
 
         HBox actionsBox = new HBox(10);
         Label reponseIndicator = new Label(reclamation.getReponse() != null ? "Réponse reçue" : "Aucune réponse");
-        reponseIndicator.setStyle("-fx-font-size: 12px; -fx-text-fill: " + (reclamation.getReponse() != null ? "#28a745" : "#6c757d") + "; -fx-font-family: 'Segoe UI';");
+        reponseIndicator.setStyle("-fx-font-size: 12px; -fx-text-fill: " + (reclamation.getReponse() != null ? "#85c20a" : "#cccccc") + "; -fx-font-family: 'Arial';");
 
         Button modifierButton = new Button("Modifier");
-        modifierButton.setStyle("-fx-background-color: #ffc107; -fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-font-size: 12px; -fx-background-radius: 5; -fx-padding: 5 10 5 10; -fx-font-family: 'Segoe UI';");
+        modifierButton.setStyle("-fx-background-color: #6dff24; -fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-font-size: 12px; -fx-background-radius: 5; -fx-padding: 5 10 5 10; -fx-font-family: 'Arial Rounded MT Bold';");
         modifierButton.setOnAction(event -> handleModifier(reclamation));
 
         Button supprimerButton = new Button("Supprimer");
-        supprimerButton.setStyle("-fx-background-color: #dc3545; -fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-font-size: 12px; -fx-background-radius: 5; -fx-padding: 5 10 5 10; -fx-font-family: 'Segoe UI';");
+        supprimerButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-font-size: 12px; -fx-background-radius: 5; -fx-padding: 5 10 5 10; -fx-font-family: 'Arial Rounded MT Bold';");
         supprimerButton.setOnAction(event -> handleSupprimer(reclamation));
 
         actionsBox.getChildren().addAll(dateLabel, reponseIndicator, modifierButton, supprimerButton);
@@ -83,7 +94,6 @@ public class AfficherReclamationController {
     }
 
     @FXML
-    @SuppressWarnings("unused")
     private void handleAjouter(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterReclamation.fxml"));
@@ -98,11 +108,45 @@ public class AfficherReclamationController {
         }
     }
 
+    @FXML
+    private void filterReclamations() {
+        String searchText = searchField.getText().toLowerCase();
+        cardsContainer.getChildren().clear();
+        List<Reclammation> filteredReclamations = allReclamations.stream()
+                .filter(r -> r.getTitre().toLowerCase().contains(searchText) ||
+                        r.getDescription().toLowerCase().contains(searchText))
+                .collect(Collectors.toList());
+        for (Reclammation reclamation : filteredReclamations) {
+            VBox card = createReclamationCard(reclamation);
+            cardsContainer.getChildren().add(card);
+        }
+    }
+
+    @FXML
+    private void refreshList(ActionEvent event) {
+        searchField.clear();
+        loadReclamations();
+    }
+
+    @FXML
+    private void navigateHome(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainDashboard.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) homeButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Tableau de Bord");
+            stage.show();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Erreur de Navigation", "Impossible de retourner au tableau de bord : " + e.getMessage());
+        }
+    }
+
     private void handleModifier(Reclammation reclamation) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterReclamation.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierReclamation.fxml"));
             Parent root = loader.load();
-            AjouterReclamationController controller = loader.getController();
+            ModifierReclamationController controller = loader.getController();
             controller.setReclamation(reclamation);
             Stage stage = new Stage();
             stage.setTitle("Modifier Réclamation");

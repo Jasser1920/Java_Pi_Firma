@@ -6,11 +6,16 @@ import Services.ReponseReclamationService;
 import Services.ReclammationService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
+import java.io.IOException;
 import java.util.Date;
 
 public class AjouterReponseReclamationController {
@@ -21,49 +26,43 @@ public class AjouterReponseReclamationController {
     @FXML
     private TextArea messageFx;
 
+    @FXML
+    private Button ajouterBtn;
+
+    @FXML
+    private Button homeButton;
+
+    @FXML
+    private Label reclamationIdError;
+
+    @FXML
+    private Label messageError;
+
     private final ReponseReclamationService reponseService = new ReponseReclamationService();
     private final ReclammationService reclammationService = new ReclammationService();
     private ReponseReclamation reponseToEdit;
-    private static final int MAX_MESSAGE_LENGTH = 500; // Longueur maximale du message
+    private static final int MAX_MESSAGE_LENGTH = 500;
 
     @FXML
-    @SuppressWarnings("unused")
+    public void initialize() {
+        if (reponseToEdit != null) {
+            reclamationIdFx.setText(String.valueOf(reponseToEdit.getReclamation() != null ? reponseToEdit.getReclamation().getId() : ""));
+            messageFx.setText(reponseToEdit.getMessage());
+        }
+        validateForm(); // Initial validation
+    }
+
+    @FXML
     public void AjouterReponse(ActionEvent actionEvent) {
         String reclamationIdStr = reclamationIdFx.getText().trim();
         String message = messageFx.getText().trim();
 
-        // Contrôle de saisie : Vérification des champs vides
-        if (reclamationIdStr.isEmpty() || message.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Erreur de Saisie", "Tous les champs doivent être remplis.");
+        if (!validateForm()) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez corriger les erreurs dans le formulaire.");
             return;
         }
 
-        // Contrôle de saisie : Vérification que l'ID est un nombre positif
-        int reclamationId;
-        try {
-            reclamationId = Integer.parseInt(reclamationIdStr);
-            if (reclamationId <= 0) {
-                showAlert(Alert.AlertType.ERROR, "Erreur de Saisie", "L'ID de réclamation doit être un nombre positif.");
-                return;
-            }
-        } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur de Saisie", "L'ID de réclamation doit être un nombre valide.");
-            return;
-        }
-
-        // Contrôle de saisie : Vérification de la longueur du message
-        if (message.length() > MAX_MESSAGE_LENGTH) {
-            showAlert(Alert.AlertType.ERROR, "Erreur de Saisie", "Le message ne peut pas dépasser " + MAX_MESSAGE_LENGTH + " caractères.");
-            return;
-        }
-
-        // Contrôle de saisie : Vérification que le message contient du contenu significatif
-        if (!message.matches(".*[a-zA-Z0-9].*")) {
-            showAlert(Alert.AlertType.ERROR, "Erreur de Saisie", "Le message doit contenir des lettres ou des chiffres significatifs (pas seulement des espaces ou des caractères spéciaux).");
-            return;
-        }
-
-        // Vérification de l'existence de la réclamation
+        int reclamationId = Integer.parseInt(reclamationIdStr); // Already validated
         Reclammation reclamation = null;
         try {
             for (Reclammation r : reclammationService.rechercher()) {
@@ -82,7 +81,6 @@ public class AjouterReponseReclamationController {
             return;
         }
 
-        // Ajout ou modification de la réponse
         try {
             if (reponseToEdit != null) {
                 reponseToEdit.setReclamation(reclamation);
@@ -104,16 +102,95 @@ public class AjouterReponseReclamationController {
     }
 
     @FXML
-    @SuppressWarnings("unused")
     public void AnnulerReponse(ActionEvent actionEvent) {
         Stage stage = (Stage) reclamationIdFx.getScene().getWindow();
         stage.close();
     }
 
+    @FXML
+    public boolean validateForm() {
+        String reclamationIdStr = reclamationIdFx.getText().trim();
+        String message = messageFx.getText().trim();
+        boolean isValid = true;
+
+        // Validate reclamation ID
+        int reclamationId;
+        if (reclamationIdStr.isEmpty()) {
+            reclamationIdError.setText("L'ID de réclamation est requis.");
+            isValid = false;
+        } else {
+            try {
+                reclamationId = Integer.parseInt(reclamationIdStr);
+                if (reclamationId <= 0) {
+                    reclamationIdError.setText("L'ID doit être un nombre positif.");
+                    isValid = false;
+                } else {
+                    // Check if reclamation exists
+                    boolean exists = false;
+                    try {
+                        for (Reclammation r : reclammationService.rechercher()) {
+                            if (r.getId() == reclamationId) {
+                                exists = true;
+                                break;
+                            }
+                        }
+                    } catch (Exception e) {
+                        reclamationIdError.setText("Erreur de vérification de l'ID.");
+                        isValid = false;
+                    }
+                    if (!exists) {
+                        reclamationIdError.setText("Aucune réclamation avec cet ID.");
+                        isValid = false;
+                    } else {
+                        reclamationIdError.setText("");
+                    }
+                }
+            } catch (NumberFormatException e) {
+                reclamationIdError.setText("L'ID doit être un nombre valide.");
+                isValid = false;
+            }
+        }
+
+        // Validate message
+        if (message.isEmpty()) {
+            messageError.setText("Le message est requis.");
+            isValid = false;
+        } else if (message.length() > MAX_MESSAGE_LENGTH) {
+            messageError.setText("Le message ne peut pas dépasser " + MAX_MESSAGE_LENGTH + " caractères.");
+            isValid = false;
+        } else if (!message.matches(".*[a-zA-Z0-9].*")) {
+            messageError.setText("Le message doit contenir des lettres ou chiffres.");
+            isValid = false;
+        } else {
+            messageError.setText("");
+        }
+
+        // Enable/disable Ajouter button
+        ajouterBtn.setDisable(!isValid);
+        return isValid;
+    }
+
+    @FXML
+    public void navigateHome(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainDashboard.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) homeButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Tableau de Bord");
+            stage.show();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Erreur de Navigation", "Impossible de retourner au tableau de bord : " + e.getMessage());
+        }
+    }
+
     public void setReponse(ReponseReclamation reponse) {
         this.reponseToEdit = reponse;
-        reclamationIdFx.setText(String.valueOf(reponse.getReclamation() != null ? reponse.getReclamation().getId() : ""));
-        messageFx.setText(reponse.getMessage());
+        if (reponse != null) {
+            reclamationIdFx.setText(String.valueOf(reponse.getReclamation() != null ? reponse.getReclamation().getId() : ""));
+            messageFx.setText(reponse.getMessage());
+            validateForm();
+        }
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {

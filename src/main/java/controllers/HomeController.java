@@ -28,19 +28,18 @@ public class HomeController {
         categorieLink.setOnAction(event -> ouvrirPage("/AfficherCategorie.fxml", "Catégories"));
         evenementLink.setOnAction(event -> ouvrirPage("/AfficherEvenement.fxml", "Événements"));
         donLink.setOnAction(event -> ouvrirPage("/AfficherDon.fxml", "Dons"));
-
-        // reclamationLink.setOnAction(event -> ouvrirPage("/AfficherReclamation.fxml", "Réclamations"));
-        // reponseLink.setOnAction(event -> ouvrirPage("/AfficherReponse.fxml", "Réponses"));
-        // commandeLink.setOnAction(event -> ouvrirPage("/AfficherCommande.fxml", "Commandes"));
-        // terrainLink.setOnAction(event -> ouvrirPage("/AfficherTerrain.fxml", "Terrains"));
-        // livraisonLink.setOnAction(event -> ouvrirPage("/AfficherLivraison.fxml", "Livraisons"));
+        userLink.setOnAction(event -> ouvrirPage("/AfficherUtilisateurs.fxml", "Utilisateurs"));
+        reclamationLink.setOnAction(event -> ouvrirPage("/AfficherReclamation.fxml", "Réclamations"));
+        reponseLink.setOnAction(event -> ouvrirPage("/AfficherReponseReclamation.fxml", "Réponses"));
+        commandeLink.setOnAction(event -> ouvrirPage("/affichercommand.fxml", "Commandes"));
+         //terrainLink.setOnAction(event -> ouvrirPage("/AfficherTerrain.fxml", "Terrains"));
+         livraisonLink.setOnAction(event -> ouvrirPage("/afficherlivraison.fxml", "Livraisons"));
         // locationLink.setOnAction(event -> ouvrirPage("/Affich<?xml version="1.0" encoding="UTF-8"?>
         //
         //<?import javafx.scene.shape.Rectangle?>
         //
         //
         //<Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="16.0" layoutY="14.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="964.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" />erLocation.fxml", "Locations"));
-        // userLink.setOnAction(event -> ouvrirPage("/AfficherUtilisateur.fxml", "Utilisateurs"));
     }
 
     private void ouvrirPage(String fxmlPath, String title) {

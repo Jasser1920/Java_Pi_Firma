@@ -1,22 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: #ffffff; -fx-border-radius: 15; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterReclamationController">
-   <padding>
-      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-   </padding>
+<AnchorPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="986.0" prefWidth="986.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterReclamationController">
+   <stylesheets>
+      <URL value="@css/styles.css" />
+   </stylesheets>
    <children>
-      <Label text="Titre :" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #333; -fx-font-family: 'Segoe UI';" />
-      <TextField fx:id="titreFx" promptText="Entrez le titre de la réclamation" style="-fx-background-color: #f5f5f5; -fx-border-color: #b0bec5; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Segoe UI';" />
-      <Label text="Description :" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #333; -fx-font-family: 'Segoe UI';" />
-      <TextArea fx:id="descriptionFx" prefHeight="150.0" wrapText="true" promptText="Entrez la description de la réclamation" style="-fx-background-color: #f5f5f5; -fx-border-color: #b0bec5; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Segoe UI';" />
-      <Button onAction="#AjouterReclamation" text="Ajouter" style="-fx-background-color: #0288d1; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 25; -fx-padding: 10 20 10 20; -fx-font-family: 'Segoe UI'; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);" />
-      <Button onAction="#AnnulerReclamation" text="Annuler" style="-fx-background-color: #e57373; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 25; -fx-padding: 10 20 10 20; -fx-font-family: 'Segoe UI'; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);" />
+      <!-- Background Rectangle -->
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="838.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1000.0" />
+
+      <!-- Header Green Rectangles -->
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="25.0" layoutY="24.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="58.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="92.0" layoutY="24.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 30;" width="869.0" />
+
+      <!-- Home Button -->
+      <Button fx:id="homeButton" layoutX="34.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: #85c20a; -fx-border-radius: 50;" text="🏠" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="17.0" />
+         </font>
+      </Button>
+
+      <!-- Centered Title -->
+      <Text fill="WHITE" layoutX="111.4" layoutY="58.788671875" text="Ajouter une Réclamation" textAlignment="CENTER" AnchorPane.leftAnchor="111.4" AnchorPane.rightAnchor="529.449609375" AnchorPane.topAnchor="30.4">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="30.0" />
+         </font>
+      </Text>
+
+      <!-- Form Container -->
+      <VBox spacing="20" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="110.0">
+         <GridPane hgap="30" prefHeight="269.0" prefWidth="811.0" styleClass="form-container" vgap="15">
+            <columnConstraints>
+               <ColumnConstraints percentWidth="100" />
+            </columnConstraints>
+            <VBox prefHeight="730.0" prefWidth="620.0" spacing="10">
+               <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Titre" />
+               <TextField fx:id="titreFx" onKeyReleased="#validateForm" promptText="Entrez le titre de la réclamation" style="-fx-background-color: transparent; -fx-border-color: #85C20A; -fx-text-fill: #000000;" styleClass="form-field" />
+               <Label fx:id="titreError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
+
+               <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Description" />
+               <TextArea fx:id="descriptionFx" onKeyReleased="#validateForm" prefHeight="150.0" promptText="Entrez la description de la réclamation" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #000000;" styleClass="form-field" wrapText="true" />
+               <Label fx:id="descriptionError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
+            </VBox>
+            <rowConstraints>
+               <RowConstraints />
+            </rowConstraints>
+         </GridPane>
+
+         <!-- Form Buttons -->
+         <HBox alignment="CENTER_RIGHT" spacing="15">
+            <Button fx:id="ajouterBtn" disable="true" onAction="#AjouterReclamation" style="-fx-background-color: #85C20A; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Ajouter">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+            <Button onAction="#AnnulerReclamation" style="-fx-background-color: #ffb524; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Annuler">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+         </HBox>
+      </VBox>
    </children>
-</VBox>
+</AnchorPane>
