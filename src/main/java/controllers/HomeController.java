@@ -1,55 +1,99 @@
 package controllers;
 
+import Models.Utilisateur;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class HomeController {
 
     @FXML private Hyperlink produitLink;
-    @FXML private Hyperlink categorieLink;
-    @FXML private Hyperlink evenementLink;
-    @FXML private Hyperlink donLink;
     @FXML private Hyperlink reclamationLink;
     @FXML private Hyperlink reponseLink;
-    @FXML private Hyperlink commandeLink;
-    @FXML private Hyperlink terrainLink;
-    @FXML private Hyperlink livraisonLink;
-    @FXML private Hyperlink locationLink;
-    @FXML private Hyperlink userLink;
+    @FXML private Label userNameLabel;
+    @FXML private MenuButton userMenu;
+    @FXML private MenuItem profileItem;
+    @FXML private MenuItem reclamationItem;
+    @FXML private MenuItem logoutItem;
 
+    private AuthController authController = AuthController.getInstance();
 
     @FXML
     public void initialize() {
+        // Set hyperlink actions
         produitLink.setOnAction(event -> ouvrirPage("/AfficherProduit.fxml", "Produits"));
-        categorieLink.setOnAction(event -> ouvrirPage("/AfficherCategorie.fxml", "Catégories"));
-        evenementLink.setOnAction(event -> ouvrirPage("/AfficherEvenement.fxml", "Événements"));
-        donLink.setOnAction(event -> ouvrirPage("/AfficherDon.fxml", "Dons"));
-        userLink.setOnAction(event -> ouvrirPage("/AfficherUtilisateurs.fxml", "Utilisateurs"));
         reclamationLink.setOnAction(event -> ouvrirPage("/AfficherReclamation.fxml", "Réclamations"));
         reponseLink.setOnAction(event -> ouvrirPage("/AfficherReponseReclamation.fxml", "Réponses"));
-        commandeLink.setOnAction(event -> ouvrirPage("/affichercommand.fxml", "Commandes"));
-         terrainLink.setOnAction(event -> ouvrirPage("/TerrainList.fxml", "Terrains"));
-         livraisonLink.setOnAction(event -> ouvrirPage("/afficherlivraison.fxml", "Livraisons"));
-        locationLink.setOnAction(event -> ouvrirPage("/LocationList.fxml", "Terrains"));
-        //
-        //<?import javafx.scene.shape.Rectangle?>
-        //
-        //
-        //<Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="16.0" layoutY="14.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="964.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" />erLocation.fxml", "Locations"));
+
+        // Display logged-in user's name
+        Utilisateur currentUser = authController.getCurrentUser();
+        if (currentUser != null) {
+            userNameLabel.setText(currentUser.getNom() + " " + currentUser.getPrenom());
+        } else {
+            userNameLabel.setText("Guest");
+        }
+    }
+
+    @FXML
+    public void showProfile() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileUtilisateur.fxml"));
+            Parent root = loader.load();
+            ProfileUtilisateurController controller = loader.getController();
+            controller.setUtilisateur(authController.getCurrentUser());
+            Stage stage = (Stage) userMenu.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Profile");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void showReclamation() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/AjouterReclamation.fxml"));
+            Stage stage = (Stage) userMenu.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Ajouter Réclamation");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void logout() {
+        authController.logout();
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/signin.fxml"));
+            Stage stage = (Stage) userMenu.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Sign In");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void ouvrirPage(String fxmlPath, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
-            Stage stage = (Stage) produitLink.getScene().getWindow(); // ou categorieLink, peu importe ici
+            Stage stage = (Stage) produitLink.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle(title);
-        } catch (Exception e) {
+            stage.show();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

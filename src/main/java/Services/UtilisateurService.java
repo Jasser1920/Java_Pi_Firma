@@ -2,6 +2,7 @@ package Services;
 
 import Models.Utilisateur;
 import Utils.MyDatabase;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,30 @@ import java.util.List;
 public class UtilisateurService implements IService<Utilisateur> {
 
     private Connection connection = MyDatabase.getInstance().getConnection();
+
+    public Utilisateur findByEmail(String email) throws SQLException {
+        String req = "SELECT * FROM utilisateur WHERE email = ?";
+        PreparedStatement ps = connection.prepareStatement(req);
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return new Utilisateur(
+                    rs.getInt("id"),
+                    rs.getString("nom"),
+                    rs.getString("prenom"),
+                    rs.getString("email"),
+                    rs.getString("motdepasse"),
+                    rs.getString("telephone"),
+                    rs.getString("adresse"),
+                    rs.getString("role"),
+                    rs.getString("profile_picture"),
+                    rs.getBoolean("blocked"),
+                    rs.getBoolean("is_verified"),
+                    rs.getString("confirmation_code")
+            );
+        }
+        return null;
+    }
 
     @Override
     public void ajouter(Utilisateur utilisateur) throws SQLException {
@@ -28,11 +53,10 @@ public class UtilisateurService implements IService<Utilisateur> {
         ps.setString(11, utilisateur.getConfirmationCode());
         ps.executeUpdate();
         System.out.println("Utilisateur ajouté");
-
     }
 
     @Override
-    public void modifier(Utilisateur utilisateur)  throws SQLException {
+    public void modifier(Utilisateur utilisateur) throws SQLException {
         String req = "UPDATE `utilisateur` SET `nom`=?, `prenom`=?, `email`=?, `motdepasse`=?, `telephone`=?, `adresse`=?, `role`=?, `profile_picture`=?, `blocked`=?, `is_verified`=?, `confirmation_code`=? WHERE `id`=?";
 
         PreparedStatement ps = connection.prepareStatement(req);
@@ -50,22 +74,20 @@ public class UtilisateurService implements IService<Utilisateur> {
         ps.setInt(12, utilisateur.getId());
         ps.executeUpdate();
         System.out.println("Utilisateur modifié");
-
     }
 
     @Override
-    public void supprimer(Utilisateur utilisateur)  throws SQLException {
+    public void supprimer(Utilisateur utilisateur) throws SQLException {
         String req = "DELETE FROM `utilisateur` WHERE `id`=?";
 
         PreparedStatement ps = connection.prepareStatement(req);
         ps.setInt(1, utilisateur.getId());
         ps.executeUpdate();
         System.out.println("Utilisateur supprimé");
-
     }
 
     @Override
-    public List<Utilisateur> rechercher()  throws SQLException {
+    public List<Utilisateur> rechercher() throws SQLException {
         String req = "SELECT * FROM `utilisateur`";
         List<Utilisateur> utilisateurs = new ArrayList<>();
 
@@ -89,7 +111,6 @@ public class UtilisateurService implements IService<Utilisateur> {
             utilisateurs.add(utilisateur);
         }
         System.out.println("Utilisateurs récupérés: " + utilisateurs.size());
-
         return utilisateurs;
     }
 }

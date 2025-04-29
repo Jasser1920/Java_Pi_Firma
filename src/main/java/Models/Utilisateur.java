@@ -1,5 +1,9 @@
 package Models;
-
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.*;
+@Entity
+@Table(name = "utilisateurs")
 public class Utilisateur {
     private int id;
     private String nom;
@@ -13,6 +17,20 @@ public class Utilisateur {
     private boolean blocked;
     private boolean isVerified;
     private String confirmationCode;
+    @OneToMany(mappedBy = "dons_user", cascade = CascadeType.ALL, orphanRemoval = true)
+private Set<Don> dons = new HashSet<>();
+
+@OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL, orphanRemoval = true)
+private Set<Evenemment> evenement = new HashSet<>();
+
+@OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL, orphanRemoval = true)
+private Set<Reclammation> reclamation = new HashSet<>();
+
+@OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL, orphanRemoval = true)
+private Set<Terrain> terrain = new HashSet<>();
+
+@OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL, orphanRemoval = true)
+private Set<Produit> produit = new HashSet<>();
 
     // Constructor
     public Utilisateur(int id, String nom, String prenom, String email, String motdepasse, String telephone,
@@ -57,4 +75,14 @@ public class Utilisateur {
     public void setVerified(boolean verified) { isVerified = verified; }
     public String getConfirmationCode() { return confirmationCode; }
     public void setConfirmationCode(String confirmationCode) { this.confirmationCode = confirmationCode; }
+    public Set<Don> getDons() { return dons; }
+    public void setDons(Set<Don> dons) { this.dons = dons; }
+    public Set<Evenemment> getEvenement() { return evenement; }
+    public void setEvenement(Set<Evenemment> evenement) { this.evenement = evenement; }
+    public Set<Reclammation> getReclamation() { return reclamation; }
+    public void setReclamation(Set<Reclammation> reclamation) { this.reclamation = reclamation; }
+    public Set<Terrain> getTerrain() { return terrain; }
+    public void setTerrain(Set<Terrain> terrain) { this.terrain = terrain; }
+    public Set<Produit> getProduit() { return produit; }
+    public void setProduit(Set<Produit> produit) { this.produit = produit; }
 }

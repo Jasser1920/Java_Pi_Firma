@@ -1,161 +1,75 @@
 package controllers;
 
-import Models.Reclammation;
-import Models.Statut;
-import Services.ReclammationService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+
 import java.io.IOException;
-import java.util.Date;
 
 public class AjouterReclamationController {
+    @FXML private TextField titreFx;
+    @FXML private TextArea descriptionFx;
+    @FXML private Button ajouterBtn;
+    @FXML private Label titreError;
+    @FXML private Label descriptionError;
+    @FXML private Button homeButton;
 
     @FXML
-    private TextField titreFx;
+    public void validateForm() {
+        boolean titreValid = !titreFx.getText().trim().isEmpty();
+        boolean descriptionValid = !descriptionFx.getText().trim().isEmpty();
 
-    @FXML
-    private TextArea descriptionFx;
-
-    @FXML
-    private Button ajouterBtn;
-
-    @FXML
-    private Button homeButton;
-
-    @FXML
-    private Label titreError;
-
-    @FXML
-    private Label descriptionError;
-
-    private final ReclammationService reclammationService = new ReclammationService();
-    private Reclammation reclamationToEdit;
-    private static final int MIN_TITRE_LENGTH = 3;
-    private static final int MIN_DESCRIPTION_LENGTH = 10;
-
-    @FXML
-    public void initialize() {
-        if (reclamationToEdit != null) {
-            titreFx.setText(reclamationToEdit.getTitre());
-            descriptionFx.setText(reclamationToEdit.getDescription());
-        }
-        validateForm(); // Initial validation
-    }
-
-    @FXML
-    public void AjouterReclamation(ActionEvent actionEvent) {
-        String titre = titreFx.getText().trim();
-        String description = descriptionFx.getText().trim();
-
-        if (!validateForm()) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez corriger les erreurs dans le formulaire.");
-            return;
-        }
-
-        try {
-            if (reclamationToEdit != null) {
-                reclamationToEdit.setTitre(titre);
-                reclamationToEdit.setDescription(description);
-                reclammationService.modifier(reclamationToEdit);
-                showAlert(Alert.AlertType.INFORMATION, "Succès", "Réclamation modifiée avec succès !");
-            } else {
-                Reclammation reclammation = new Reclammation(
-                        0, null, titre, description, new Date(), Statut.enattente
-                );
-                reclammationService.ajouter(reclammation);
-                showAlert(Alert.AlertType.INFORMATION, "Succès", "Réclamation ajoutée avec succès !");
-            }
-            Stage stage = (Stage) titreFx.getScene().getWindow();
-            stage.close();
-        } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de sauvegarder la réclamation : " + e.getMessage());
-        }
-    }
-
-    @FXML
-    public void AnnulerReclamation(ActionEvent actionEvent) {
-        Stage stage = (Stage) titreFx.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
-    public boolean validateForm() {
-        String titre = titreFx.getText().trim();
-        String description = descriptionFx.getText().trim();
-        boolean isValid = true;
-
-        // Validate titre
-        if (titre.isEmpty()) {
-            titreError.setText("Le titre est requis.");
-            isValid = false;
-        } else if (titre.length() < MIN_TITRE_LENGTH) {
-            titreError.setText("Le titre doit contenir au moins " + MIN_TITRE_LENGTH + " caractères.");
-            isValid = false;
+        if (!titreValid) {
+            titreError.setText("Le titre est requis");
+            titreError.setVisible(true);
         } else {
-            titreError.setText("");
+            titreError.setVisible(false);
         }
 
-        // Validate description
-        if (description.isEmpty()) {
-            descriptionError.setText("La description est requise.");
-            isValid = false;
-        } else if (description.length() < MIN_DESCRIPTION_LENGTH) {
-            descriptionError.setText("La description doit contenir au moins " + MIN_DESCRIPTION_LENGTH + " caractères.");
-            isValid = false;
+        if (!descriptionValid) {
+            descriptionError.setText("La description est requise");
+            descriptionError.setVisible(true);
         } else {
-            descriptionError.setText("");
+            descriptionError.setVisible(false);
         }
 
-        // Enable/disable Ajouter button
-        ajouterBtn.setDisable(!isValid);
-        return isValid;
+        ajouterBtn.setDisable(!(titreValid && descriptionValid));
     }
 
     @FXML
-    public void navigateHome(ActionEvent event) {
+    public void AjouterReclamation(ActionEvent event) {
+        // Implement reclamation addition logic here
+        // For now, just navigate back to home
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainDashboard.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) homeButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Tableau de Bord");
-            stage.show();
+            Parent root = FXMLLoader.load(getClass().getResource("/home.fxml"));
+            ajouterBtn.getScene().setRoot(root);
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur de Navigation", "Impossible de retourner au tableau de bord : " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    public void setReclamation(Reclammation reclamation) {
-        this.reclamationToEdit = reclamation;
-        if (reclamation != null) {
-            titreFx.setText(reclamation.getTitre());
-            descriptionFx.setText(reclamation.getDescription());
-            validateForm();
+    @FXML
+    public void AnnulerReclamation(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/home.fxml"));
+            ajouterBtn.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    public TextField getTitreFx() {
-        return titreFx;
-    }
-
-    public TextArea getDescriptionFx() {
-        return descriptionFx;
+    @FXML
+    public void goToHome(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/home.fxml"));
+            homeButton.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

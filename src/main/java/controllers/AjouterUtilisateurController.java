@@ -7,17 +7,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.regex.Pattern;
 
 public class AjouterUtilisateurController {
@@ -30,8 +26,8 @@ public class AjouterUtilisateurController {
     @FXML private ChoiceBox<String> roleCB;
     @FXML private TextField profilePictureTF;
     @FXML private Button ajouterBtn;
+    @FXML private ImageView imagePreview;
 
-    // Error labels
     @FXML private Label nomError;
     @FXML private Label prenomError;
     @FXML private Label emailError;
@@ -60,6 +56,8 @@ public class AjouterUtilisateurController {
         File file = fileChooser.showOpenDialog(nomTF.getScene().getWindow());
         if (file != null) {
             profilePictureTF.setText(file.getAbsolutePath());
+            imagePreview.setImage(new Image(file.toURI().toString()));
+            imagePreview.setVisible(true);
             validateForm();
         }
     }
@@ -79,7 +77,7 @@ public class AjouterUtilisateurController {
                 && telephoneValid && adresseValid && roleValid && profilePictureValid;
 
         ajouterBtn.setDisable(!formValid);
-        return formValid;  // Add this return statement
+        return formValid;
     }
 
     private boolean validateNom() {
@@ -193,37 +191,50 @@ public class AjouterUtilisateurController {
         if (!validateForm()) return;
 
         UtilisateurService us = new UtilisateurService();
-        String nom = nomTF.getText();
-        String prenom = prenomTF.getText();
-        String email = emailTF.getText();
-        String motdepasse = motdepasseTF.getText();
-        String telephone = telephoneTF.getText();
-        String adresse = adresseTF.getText();
+        AuthController authController = AuthController.getInstance(); // Use singleton instance
+        String nom = nomTF.getText().trim();
+        String prenom = prenomTF.getText().trim();
+        String email = emailTF.getText().trim();
+        String motdepasse = motdepasseTF.getText().trim();
+        String telephone = telephoneTF.getText().trim();
+        String adresse = adresseTF.getText().trim();
         String role = roleCB.getValue();
-        String profilePicture = profilePictureTF.getText();
+        String profilePicture = profilePictureTF.getText().trim();
 
         Utilisateur u = new Utilisateur(0, nom, prenom, email, motdepasse, telephone, adresse, role, profilePicture, false, false, null);
         try {
-            us.ajouter(u);
+            if (authController.signup(u)) {
+                // Clear form
+                nomTF.clear();
+                prenomTF.clear();
+                emailTF.clear();
+                motdepasseTF.clear();
+                telephoneTF.clear();
+                adresseTF.clear();
+                roleCB.setValue(null);
+                profilePictureTF.clear();
+                imagePreview.setImage(null);
+                imagePreview.setVisible(false);
 
-            // Clear form
-            nomTF.clear();
-            prenomTF.clear();
-            emailTF.clear();
-            motdepasseTF.clear();
-            telephoneTF.clear();
-            adresseTF.clear();
-            roleCB.setValue(null);
-            profilePictureTF.clear();
+                // Show success message
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("Succès");
+                a.setContentText("Utilisateur ajouté avec succès. Veuillez vérifier votre email.");
+                a.showAndWait();
 
-            // Show success message
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setTitle("Succès");
-            a.setContentText("Utilisateur ajouté avec succès");
-            a.show();
-
-            validateForm();
-        } catch (SQLException e) {
+                // Redirect to code confirmation page
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/codeConfirmation.fxml"));
+                Parent root = loader.load();
+                CodeConfirmationController controller = loader.getController();
+                controller.setUserEmail(email);
+                nomTF.getScene().setRoot(root);
+            } else {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Erreur");
+                a.setContentText("Erreur lors de l'ajout de l'utilisateur.");
+                a.show();
+            }
+        } catch (IOException e) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setTitle("Erreur");
             a.setContentText(e.getMessage());
@@ -232,13 +243,7 @@ public class AjouterUtilisateurController {
     }
 
     @FXML
-    public void afficherUtilisateurs(ActionEvent actionEvent) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherUtilisateurs.fxml"));
-        try {
-            Parent root = loader.load();
-            nomTF.getScene().setRoot(root);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public void goToSignIn(ActionEvent actionEvent) {
+        SceneChanger.changeScene(actionEvent, "/signin.fxml");
     }
 }

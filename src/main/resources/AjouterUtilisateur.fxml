@@ -18,40 +18,36 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="1000" prefWidth="700" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterUtilisateurController">
+<AnchorPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="1000.0" prefWidth="700.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterUtilisateurController">
     <stylesheets>
         <URL value="@css/styles.css" />
     </stylesheets>
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="1000.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1000.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="25.0" layoutY="24.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="58.0" />
-        <Button layoutX="34.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: #85c20a; -fx-border-radius: 50;" text="🏠" textAlignment="CENTER" textFill="WHITE">
+        <Button layoutX="34.0" layoutY="32.0" mnemonicParsing="false" onAction="#goToSignIn" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: #85c20a; -fx-border-radius: 50;" text="🏠" textAlignment="CENTER" textFill="WHITE">
             <font>
                 <Font name="Arial Rounded MT Bold" size="17.0" />
             </font>
         </Button>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="93.0" layoutY="24.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 30;" width="897.0" />
         <Text fill="WHITE" layoutX="124.8" layoutY="60.188671875" text="Ajouter un Nouvel Utilisateur" AnchorPane.leftAnchor="124.8" AnchorPane.topAnchor="31.799999999999997">
-            <font>
-                <Font name="Arial Rounded MT Bold" size="30.0" />
-            </font>
+
         </Text>
 
         <VBox spacing="20" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="110.0">
-            <!-- Form Container -->
             <GridPane hgap="30" prefHeight="802.0" prefWidth="916.0" styleClass="form-container" vgap="15">
                 <columnConstraints>
                     <ColumnConstraints percentWidth="50" />
                     <ColumnConstraints percentWidth="50" />
                 </columnConstraints>
 
-                <!-- Left Column -->
                 <VBox prefHeight="730.0" prefWidth="426.0" spacing="10" GridPane.columnIndex="0">
                     <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Nom" />
                     <TextField fx:id="nomTF" onKeyReleased="#validateForm" promptText="Entrez le nom" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
                     <Label fx:id="nomError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
 
-                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Prénom" />
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fillLey: #ffffff;" styleClass="form-label" text="Prénom" />
                     <TextField fx:id="prenomTF" onKeyReleased="#validateForm" promptText="Entrez le prénom" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
                     <Label fx:id="prenomError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
 
@@ -64,7 +60,6 @@
                     <Label fx:id="motdepasseError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
                 </VBox>
 
-                <!-- Right Column -->
                 <VBox spacing="10" GridPane.columnIndex="1">
                     <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Téléphone" />
                     <TextField fx:id="telephoneTF" onKeyReleased="#validateForm" promptText="Entrez le téléphone" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
@@ -85,10 +80,10 @@
                                 <Font name="System Bold" size="16.0" />
                             </font>
                         </Button>
-                        <TextField fx:id="profilePictureTF" editable="false" promptText="Aucun fichier sélectionné" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" visible="false" />
+                        <TextField fx:id="profilePictureTF" editable="false" promptText="Aucun fichier sélectionné" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" visible="true" />
                     </HBox>
                     <Label fx:id="profilePictureError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
-                    <ImageView fx:id="imagePreview" fitHeight="150" fitWidth="150" preserveRatio="true" visible="false">
+                    <ImageView fx:id="imagePreview" fitHeight="150" fitWidth="150" preserveRatio="true" visible="true">
                         <VBox.margin>
                             <Insets top="10" />
                         </VBox.margin>
@@ -99,14 +94,13 @@
                 </rowConstraints>
             </GridPane>
 
-            <!-- Form Buttons -->
             <HBox alignment="CENTER_RIGHT" spacing="15">
                 <Button fx:id="ajouterBtn" disable="true" onAction="#ajouterUtilisateur" style="-fx-background-color: #85C20A; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Ajouter">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
                 </Button>
-                <Button onAction="#afficherUtilisateurs" style="-fx-background-color: #ffb524; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Annuler">
+                <Button onAction="#goToSignIn" style="-fx-background-color: #ffb524; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Annuler">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
