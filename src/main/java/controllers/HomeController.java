@@ -28,32 +28,39 @@ public class HomeController {
 
     @FXML
     public void initialize() {
-        // Set hyperlink actions
         produitLink.setOnAction(event -> ouvrirPage("/AfficherProduit.fxml", "Produits"));
         reclamationLink.setOnAction(event -> ouvrirPage("/AfficherReclamation.fxml", "Réclamations"));
         reponseLink.setOnAction(event -> ouvrirPage("/AfficherReponseReclamation.fxml", "Réponses"));
 
-        // Display logged-in user's name
         Utilisateur currentUser = authController.getCurrentUser();
         if (currentUser != null) {
             userNameLabel.setText(currentUser.getNom() + " " + currentUser.getPrenom());
+            System.out.println("HomeController: User initialized - " + currentUser.getEmail());
         } else {
             userNameLabel.setText("Guest");
+            System.out.println("HomeController: No user found");
         }
     }
 
     @FXML
     public void showProfile() {
         try {
+            Utilisateur currentUser = authController.getCurrentUser();
+            if (currentUser == null) {
+                System.out.println("showProfile: No user logged in");
+                return;
+            }
+            System.out.println("Navigating to profile for user: " + currentUser.getEmail());
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileUtilisateur.fxml"));
             Parent root = loader.load();
             ProfileUtilisateurController controller = loader.getController();
-            controller.setUtilisateur(authController.getCurrentUser());
+            controller.setUtilisateur(currentUser);
             Stage stage = (Stage) userMenu.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Profile");
             stage.show();
         } catch (IOException e) {
+            System.err.println("Error loading profile page: " + e.getMessage());
             e.printStackTrace();
         }
     }

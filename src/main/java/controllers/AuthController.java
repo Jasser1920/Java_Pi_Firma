@@ -2,6 +2,8 @@ package controllers;
 
 import Models.Utilisateur;
 import Services.UtilisateurService;
+import Services.EmailService;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -12,11 +14,13 @@ public class AuthController {
     private static AuthController instance;
     private Utilisateur currentUser;
     private UtilisateurService utilisateurService;
-    private Map<String, String> resetCodes; // Map email to reset code
-    private Map<String, Long> codeTimestamps; // Map email to code generation timestamp
+    private EmailService emailService;
+    private Map<String, String> resetCodes;
+    private Map<String, Long> codeTimestamps;
 
     private AuthController() {
         utilisateurService = new UtilisateurService();
+        emailService = new EmailService();
         resetCodes = new HashMap<>();
         codeTimestamps = new HashMap<>();
     }
@@ -30,20 +34,37 @@ public class AuthController {
 
     public boolean login(String email, String password) {
         try {
-            Utilisateur user = utilisateurService.findByEmail(email); // Updated method name
-            if (user != null && user.getMotdepasse().equals(password) && user.isVerified()) {
+            Utilisateur user = utilisateurService.findByEmail(email);
+            if (user == null) {
+                System.out.println("Login failed: No user found for email: " + email);
+                return false;
+            }
+            System.out.println("User found: " + user.getEmail() + ", hashed password: " + user.getMotdepasse());
+            if (BCrypt.checkpw(password, user.getMotdepasse()) && user.isVerified()) {
                 currentUser = user;
+                System.out.println("User logged in successfully: " + user.getEmail());
                 return true;
+            } else {
+                System.out.println("Login failed for email: " + email + " - Password mismatch or user not verified");
+                return false;
             }
         } catch (SQLException e) {
+            System.err.println("SQLException during login: " + e.getMessage());
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     public boolean signup(Utilisateur user) {
         try {
-            utilisateurService.ajouter(user); // Updated method name to match IService
+            String code = emailService.generateAndSendCode(user.getEmail());
+            if (code == null) {
+                return false;
+            }
+            String hashedPassword = BCrypt.hashpw(user.getMotdepasse(), BCrypt.gensalt());
+            user.setMotdepasse(hashedPassword);
+            user.setConfirmationCode(code);
+            utilisateurService.ajouter(user);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,22 +73,33 @@ public class AuthController {
     }
 
     public boolean confirmCode(String code, String email) {
-        // Simulate code verification (in reality, check against sent code)
-        return true; // For simplicity, assume code is always valid
+        try {
+            Utilisateur user = utilisateurService.findByEmail(email);
+            if (user != null && user.getConfirmationCode() != null && user.getConfirmationCode().equals(code)) {
+                user.setVerified(true);
+                user.setConfirmationCode(null);
+                utilisateurService.modifier(user);
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public boolean sendResetCode(String email) {
         try {
-            Utilisateur user = utilisateurService.findByEmail(email); // Updated method name
+            Utilisateur user = utilisateurService.findByEmail(email);
             if (user == null) {
                 return false;
             }
-            // Generate a random 6-digit code
-            String code = String.valueOf(new Random().nextInt(900000) + 100000);
+            String code = emailService.generateAndSendCode(email);
+            if (code == null) {
+                return false;
+            }
             resetCodes.put(email, code);
             codeTimestamps.put(email, System.currentTimeMillis());
-            // Simulate sending the code via email
-            System.out.println("Reset code for " + email + ": " + code);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,14 +113,13 @@ public class AuthController {
         }
         String storedCode = resetCodes.get(email);
         Long timestamp = codeTimestamps.get(email);
-        // Check if code is expired (e.g., 10 minutes = 600,000 ms)
         if (System.currentTimeMillis() - timestamp > 600000) {
             resetCodes.remove(email);
             codeTimestamps.remove(email);
             return false;
         }
         if (storedCode.equals(code)) {
-            resetCodes.remove(email); // Clear the code after verification
+            resetCodes.remove(email);
             codeTimestamps.remove(email);
             return true;
         }
@@ -97,12 +128,13 @@ public class AuthController {
 
     public boolean updatePassword(String email, String newPassword) {
         try {
-            Utilisateur user = utilisateurService.findByEmail(email); // Updated method name
+            Utilisateur user = utilisateurService.findByEmail(email);
             if (user == null) {
                 return false;
             }
-            user.setMotdepasse(newPassword);
-            utilisateurService.modifier(user); // Updated method name to match IService
+            String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+            user.setMotdepasse(hashedPassword);
+            utilisateurService.modifier(user);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -111,10 +143,12 @@ public class AuthController {
     }
 
     public Utilisateur getCurrentUser() {
+        System.out.println("Current user retrieved: " + (currentUser != null ? currentUser.getEmail() : "null"));
         return currentUser;
     }
 
     public void logout() {
         currentUser = null;
+        System.out.println("User logged out");
     }
 }

@@ -9,6 +9,13 @@ import java.util.List;
 
 public class UtilisateurService implements IService<Utilisateur> {
 
+    /**
+     * Returns all users in the database.
+     */
+    public List<Utilisateur> getAllUsers() throws SQLException {
+        return rechercher();
+    }
+
     private Connection connection = MyDatabase.getInstance().getConnection();
 
     public Utilisateur findByEmail(String email) throws SQLException {

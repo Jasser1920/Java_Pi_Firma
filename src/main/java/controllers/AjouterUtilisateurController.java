@@ -17,25 +17,43 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class AjouterUtilisateurController {
-    @FXML private TextField nomTF;
-    @FXML private TextField prenomTF;
-    @FXML private TextField emailTF;
-    @FXML private TextField motdepasseTF;
-    @FXML private TextField telephoneTF;
-    @FXML private TextField adresseTF;
-    @FXML private ChoiceBox<String> roleCB;
-    @FXML private TextField profilePictureTF;
-    @FXML private Button ajouterBtn;
-    @FXML private ImageView imagePreview;
+    @FXML
+    private TextField nomTF;
+    @FXML
+    private TextField prenomTF;
+    @FXML
+    private TextField emailTF;
+    @FXML
+    private TextField motdepasseTF;
+    @FXML
+    private TextField telephoneTF;
+    @FXML
+    private TextField adresseTF;
+    @FXML
+    private ChoiceBox<String> roleCB;
+    @FXML
+    private TextField profilePictureTF;
+    @FXML
+    private Button ajouterBtn;
+    @FXML
+    private ImageView imagePreview;
 
-    @FXML private Label nomError;
-    @FXML private Label prenomError;
-    @FXML private Label emailError;
-    @FXML private Label motdepasseError;
-    @FXML private Label telephoneError;
-    @FXML private Label adresseError;
-    @FXML private Label roleError;
-    @FXML private Label profilePictureError;
+    @FXML
+    private Label nomError;
+    @FXML
+    private Label prenomError;
+    @FXML
+    private Label emailError;
+    @FXML
+    private Label motdepasseError;
+    @FXML
+    private Label telephoneError;
+    @FXML
+    private Label adresseError;
+    @FXML
+    private Label roleError;
+    @FXML
+    private Label profilePictureError;
 
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
     private static final Pattern PHONE_PATTERN = Pattern.compile("^\\d{8}$");

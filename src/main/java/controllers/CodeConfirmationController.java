@@ -26,7 +26,7 @@ public class CodeConfirmationController {
             return;
         }
         if (authController.confirmCode(code, userEmail)) {
-            SceneChanger.changeScene(event, "/home.fxml");
+            SceneChanger.changeScene(event, "/Signin.fxml");
         } else {
             infoLabel.setText("Invalid or expired code.");
         }
