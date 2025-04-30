@@ -1,5 +1,6 @@
 package test;
 
+import Utils.StripeConfig;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +17,7 @@ public class MainFx extends Application {
     }
 
     public static void main(String[] args) {
+        StripeConfig.init();
         launch(args);
     }
 }

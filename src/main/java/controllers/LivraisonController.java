@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.web.WebView; // Ajout pour WebView
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -28,7 +29,6 @@ public class LivraisonController {
     @FXML private TextField nomSocieteField;
     @FXML private TextField adresseField;
     @FXML private DatePicker dateLivraisonPicker;
-    @FXML private ComboBox<StatutLivraison> statutCombo;
     @FXML private TableView<Livraison> livraisonsTable;
     @FXML private TableColumn<Livraison, Integer> idColumn;
     @FXML private TableColumn<Livraison, String> nomSocieteColumn;
@@ -40,14 +40,15 @@ public class LivraisonController {
     @FXML private Button btnModifier;
     @FXML private Button btnSupprimer;
     @FXML private Button btnRetour;
+    @FXML private WebView paymentWebView; // Ajout pour la WebView
+
     private LivraisonService livraisonService = new LivraisonService();
     private Livraison livraisonToModify;
-    private Commande commandeTemp; // Commande temporaire passée depuis CommandeController
-    private CommandeController sourceController; // Référence au CommandeController
+    private Commande commandeTemp;
+    private CommandeController sourceController;
 
     @FXML
     public void initialize() {
-        // Initialiser les colonnes du TableView uniquement si elles existent (pour afficherlivraison.fxml)
         if (livraisonsTable != null && idColumn != null) {
             idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
             nomSocieteColumn.setCellValueFactory(new PropertyValueFactory<>("nomSociete"));
@@ -55,7 +56,6 @@ public class LivraisonController {
             dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateLivraison"));
             statutColumn.setCellValueFactory(new PropertyValueFactory<>("statut"));
 
-            // Initialiser la colonne d'actions
             actionColumn.setCellFactory(col -> new TableCell<Livraison, Void>() {
                 private final Button modifierButton = new Button("Modifier");
                 private final Button supprimerButton = new Button("Supprimer");
@@ -87,17 +87,9 @@ public class LivraisonController {
                 }
             });
 
-            // Charger les données dans le TableView
             loadData();
         }
 
-        // Initialiser le ComboBox avec les statuts uniquement s'il existe (pour ajouterlivraison.fxml et modifierlivraison.fxml)
-        if (statutCombo != null) {
-            statutCombo.setItems(FXCollections.observableArrayList(StatutLivraison.values()));
-            statutCombo.setValue(StatutLivraison.en_cours); // Valeur par défaut
-        }
-
-        // Pré-remplir les champs si on est en mode modification
         if (livraisonToModify != null) {
             preFillFields();
         }
@@ -109,14 +101,12 @@ public class LivraisonController {
 
     @FXML
     private void ajouterLivraison() {
-        // Vérifier que les champs ne sont pas vides
         if (nomSocieteField.getText().trim().isEmpty() || adresseField.getText().trim().isEmpty() ||
-                dateLivraisonPicker.getValue() == null || statutCombo.getValue() == null) {
+                dateLivraisonPicker.getValue() == null) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Tous les champs doivent être remplis.");
             return;
         }
 
-        // Vérifier que la date de livraison est supérieure à aujourd'hui
         LocalDate today = LocalDate.now();
         LocalDate dateLivraison = dateLivraisonPicker.getValue();
         if (dateLivraison.isBefore(today) || dateLivraison.isEqual(today)) {
@@ -129,7 +119,7 @@ public class LivraisonController {
                 nomSocieteField.getText().trim(),
                 adresseField.getText().trim(),
                 Date.from(dateLivraisonPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                statutCombo.getValue()
+                StatutLivraison.en_attente // Statut défini automatiquement
         );
         livraisonService.ajouter(livraison);
         clearFields();
@@ -141,7 +131,7 @@ public class LivraisonController {
     private void ajouterLivraisonDepuisCommande() {
         System.out.println("Début de ajouterLivraisonDepuisCommande");
         if (nomSocieteField.getText().trim().isEmpty() || adresseField.getText().trim().isEmpty() ||
-                dateLivraisonPicker.getValue() == null || statutCombo.getValue() == null) {
+                dateLivraisonPicker.getValue() == null) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Tous les champs doivent être remplis.");
             return;
         }
@@ -163,7 +153,7 @@ public class LivraisonController {
                     nomSocieteField.getText().trim(),
                     adresseField.getText().trim(),
                     Date.from(dateLivraisonPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                    statutCombo.getValue()
+                    StatutLivraison.en_attente // Statut défini automatiquement
             );
             System.out.println("Ajout de la livraison : " + livraison.getNomSociete());
             livraisonService.ajouter(livraison);
@@ -182,10 +172,17 @@ public class LivraisonController {
             connection.commit();
 
             clearFields();
-            showAlert(Alert.AlertType.INFORMATION, "Succès", "Commande et livraison ajoutées avec succès.");
-            System.out.println("Redirection vers affichercommand.fxml");
-            goToAfficherCommande();
-            System.out.println("Redirection réussie");
+            showAlert(Alert.AlertType.INFORMATION, "Succès", "Commande et livraison ajoutées avec succès. Procédez au paiement.");
+
+            // Passer la WebView au CommandeController et initier le paiement
+            sourceController.setPaymentWebView(paymentWebView);
+            sourceController.setCommandeTemp(commandeTemp);
+            sourceController.initierPaiement();
+
+            // Rester sur la même page (ajouterlivraison.fxml)
+            Stage stage = (Stage) nomSocieteField.getScene().getWindow();
+            stage.setScene(getCurrentScene());
+
         } catch (Exception e) {
             System.err.println("Erreur lors de l'enregistrement de la livraison ou de la commande : " + e.getMessage());
             e.printStackTrace();
@@ -206,20 +203,17 @@ public class LivraisonController {
                     e.printStackTrace();
                 }
             }
-            commandeTemp = null;
         }
     }
 
     @FXML
     private void modifierLivraison() {
-        // Vérifier que les champs ne sont pas vides
         if (livraisonToModify == null || nomSocieteField.getText().trim().isEmpty() || adresseField.getText().trim().isEmpty() ||
-                dateLivraisonPicker.getValue() == null || statutCombo.getValue() == null) {
+                dateLivraisonPicker.getValue() == null) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Sélectionnez une livraison et remplissez tous les champs.");
             return;
         }
 
-        // Vérifier que la date de livraison est supérieure à aujourd'hui
         LocalDate today = LocalDate.now();
         LocalDate dateLivraison = dateLivraisonPicker.getValue();
         if (dateLivraison.isBefore(today) || dateLivraison.isEqual(today)) {
@@ -230,7 +224,7 @@ public class LivraisonController {
         livraisonToModify.setNomSociete(nomSocieteField.getText().trim());
         livraisonToModify.setAdresseLivraison(adresseField.getText().trim());
         livraisonToModify.setDateLivraison(Date.from(dateLivraisonPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        livraisonToModify.setStatut(statutCombo.getValue());
+        livraisonToModify.setStatut(StatutLivraison.en_attente); // Statut défini automatiquement
         livraisonService.modifier(livraisonToModify);
         clearFields();
         showAlert(Alert.AlertType.INFORMATION, "Succès", "Livraison modifiée avec succès.");
@@ -251,7 +245,7 @@ public class LivraisonController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ajouterlivraison.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) btnAjouter.getScene().getWindow();
-            stage.setScene(new Scene(root, 600, 500));
+            stage.setScene(new Scene(root, 800, 500)); // Ajusté pour la WebView
             stage.setTitle("Ajouter une Livraison");
             stage.show();
         } catch (IOException e) {
@@ -283,6 +277,7 @@ public class LivraisonController {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de la redirection : " + e.getMessage());
         }
     }
+
     @FXML
     private void goToModifierLivraison() {
         if (livraisonToModify != null) {
@@ -320,6 +315,7 @@ public class LivraisonController {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de la redirection : " + e.getMessage());
         }
     }
+
     @FXML
     private void goToAfficherCommande() {
         try {
@@ -351,7 +347,6 @@ public class LivraisonController {
         if (livraisonToModify != null) {
             nomSocieteField.setText(livraisonToModify.getNomSociete());
             adresseField.setText(livraisonToModify.getAdresseLivraison());
-            // Convertir la date en LocalDate
             Date dateLivraison = livraisonToModify.getDateLivraison();
             if (dateLivraison != null) {
                 LocalDate localDate;
@@ -362,7 +357,6 @@ public class LivraisonController {
                 }
                 dateLivraisonPicker.setValue(localDate);
             }
-            statutCombo.setValue(livraisonToModify.getStatut());
         }
     }
 
@@ -370,7 +364,6 @@ public class LivraisonController {
         nomSocieteField.clear();
         adresseField.clear();
         dateLivraisonPicker.setValue(null);
-        statutCombo.getSelectionModel().clearSelection();
         livraisonToModify = null;
     }
 
@@ -380,5 +373,9 @@ public class LivraisonController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private Scene getCurrentScene() {
+        return nomSocieteField.getScene();
     }
 }

@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LivraisonController">
-    <VBox layoutX="14.0" layoutY="14.0" spacing="10.0">
-        <Label text="Ajouter une Livraison" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+<?import javafx.scene.web.WebView?>
 
-        <!-- Champs de saisie -->
-        <Label text="Nom Société :" />
-        <TextField fx:id="nomSocieteField" />
-        <Label text="Adresse Livraison :" />
-        <TextField fx:id="adresseField" />
-        <Label text="Date Livraison :" />
-        <DatePicker fx:id="dateLivraisonPicker" />
-        <Label text="Statut :" />
-        <ComboBox fx:id="statutCombo" promptText="Choisir un statut" />
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LivraisonController">
+    <HBox layoutX="14.0" layoutY="14.0" spacing="20.0">
+        <!-- Partie gauche : Formulaire pour ajouter une livraison -->
+        <VBox spacing="10.0">
+            <Label text="Ajouter une Livraison" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
 
-        <!-- Boutons d'action -->
-        <HBox spacing="10.0">
-            <Button fx:id="btnAjouter" onAction="#ajouterLivraisonDepuisCommande" text="Enregistrer" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
-            <Button fx:id="btnRetour" onAction="#goToAfficherLivraison" text="Retour" style="-fx-background-color: #757575; -fx-text-fill: white;" />
-        </HBox>
-    </VBox>
+            <!-- Champs de saisie -->
+            <Label text="Nom Société :" />
+            <TextField fx:id="nomSocieteField" />
+            <Label text="Adresse Livraison :" />
+            <TextField fx:id="adresseField" />
+            <Label text="Date Livraison :" />
+            <DatePicker fx:id="dateLivraisonPicker" />
+
+            <!-- Boutons d'action -->
+            <HBox spacing="10.0">
+                <Button fx:id="btnAjouter" onAction="#ajouterLivraisonDepuisCommande" text="Payer" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
+                <Button fx:id="btnRetour" onAction="#goToAfficherLivraison" text="Retour" style="-fx-background-color: #757575; -fx-text-fill: white;" />
+            </HBox>
+        </VBox>
+
+        <!-- Partie droite : WebView pour le formulaire de paiement -->
+        <WebView fx:id="paymentWebView" prefHeight="400.0" prefWidth="300.0" visible="false" />
+    </HBox>
 </AnchorPane>

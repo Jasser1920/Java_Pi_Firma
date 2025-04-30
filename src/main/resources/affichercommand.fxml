@@ -17,6 +17,7 @@
             <TableColumn fx:id="totalColumn" prefWidth="80.0" text="Total" />
             <TableColumn fx:id="statutColumn" prefWidth="100.0" text="Statut" />
             <TableColumn fx:id="actionColumn" prefWidth="150.0" text="Actions" /> <!-- Augmenté la largeur pour accueillir deux boutons -->
+            <TableColumn fx:id="actionFactureColumn" prefWidth="150" text="Facture" />
         </columns>
     </TableView>
     <HBox layoutX="14.0" layoutY="320.0" spacing="10.0" />
