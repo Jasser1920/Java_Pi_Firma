@@ -59,12 +59,15 @@ public class HomeController {
     }
 
     @FXML
-    public void showReclamation() {
+    private void showReclamation() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/AjouterReclamation.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherReclamation.fxml"));
+            Parent root = loader.load();
+            AfficherReclamationController controller = loader.getController();
+            controller.setCurrentUser(authController.getCurrentUser());
             Stage stage = (Stage) userMenu.getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle("Ajouter Réclamation");
+            stage.setTitle("Mes Réclamations");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -89,7 +92,7 @@ public class HomeController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
-            Stage stage = (Stage) produitLink.getScene().getWindow();
+            Stage stage = (Stage) userMenu.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle(title);
             stage.show();

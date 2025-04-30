@@ -119,4 +119,41 @@ public class ReclammationService implements IService<Reclammation> {
         }
         return reclammations;
     }
+
+    public List<Reclammation> rechercherParUtilisateur(int userId) {
+        String req = "SELECT r.*, rp.id AS reponse_id, rp.message AS reponse_message, rp.date_reponse " +
+                "FROM `reclammation` r " +
+                "LEFT JOIN `reponse_reclamation` rp ON r.id = rp.reclamation_id " +
+                "WHERE r.utilisateur_id = ?";
+        List<Reclammation> reclammations = new ArrayList<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement(req);
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Reclammation reclammation = new Reclammation(
+                        rs.getInt("id"),
+                        null,
+                        rs.getString("titre"),
+                        rs.getString("description"),
+                        rs.getTimestamp("date_creation"),
+                        rs.getString("statut")
+                );
+                if (rs.getObject("reponse_id") != null) {
+                    ReponseReclamation reponse = new ReponseReclamation(
+                            rs.getInt("reponse_id"),
+                            reclammation,
+                            rs.getString("reponse_message"),
+                            rs.getTimestamp("date_reponse")
+                    );
+                    reclammation.setReponse(reponse);
+                }
+                reclammations.add(reclammation);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erreur lors de la récupération des réclamations de l'utilisateur : " + e.getMessage());
+        }
+        return reclammations;
+    }
 }
