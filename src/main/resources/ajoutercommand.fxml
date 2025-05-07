@@ -9,11 +9,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CommandeController">
-    <VBox layoutX="14.0" layoutY="14.0" prefHeight="350.0" prefWidth="600.0" spacing="10.0">
-        <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Ajouter une Commande" />
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CommandeController">
+    <VBox layoutX="27.0" layoutY="90.0" prefHeight="350.0" prefWidth="600.0" spacing="10.0">
 
         <Label text="Sélectionner un Produit" />
         <ComboBox fx:id="produitCombo" prefWidth="200.0" promptText="Choisir un produit" />
@@ -36,7 +37,7 @@
 
         <HBox spacing="10.0">
             <Label text="Total de la Commande :" />
-            <TextField fx:id="totalField" prefWidth="100.0" editable="false" text="0.0" />
+            <TextField fx:id="totalField" editable="false" prefWidth="100.0" text="0.0" />
         </HBox>
 
         <HBox spacing="10.0">
@@ -46,5 +47,17 @@
     </VBox>
 
     <!-- WebView pour afficher le formulaire de paiement Stripe -->
-    <WebView fx:id="paymentWebView" prefHeight="200.0" prefWidth="572.0" visible="false" layoutX="14.0" layoutY="380.0" />
+    <WebView fx:id="paymentWebView" layoutX="14.0" layoutY="380.0" prefHeight="200.0" prefWidth="572.0" visible="false" />
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20b" height="50.0" layoutX="93.0" layoutY="24.0" stroke="#85c20b" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="897.0" />
+   <Label layoutX="118.0" layoutY="31.0" text="Ajouter une commande" textFill="#f8f8f8">
+      <font>
+         <Font name="Arial Rounded MT Bold" size="30.0" />
+      </font>
+   </Label>
+   <Button layoutX="27.0" layoutY="24.0" mnemonicParsing="false" style="-fx-background-color: #85c20b; -fx-background-radius: 100;" text="🏠" textFill="WHITE">
+      <font>
+         <Font name="Arial Rounded MT Bold" size="23.0" />
+      </font>
+   </Button>
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="26.0" layoutY="675.0" stroke="#45595b" strokeType="INSIDE" width="1000.0" />
 </AnchorPane>

@@ -14,7 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.scene.web.WebView; // Ajout pour WebView
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -40,7 +40,8 @@ public class LivraisonController {
     @FXML private Button btnModifier;
     @FXML private Button btnSupprimer;
     @FXML private Button btnRetour;
-    @FXML private WebView paymentWebView; // Ajout pour la WebView
+    @FXML private WebView paymentWebView;
+    @FXML private ComboBox<StatutLivraison> statutLivraisonCombo; // Ajout du ComboBox pour le statut
 
     private LivraisonService livraisonService = new LivraisonService();
     private Livraison livraisonToModify;
@@ -49,6 +50,7 @@ public class LivraisonController {
 
     @FXML
     public void initialize() {
+        // Initialisation pour afficherlivraison.fxml
         if (livraisonsTable != null && idColumn != null) {
             idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
             nomSocieteColumn.setCellValueFactory(new PropertyValueFactory<>("nomSociete"));
@@ -90,11 +92,16 @@ public class LivraisonController {
             loadData();
         }
 
+        // Initialisation du ComboBox pour modifierlivraison.fxml
+        if (statutLivraisonCombo != null) {
+            statutLivraisonCombo.setItems(FXCollections.observableArrayList(StatutLivraison.values()));
+        }
+
+        // Pré-remplissage des champs si modification
         if (livraisonToModify != null) {
             preFillFields();
         }
     }
-
     private void loadData() {
         livraisonsTable.setItems(FXCollections.observableArrayList(livraisonService.rechercher()));
     }
@@ -119,13 +126,14 @@ public class LivraisonController {
                 nomSocieteField.getText().trim(),
                 adresseField.getText().trim(),
                 Date.from(dateLivraisonPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                StatutLivraison.en_attente // Statut défini automatiquement
+                StatutLivraison.en_attente
         );
         livraisonService.ajouter(livraison);
         clearFields();
         showAlert(Alert.AlertType.INFORMATION, "Succès", "Livraison ajoutée avec succès.");
         goToAfficherLivraison();
     }
+
 
     @FXML
     private void ajouterLivraisonDepuisCommande() {
@@ -153,7 +161,7 @@ public class LivraisonController {
                     nomSocieteField.getText().trim(),
                     adresseField.getText().trim(),
                     Date.from(dateLivraisonPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                    StatutLivraison.en_attente // Statut défini automatiquement
+                    StatutLivraison.en_attente
             );
             System.out.println("Ajout de la livraison : " + livraison.getNomSociete());
             livraisonService.ajouter(livraison);
@@ -172,16 +180,23 @@ public class LivraisonController {
             connection.commit();
 
             clearFields();
-            showAlert(Alert.AlertType.INFORMATION, "Succès", "Commande et livraison ajoutées avec succès. Procédez au paiement.");
+            showAlert(Alert.AlertType.INFORMATION, "Succès", "Livraison et commande enregistrées avec succès. Procédez au paiement.");
 
-            // Passer la WebView au CommandeController et initier le paiement
+            // Passer la WebView et la commande au CommandeController
             sourceController.setPaymentWebView(paymentWebView);
             sourceController.setCommandeTemp(commandeTemp);
-            sourceController.initierPaiement();
 
-            // Rester sur la même page (ajouterlivraison.fxml)
-            Stage stage = (Stage) nomSocieteField.getScene().getWindow();
-            stage.setScene(getCurrentScene());
+            // Déclencher le paiement avec le Stage récupéré
+            if (sourceController != null) {
+                Stage stage = (Stage) paymentWebView.getScene().getWindow(); // Utiliser paymentWebView pour récupérer le Stage
+                if (stage != null) {
+                    sourceController.initierPaiement(stage);
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de récupérer la fenêtre principale pour le paiement.");
+                }
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible d'initier le paiement : contrôleur source non défini.");
+            }
 
         } catch (Exception e) {
             System.err.println("Erreur lors de l'enregistrement de la livraison ou de la commande : " + e.getMessage());
@@ -205,12 +220,11 @@ public class LivraisonController {
             }
         }
     }
-
     @FXML
     private void modifierLivraison() {
         if (livraisonToModify == null || nomSocieteField.getText().trim().isEmpty() || adresseField.getText().trim().isEmpty() ||
-                dateLivraisonPicker.getValue() == null) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Sélectionnez une livraison et remplissez tous les champs.");
+                dateLivraisonPicker.getValue() == null || statutLivraisonCombo.getValue() == null) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Sélectionnez une livraison et remplissez tous les champs, y compris le statut.");
             return;
         }
 
@@ -224,13 +238,12 @@ public class LivraisonController {
         livraisonToModify.setNomSociete(nomSocieteField.getText().trim());
         livraisonToModify.setAdresseLivraison(adresseField.getText().trim());
         livraisonToModify.setDateLivraison(Date.from(dateLivraisonPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        livraisonToModify.setStatut(StatutLivraison.en_attente); // Statut défini automatiquement
+        livraisonToModify.setStatut(statutLivraisonCombo.getValue()); // Utiliser la valeur du ComboBox
         livraisonService.modifier(livraisonToModify);
         clearFields();
         showAlert(Alert.AlertType.INFORMATION, "Succès", "Livraison modifiée avec succès.");
         goToAfficherLivraison();
     }
-
     private void supprimerLivraison(Livraison livraison) {
         if (livraison != null) {
             livraisonService.supprimer(livraison);
@@ -245,7 +258,7 @@ public class LivraisonController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ajouterlivraison.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) btnAjouter.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 500)); // Ajusté pour la WebView
+            stage.setScene(new Scene(root, 800, 500));
             stage.setTitle("Ajouter une Livraison");
             stage.show();
         } catch (IOException e) {
@@ -357,9 +370,12 @@ public class LivraisonController {
                 }
                 dateLivraisonPicker.setValue(localDate);
             }
+            // Sélectionner le statut dans le ComboBox
+            if (statutLivraisonCombo != null) {
+                statutLivraisonCombo.setValue(livraisonToModify.getStatut());
+            }
         }
     }
-
     private void clearFields() {
         nomSocieteField.clear();
         adresseField.clear();

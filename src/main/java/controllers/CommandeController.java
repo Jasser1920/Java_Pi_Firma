@@ -325,14 +325,13 @@ public class CommandeController {
 
                 commandeService.modifier(commandeToModify);
                 showAlert("Succès", "Commande modifiée avec succès.");
-                goToAfficherCommande();
+                goToAfficherCommande(); // Appel sans paramètre
             }
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Erreur", "Erreur lors de la modification de la commande : " + e.getMessage());
         }
     }
-
     @FXML
     private void goToAjouterCommande() {
         try {
@@ -349,19 +348,8 @@ public class CommandeController {
     }
 
     @FXML
-    private void goToAfficherCommande() {
+    private void goToAfficherCommande(Stage stage) {
         try {
-            // Vérifier que currentPaymentWebView est disponible
-            if (currentPaymentWebView == null) {
-                throw new IllegalStateException("La WebView de paiement n'est pas définie. Impossible de rediriger.");
-            }
-
-            // Récupérer le Stage à partir de currentPaymentWebView
-            Stage stage = (Stage) currentPaymentWebView.getScene().getWindow();
-            if (stage == null) {
-                throw new IllegalStateException("Impossible de récupérer la fenêtre principale à partir de la WebView.");
-            }
-
             // Charger la nouvelle scène (affichercommand.fxml)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/affichercommand.fxml"));
             Parent root = loader.load();
@@ -459,7 +447,7 @@ public class CommandeController {
     }
 
     // Méthode pour initier le paiement après l'enregistrement de la commande et de la livraison
-    public void initierPaiement() {
+    public void initierPaiement(Stage stage) {
         if (commandeTemp == null) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Aucune commande enregistrée pour le paiement.");
             return;
@@ -496,7 +484,7 @@ public class CommandeController {
                         } catch (Exception e) {
                             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de la génération de la facture : " + e.getMessage());
                         }
-                        goToAfficherCommande();
+                        goToAfficherCommande(stage); // Passer le Stage directement
                     } else if (newLocation.contains("cancel")) {
                         showAlert(Alert.AlertType.WARNING, "Annulé", "Le paiement a été annulé.");
                         webViewToUse.setVisible(false);
@@ -508,8 +496,7 @@ public class CommandeController {
         } catch (StripeException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur de paiement", "Erreur lors de l'initiation du paiement : " + e.getMessage());
         }
-    }
-    public void setCommandeTemp(Commande commande) {
+    }    public void setCommandeTemp(Commande commande) {
         this.commandeTemp = commande;
     }
 
@@ -574,5 +561,30 @@ public class CommandeController {
 
     public void setPaymentWebView(WebView webView) {
         this.currentPaymentWebView = webView;
+    }
+
+    @FXML
+    private void goToAfficherCommande() {
+        try {
+            // Utiliser un élément existant pour récupérer le Stage
+            Stage stage;
+            if (produitsSelectionnesTable != null) {
+                stage = (Stage) produitsSelectionnesTable.getScene().getWindow();
+            } else if (statutCombo != null) {
+                stage = (Stage) statutCombo.getScene().getWindow();
+            } else if (commandeTable != null) {
+                stage = (Stage) commandeTable.getScene().getWindow();
+            } else if (addButton != null) {
+                stage = (Stage) addButton.getScene().getWindow();
+            } else {
+                throw new IllegalStateException("Impossible de récupérer la fenêtre principale.");
+            }
+
+            // Appeler la méthode privée avec le Stage récupéré
+            goToAfficherCommande(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement de l'interface d'affichage des commandes : " + e.getMessage());
+        }
     }
 }
