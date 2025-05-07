@@ -34,5 +34,6 @@
     </Button>
     <Button layoutX="218.0" layoutY="403.0" onAction="#goToAfficherLivraison" style="-fx-background-color: #ffb524; -fx-background-radius: 20;" text="Gérer Livraisons" textFill="#45595b" />
     <Button fx:id="addButton" layoutX="69.0" layoutY="403.0" onAction="#goToAjouterCommande" style="-fx-background-color: #45595b; -fx-background-radius: 20;" text="Ajouter une Commande" textFill="#ffb524" />
+    <Button fx:id="statsButton" layoutX="367.0" layoutY="403.0" onAction="#goToStatistiques" style="-fx-background-color: #85c20a; -fx-background-radius: 20; -fx-text-fill: white;" text="Statistiques" prefWidth="140.0" />
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="26.0" layoutY="675.0" stroke="#45595b" strokeType="INSIDE" width="1000.0" />
 </AnchorPane>

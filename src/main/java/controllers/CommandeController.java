@@ -563,6 +563,22 @@ public class CommandeController {
         this.currentPaymentWebView = webView;
     }
 
+    @FXML private Button statsButton;
+
+    @FXML
+    private void goToStatistiques() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/statistiquescommande.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) statsButton.getScene().getWindow();
+            stage.setScene(new Scene(root, 800, 600));
+            stage.setTitle("Statistiques des Commandes");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private void goToAfficherCommande() {
         try {
