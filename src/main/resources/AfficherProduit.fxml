@@ -49,7 +49,8 @@
                 <TableColumn fx:id="colimageFX" prefWidth="125.0" text="Image" />
                 <TableColumn fx:id="colquantiteFX" prefWidth="73.0" text="Quantité" />
                 <TableColumn fx:id="coldateFX" prefWidth="130.0" text="Date d'expiration" />
-                <TableColumn fx:id="colcategorieFX" prefWidth="167.0" text="Catégorie" />
+                <TableColumn fx:id="colcategorieFX" prefWidth="135.199951171875" text="Catégorie" />
+                <TableColumn fx:id="colAlerteFX" prefWidth="112.0" text=" " />
             </columns>
         </TableView>
 
@@ -61,5 +62,6 @@
             <Font name="Arial Rounded MT Bold" size="23.0" />
          </font>
       </Button>
+      <Button fx:id="btnStatistiquesFX" layoutX="117.0" layoutY="608.0" onAction="#ouvrirStatistiques" style="-fx-background-color: #ffb524; -fx-background-radius: 20;" text="Statistiques" textFill="#45595b" />
     </children>
 </AnchorPane>

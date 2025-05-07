@@ -17,7 +17,7 @@
 
         <!-- Logo -->
         <ImageView fitHeight="54.0" fitWidth="58.0" layoutX="28.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
-            <image><Image url="@../../../../../../PIJava/Java_Pi_Firma/src/main/resources/Images/logoblanc2.png" /></image>
+            <image><Image url="@Images/logoblanc2.png" /></image>
         </ImageView>
 
         <!-- Titre -->
@@ -73,7 +73,7 @@
 
         <!-- BANNIÈRE large -->
         <ImageView fitHeight="308.0" fitWidth="1000.0" layoutY="109.0" pickOnBounds="true" preserveRatio="false">
-            <image><Image url="@../../../../../../PIJava/Java_Pi_Firma/src/main/resources/Images/ban.jpg" /></image>
+            <image><Image url="@Images/ban.jpg" /></image>
         </ImageView>
 
         <!-- Texte gauche -->
@@ -135,17 +135,17 @@
       </Label>
       <ImageView fitHeight="108.0" fitWidth="121.0" layoutX="178.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../PIJava/Java_Pi_Firma/src/main/resources/Images/sdg1.png" />
+            <Image url="@Images/sdg1.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="108.0" fitWidth="121.0" layoutX="445.0" layoutY="468.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../PIJava/Java_Pi_Firma/src/main/resources/Images/sdg2.png" />
+            <Image url="@Images/sdg2.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="108.0" fitWidth="121.0" layoutX="719.0" layoutY="469.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../PIJava/Java_Pi_Firma/src/main/resources/Images/sdg3.png" />
+            <Image url="@Images/sdg3.png" />
          </image>
       </ImageView>
       <Label layoutX="764.0" layoutY="628.0" text="Phone : +216 28 742 873" textFill="#d3d3d3">

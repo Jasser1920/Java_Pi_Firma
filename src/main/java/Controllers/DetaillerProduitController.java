@@ -4,6 +4,7 @@ import Models.Categorie;
 import Models.Produit;
 import Services.CategorieService;
 import Services.ProduitService;
+import Utils.PrixScraper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,6 +30,10 @@ public class DetaillerProduitController {
     @FXML private ComboBox<Categorie> categorieCombo;
     @FXML
     private Button retourFX;
+    @FXML
+    private Label prixSuggereLabel;
+
+
 
     public void setProduit(Produit produit) {
         this.produit = produit;
@@ -67,6 +72,11 @@ public class DetaillerProduitController {
                 setText((item == null || empty) ? "" : item.getNomCategorie());
             }
         });
+        nomField.textProperty().addListener((obs, oldVal, newVal) -> {
+            String suggestion = PrixScraper.getPrixPourProduit(newVal);
+            prixSuggereLabel.setText(suggestion != null ? "💡 Prix suggéré : " + suggestion : "");
+        });
+
     }
 
     @FXML

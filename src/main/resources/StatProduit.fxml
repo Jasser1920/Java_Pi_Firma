@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="tableauFX" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #F8F8F8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.StatProduitController">
+
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="93.0" layoutY="24.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="897.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="26.0" layoutY="675.0" stroke="#45595b" strokeType="INSIDE" width="1000.0" />
+
+        <Label layoutX="118.0" layoutY="31.0" text="Statistiques des Produits" textFill="#f8f8f8">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="30.0" />
+            </font>
+        </Label>
+
+        <Button fx:id="RetourFX" layoutX="27.0" layoutY="24.0" mnemonicParsing="false" onAction="#RetourProduit" prefHeight="50.0" prefWidth="60.0" style="-fx-background-color: #85c20a; -fx-background-radius: 100;" text="⬅" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="23.0" />
+            </font>
+        </Button>
+
+        <!-- ImageView 1: Produits par catégorie -->
+        <ImageView fx:id="graph1" fitHeight="187.0" fitWidth="322.0" layoutX="136.0" layoutY="193.0" preserveRatio="true" style="-fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 20; -fx-background-color: black;" />
+
+        <!-- ImageView 2: Stock total par catégorie -->
+        <ImageView fx:id="graph2" fitHeight="187.0" fitWidth="322.0" layoutX="556.0" layoutY="192.0" preserveRatio="true" style="-fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 20;" />
+
+        <!-- ImageView 3: Prix moyen par catégorie -->
+        <ImageView fx:id="graph3" fitHeight="187.0" fitWidth="322.0" layoutX="29.0" layoutY="431.0" preserveRatio="true" style="-fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 20;" />
+
+        <!-- ImageView 4: Produits expirants bientôt -->
+        <ImageView fx:id="graph4" fitHeight="187.0" fitWidth="322.0" layoutX="378.0" layoutY="431.0" preserveRatio="true" style="-fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 20;" />
+
+        <ImageView fx:id="graph5" fitHeight="162.0" fitWidth="190.0" layoutX="736.0" layoutY="444.0" preserveRatio="true" style="-fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 20;" />
+        <Label layoutX="214.0" layoutY="107.0" text="Catégorie:" />
+        <ComboBox fx:id="categorieFilterFX" layoutX="298.0" layoutY="102.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A;" />
+
+
+        <Button fx:id="btnFiltrer" layoutX="568.0" layoutY="103.0" prefWidth="90.0" style="-fx-background-color: #ffb524; -fx-background-radius: 20;" text="Filtrer" textFill="#45595b" />
+
+
+        <Button fx:id="btnReinitialiser" layoutX="687.0" layoutY="103.0" prefWidth="100.0" style="-fx-background-color: #45595b; -fx-background-radius: 20;" text="Réinitialiser" textFill="#ffb524" />
+        <Label layoutX="726.0" layoutY="465.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Produits avec stock faible (&lt; 5)" textFill="#85c20a" />
+        <ListView fx:id="stockFaibleListFX" layoutX="726.0" layoutY="506.0" prefHeight="100.0" prefWidth="244.0" style="-fx-background-color: #F8F8F8; -fx-border-radius: 20; -fx-background-radius: 20;" />
+
+
+
+
+    </children>
+</AnchorPane>
