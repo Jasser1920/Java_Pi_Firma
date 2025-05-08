@@ -3,6 +3,9 @@ package Services;
 import Models.Evenemment;
 import Utils.MyDatabase;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,4 +82,39 @@ public class EvenemmentService implements IService<Evenemment> {
         }
         return evenements;
     }
+
+    public List<Evenemment> afficher() {
+        List<Evenemment> evenements = new ArrayList<>();
+
+        String sql = "SELECT * FROM evenemment";
+
+        try (Statement ste = connection.createStatement();
+             ResultSet rs = ste.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Evenemment e = new Evenemment(
+                        rs.getInt("id"),
+                        null, // utilisateur non chargé ici
+                        rs.getString("titre"),
+                        rs.getString("desecription"), // attention : champ mal orthographié en BDD
+                        rs.getDate("date"),
+                        rs.getString("lieux"),
+                        rs.getString("image")
+                );
+
+                evenements.add(e);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("❌ Erreur lors de l'affichage des événements : " + ex.getMessage());
+        }
+
+        return evenements;
+    }
+
+
+
+
+
+
 }

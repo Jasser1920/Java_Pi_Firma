@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OpenStreetMap - Tunisia</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            width: 100%;
+            height: 300px; /* Match WebView height */
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    try {
+        var map = L.map('map').setView([36.8065, 10.1815], 7); // Zoom level 7 for Tunisia overview
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 19
+        }).addTo(map);
+
+        var marker = null;
+
+        map.on('click', function(e) {
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            marker = L.marker(e.latlng).addTo(map);
+
+            // Send coordinates to JavaFX controller
+            try {
+                window.java.onMapClick(e.latlng.lat, e.latlng.lng);
+                console.log("Sent to Java: lat=" + e.latlng.lat + ", lng=" + e.latlng.lng);
+            } catch (error) {
+                console.error("Error calling Java bridge for coordinates: " + error.message);
+            }
+
+            // Fetch weather data from OpenWeatherMap API
+            fetchWeatherData(e.latlng.lat, e.latlng.lng);
+        });
+
+        function fetchWeatherData(lat, lng) {
+            const apiKey = "958d8b0cf3404adfc5e6c53761b52a11";
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${apiKey}&units=metric&lang=fr`;
+
+            fetch(url, { mode: 'cors' }) // Explicitly set CORS mode
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const weatherInfo = {
+                        temperature: data.main.temp,
+                        description: data.weather[0].description,
+                        city: data.name
+                    };
+                    console.log("Weather data received:", weatherInfo);
+
+                    // Send weather data to JavaFX controller
+                    try {
+                        window.java.onWeatherUpdate(weatherInfo);
+                    } catch (error) {
+                        console.error("Error calling Java bridge for weather: " + error.message);
+                    }
+                })
+                .catch(error => {
+                    console.error("Fetch error details:", error);
+                    try {
+                        window.java.onWeatherError("Erreur lors de la récupération de la météo: " + error.message);
+                    } catch (err) {
+                        console.error("Error calling Java bridge for weather error: " + err.message);
+                    }
+                });
+        }
+
+        function setMarker(lat, lng) {
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            marker = L.marker([lat, lng]).addTo(map);
+            map.setView([lat, lng], 13);
+            console.log("Marker set from Java: lat=" + lat + ", lng=" + lng);
+        }
+
+        // Initial call to set marker at Tunis
+        setMarker(36.8065, 10.1815);
+    } catch (error) {
+        console.error("Error in map script: " + error.message);
+        alert("Failed to initialize map: " + error.message);
+    }
+</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93a6727b98bc53ee',t:'MTc0NjM0NTQ0NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
+</html>

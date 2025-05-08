@@ -17,6 +17,9 @@ import java.util.logging.Logger;
 
 public class EditTerrainController {
 
+    @FXML private Label idLabel; // New field for ID (display only)
+    @FXML private Label utilisateurLabel; // New field for Utilisateur (display only)
+    @FXML private Label dateCreationLabel; // New field for Date Creation (display only)
     @FXML private TextField descriptionField;
     @FXML private TextField superficieField;
     @FXML private TextField latitudeField;
@@ -42,6 +45,12 @@ public class EditTerrainController {
     }
 
     private void populateFields() {
+        // Populate display-only fields
+        idLabel.setText(String.valueOf(terrain.getId()));
+        utilisateurLabel.setText(terrain.getUtilisateur() != null ? terrain.getUtilisateur().toString() : "N/A");
+        dateCreationLabel.setText(terrain.getDateCreation() != null ? terrain.getDateCreation().toString() : "N/A");
+
+        // Populate editable fields
         descriptionField.setText(terrain.getDescription());
         superficieField.setText(String.valueOf(terrain.getSuperficie()));
         latitudeField.setText(terrain.getLatitude() != null ? String.valueOf(terrain.getLatitude()) : "");
@@ -104,6 +113,11 @@ public class EditTerrainController {
 
     @FXML
     private void handleCancel() {
+        returnToList();
+    }
+
+    @FXML
+    private void retour() {
         returnToList();
     }
 

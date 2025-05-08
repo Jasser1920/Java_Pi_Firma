@@ -32,12 +32,12 @@ public class SigninController {
             try {
                 // Fetch the user to check their role
                 Utilisateur user = utilisateurService.findByEmail(email);
-                if (user != null && "admin".equalsIgnoreCase(user.getRole())) {
+                if (user != null && "admin".equalsIgnoreCase(user.getRole().getLabel())) {
                     // Redirect to admin dashboard if the role is "admin"
                     SceneChanger.changeScene(event, "/admin_dashboard.fxml");
                 } else {
                     // Redirect to regular home for non-admin users
-                    SceneChanger.changeScene(event, "/home.fxml");
+                    SceneChanger.changeScene(event, "/Home.fxml");
                 }
             } catch (SQLException e) {
                 errorLabel.setText("Error fetching user details.");

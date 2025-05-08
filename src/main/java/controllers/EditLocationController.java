@@ -20,7 +20,7 @@ public class EditLocationController {
     @FXML private DatePicker dateDebutPicker;
     @FXML private DatePicker dateFinPicker;
     @FXML private TextField prixTotalField;
-    @FXML private ComboBox<String> modePaiementCombo;
+    @FXML private ComboBox<String> modePaiementComboBox; // Assurez-vous que c'est modePaiementComboBox
     @FXML private Button saveButton;
     @FXML private Button cancelButton;
 
@@ -46,10 +46,10 @@ public class EditLocationController {
         dateFinPicker.setValue(location.getDateFinLocalDate());
 
         prixTotalField.setText(String.valueOf(location.getPrixTotal()));
-        modePaiementCombo.setItems(FXCollections.observableArrayList(
+        modePaiementComboBox.setItems(FXCollections.observableArrayList(
                 "Carte bancaire", "Espèces", "Virement bancaire", "Chèque"
-        ));
-        modePaiementCombo.setValue(location.getModePaiement());
+        )); // Utilisation correcte de modePaiementComboBox
+        modePaiementComboBox.setValue(location.getModePaiement());
     }
 
     @FXML
@@ -70,7 +70,7 @@ public class EditLocationController {
 
     private boolean validateInputs() {
         // Validation logic remains the same as before
-        // ...
+        // Placeholder for validation (to be implemented if needed)
         return true;
     }
 
@@ -81,7 +81,7 @@ public class EditLocationController {
         location.setDateDebut(java.sql.Date.valueOf(dateDebut));
         location.setDateFin(java.sql.Date.valueOf(dateFin));
         location.setPrixTotal(Double.parseDouble(prixTotalField.getText().trim()));
-        location.setModePaiement(modePaiementCombo.getValue());
+        location.setModePaiement(modePaiementComboBox.getValue()); // Utilisation correcte de modePaiementComboBox
     }
 
     @FXML

@@ -1,61 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditTerrainController">
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditTerrainController">
     <children>
-        <!-- Bandeau titre -->
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="33.0" layoutX="74.0" layoutY="24.0"
-                   stroke="#85c20a" strokeType="INSIDE" width="516.0" />
-        <Label layoutX="89.0" layoutY="29.0" text="Modifier le terrain" textFill="#f8f8f8">
+        <!-- Header -->
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#4CAF50" height="50.0" width="600.0" />
+        <Label layoutX="20.0" layoutY="10.0" text="Modifier le Terrain" textFill="WHITE">
             <font>
-                <Font name="Arial Rounded MT Bold" size="20.0" />
+                <Font name="Arial Rounded MT Bold" size="24.0" />
             </font>
         </Label>
 
+        <!-- Form -->
+        <GridPane layoutX="20.0" layoutY="80.0" hgap="10" vgap="10">
+            <children>
+                <!-- Display-only fields -->
+                <Label text="ID :" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold;" />
+                <Label fx:id="idLabel" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-weight: bold;" />
+                <Label text="Utilisateur :" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold;" />
+                <Label fx:id="utilisateurLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-font-weight: bold;" />
+                <Label text="Date de Création :" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold;" />
+                <Label fx:id="dateCreationLabel" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-font-weight: bold;" />
 
-        <!-- Champs -->
-        <TextField fx:id="descriptionField" layoutX="89.0" layoutY="80.0" prefWidth="200.0" promptText="Description"
-                   style="-fx-background-color: transparent; -fx-border-width: 0 0 1 0; -fx-border-color: #85C20A;" />
-        <TextField fx:id="superficieField" layoutX="89.0" layoutY="120.0" prefWidth="200.0" promptText="Superficie"
-                   style="-fx-background-color: transparent; -fx-border-width: 0 0 1 0; -fx-border-color: #85C20A;" />
-        <TextField fx:id="latitudeField" layoutX="89.0" layoutY="160.0" prefWidth="200.0" promptText="Latitude"
-                   style="-fx-background-color: transparent; -fx-border-width: 0 0 1 0; -fx-border-color: #85C20A;" />
-        <TextField fx:id="longitudeField" layoutX="311.0" layoutY="80.0" prefWidth="200.0" promptText="Longitude"
-                   style="-fx-background-color: transparent; -fx-border-width: 0 0 1 0; -fx-border-color: #85C20A;" />
-        <TextField fx:id="prixLocationField" layoutX="311.0" layoutY="120.0" prefWidth="200.0" promptText="Prix location"
-                   style="-fx-background-color: transparent; -fx-border-width: 0 0 1 0; -fx-border-color: #85C20A;" />
+                <!-- Editable fields -->
+                <Label text="Description :" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-weight: bold;" />
+                <TextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="3" prefWidth="200.0" style="-fx-border-color: #4CAF50; -fx-border-radius: 5;" />
+                <Label text="Superficie (m²) :" GridPane.columnIndex="0" GridPane.rowIndex="4" style="-fx-font-weight: bold;" />
+                <TextField fx:id="superficieField" GridPane.columnIndex="1" GridPane.rowIndex="4" prefWidth="200.0" style="-fx-border-color: #4CAF50; -fx-border-radius: 5;" />
+                <Label text="Latitude :" GridPane.columnIndex="0" GridPane.rowIndex="5" style="-fx-font-weight: bold;" />
+                <TextField fx:id="latitudeField" GridPane.columnIndex="1" GridPane.rowIndex="5" prefWidth="200.0" style="-fx-border-color: #4CAF50; -fx-border-radius: 5;" />
+                <Label text="Longitude :" GridPane.columnIndex="2" GridPane.rowIndex="3" style="-fx-font-weight: bold;" />
+                <TextField fx:id="longitudeField" GridPane.columnIndex="3" GridPane.rowIndex="3" prefWidth="200.0" style="-fx-border-color: #4CAF50; -fx-border-radius: 5;" />
+                <Label text="Prix de location (€/jour) :" GridPane.columnIndex="2" GridPane.rowIndex="4" style="-fx-font-weight: bold;" />
+                <TextField fx:id="prixLocationField" GridPane.columnIndex="3" GridPane.rowIndex="4" prefWidth="200.0" style="-fx-border-color: #4CAF50; -fx-border-radius: 5;" />
+                <Label text="Disponible :" GridPane.columnIndex="2" GridPane.rowIndex="5" style="-fx-font-weight: bold;" />
+                <CheckBox fx:id="disponibiliteCheckBox" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            </children>
+        </GridPane>
 
+        <!-- Buttons -->
+        <HBox layoutX="20.0" layoutY="550.0" spacing="10">
+            <Button fx:id="saveButton" text="Enregistrer" onAction="#handleSave" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" />
+            <Button fx:id="cancelButton" text="Annuler" onAction="#handleCancel" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" />
+            <Button fx:id="retourFX" text="⬅ Retour" onAction="#retour" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" />
+        </HBox>
 
-        <Label layoutX="311.0" layoutY="160.0" text="Disponible :" />
-        <CheckBox fx:id="disponibiliteCheckBox" layoutX="390.0" layoutY="160.0" />
-
-
-        <!-- Boutons -->
-        <Button fx:id="saveButton" layoutX="420.0" layoutY="340.0" text="Enregistrer" onAction="#handleSave"
-                style="-fx-background-color: #FFB524; -fx-background-radius: 20;" textFill="#45595b" />
-        <Button fx:id="cancelButton" layoutX="330.0" layoutY="340.0" text="Annuler" onAction="#handleCancel"
-                style="-fx-background-color: #45595b; -fx-background-radius: 20;" textFill="#FFB524" />
-
-
-        <!-- Bouton retour -->
-        <Button fx:id="retourFX" layoutX="30.0" layoutY="25.0" text="⬅" textFill="WHITE"
-                style="-fx-background-color: #85C20A; -fx-background-radius: 100;" onAction="#retour">
-            <font>
-                <Font size="15.0" />
-            </font>
-        </Button>
-
-
-        <!-- Pied de page -->
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="15.0" layoutY="385.0"
-                   stroke="#45595b" strokeType="INSIDE" width="600.0" />
+        <!-- Footer -->
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="15.0" layoutY="585.0" width="600.0" />
     </children>
 </AnchorPane>
-

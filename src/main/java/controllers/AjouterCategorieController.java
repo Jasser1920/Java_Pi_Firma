@@ -22,9 +22,9 @@ public class AjouterCategorieController {
     @FXML
     private Button retourFX;
 
-    private AfficherCategorieController afficherCategorieController;
+    private controllers.AfficherCategorieController afficherCategorieController;
 
-    public void setAfficherCategorieController(AfficherCategorieController controller) {
+    public void setAfficherCategorieController(controllers.AfficherCategorieController controller) {
         this.afficherCategorieController = controller;
     }
 

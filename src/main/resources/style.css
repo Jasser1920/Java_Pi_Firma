@@ -1,0 +1,101 @@
+/* Firma Modern Green Theme - style.css */
+.root {
+    -fx-font-family: "Segoe UI", "Roboto", "Open Sans", sans-serif;
+    -fx-background-color: #f5f5f5;
+}
+
+.button {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-background-radius: 16px;
+    -fx-font-size: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(39,174,96,0.12), 8, 0.2, 0, 2);
+    -fx-cursor: hand;
+    -fx-padding: 10 24;
+    -fx-font-weight: bold;
+    -fx-border-width: 0;
+    -fx-transition: background-color 0.2s;
+}
+.button:hover {
+    -fx-background-color: #219150;
+}
+.form-container {
+    -fx-padding: 10px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #45595b;
+    -fx-border-width: 1px;
+}
+
+.form-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.form-field {
+    -fx-background-color: transparent;
+    -fx-border-width: 0px 0px 1px 0px;
+    -fx-border-color: #85C20A;
+    -fx-text-fill: #000000;
+    -fx-pref-width: 100%;
+}
+
+.form-field:focused {
+    -fx-border-color: #4CAF50;
+}
+
+.error-label {
+    -fx-text-fill: #ff4d4d;
+    -fx-font-size: 12px;
+}
+
+.button {
+    -fx-padding: 5px 15px;
+    -fx-font-size: 14px;
+}
+.error-label {
+    -fx-font-size: 0.9em;
+}
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0.2, 0, 6);
+    -fx-padding: 24;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 20px;
+}
+
+.label-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #27ae60;
+}
+
+.text-field, .combo-box, .date-picker {
+    -fx-background-radius: 12px;
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 12px;
+    -fx-padding: 8 12;
+}
+
+.table-view {
+    -fx-background-radius: 16px;
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 16px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 6, 0.15, 0, 2);
+}
+
+.table-column {
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-size: 14px;
+}
+
+.scroll-pane {
+    -fx-background: #f5f5f5;
+    -fx-background-color: #f5f5f5;
+    -fx-border-radius: 16px;
+}
+
+/* Add more classes as needed for icons, headers, etc. */

@@ -1,71 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.*?>
 <?import java.lang.String?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.UserTableController" prefWidth="640" prefHeight="500">
-    <!-- Top Control Panel for Search and Sort -->
-    <VBox layoutX="20" layoutY="20" spacing="10" prefWidth="600">
-        <!-- Search and Filter Controls -->
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="Search:" />
-            <TextField fx:id="searchField" promptText="Search by username or email..." prefWidth="200"
-                       onAction="#handleSearch" />
-            <ComboBox fx:id="searchTypeCombo" prefWidth="150">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="All" />
-                        <String fx:value="Username" />
-                        <String fx:value="Email" />
-                        <String fx:value="Role" />
-                    </FXCollections>
-                </items>
-                <value>
-                    <String fx:value="All" />
-                </value>
-            </ComboBox>
-            <Button fx:id="clearSearchButton" text="Clear" onAction="#clearSearch" />
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.UserTableController" prefWidth="1000" prefHeight="600" style="-fx-background-color: #f5f5f5;">
+    <VBox spacing="15" AnchorPane.topAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10">
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-padding: 10; -fx-background-radius: 5;">
+            <TextField fx:id="searchField" promptText="Rechercher par nom, prénom, email, etc..." HBox.hgrow="ALWAYS" style="-fx-background-radius: 5;"/>
+            <ComboBox fx:id="searchTypeCombo" promptText="Type" prefWidth="150"/>
+            <Button fx:id="refreshButton" text="Refresh" onAction="#refreshTable"/>
+            <Button fx:id="clearSearchButton" text="Réinitialiser" onAction="#clearSearch" style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
         </HBox>
 
-        <!-- Sort Controls -->
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="Sort By:" />
-            <ComboBox fx:id="sortColumnCombo" prefWidth="150">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="Username" />
-                        <String fx:value="Email" />
-                        <String fx:value="Role" />
-                    </FXCollections>
-                </items>
-                <value>
-                    <String fx:value="Username" />
-                </value>
-            </ComboBox>
-            <ToggleButton fx:id="sortOrderToggle" text="Ascending" selected="true"
-                          onAction="#toggleSortOrder" />
-            <Button fx:id="refreshButton" text="Refresh" onAction="#refreshTable" />
-        </HBox>
+        <!-- Table -->
+        <TableView fx:id="userTable" VBox.vgrow="ALWAYS" style="-fx-background-color: white; -fx-background-radius: 5;">
+            <columns>
+                <TableColumn fx:id="colNom" text="Nom" prefWidth="120"/>
+                <TableColumn fx:id="colPrenom" text="Prénom" prefWidth="120"/>
+                <TableColumn fx:id="colEmail" text="Email" prefWidth="150"/>
+                <TableColumn fx:id="colTelephone" text="Téléphone" prefWidth="120"/>
+                <TableColumn fx:id="colAdresse" text="Adresse" prefWidth="150"/>
+                <TableColumn fx:id="colRole" text="Rôle" prefWidth="100"/>
+                <TableColumn fx:id="colProfilePicture" text="Photo de Profil" prefWidth="120"/>
+                <TableColumn fx:id="colActions" text="Actions" prefWidth="120"/>
+            </columns>
+        </TableView>
     </VBox>
-
-    <!-- TableView -->
-    <TableView fx:id="userTable" layoutX="20" layoutY="100" prefWidth="600" prefHeight="380">
-        <columns>
-            <TableColumn fx:id="colUsername" text="Username" prefWidth="150" />
-            <TableColumn fx:id="colEmail" text="Email" prefWidth="180" />
-            <TableColumn fx:id="colRole" text="Role" prefWidth="100" />
-            <TableColumn fx:id="colActions" text="Actions" prefWidth="150" />
-        </columns>
-        <sortOrder>
-            <fx:reference source="colUsername" />
-        </sortOrder>
-    </TableView>
-
-
-
-    <!-- Padding -->
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20" />
-    </padding>
 </AnchorPane>

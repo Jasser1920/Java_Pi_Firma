@@ -24,7 +24,7 @@ public class ModifierUtilisateurController {
     @FXML private TextField motdepasseTF;
     @FXML private TextField telephoneTF;
     @FXML private TextField adresseTF;
-    @FXML private ChoiceBox<String> roleCB;
+    @FXML private ChoiceBox<Models.Role> roleCB;
     @FXML private TextField profilePictureTF;
     @FXML private Button enregistrerBtn;
     @FXML private ImageView imagePreview;
@@ -38,13 +38,23 @@ public class ModifierUtilisateurController {
     @FXML private Label profilePictureError;
 
     private Utilisateur utilisateur;
-
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
-    private static final Pattern PHONE_PATTERN = Pattern.compile("^\\d{8}$");
+    private static final Pattern PHONE_PATTERN = Pattern.compile("^\\d{8}$"); // Validate only the 8 digits
+    private static final String PHONE_PREFIX = "216";
 
     @FXML
     void initialize() {
-        roleCB.setItems(FXCollections.observableArrayList("Agriculture", "Client", "Association"));
+        roleCB.setItems(FXCollections.observableArrayList(Models.Role.AGRICULTURE, Models.Role.CLIENT, Models.Role.ASSOCIATION));
+        roleCB.setConverter(new javafx.util.StringConverter<Models.Role>() {
+            @Override
+            public String toString(Models.Role role) {
+                return role != null ? role.getLabel() : "";
+            }
+            @Override
+            public Models.Role fromString(String string) {
+                return Models.Role.fromString(string);
+            }
+        });
         validateForm();
     }
 
@@ -55,7 +65,13 @@ public class ModifierUtilisateurController {
             prenomTF.setText(utilisateur.getPrenom());
             emailTF.setText(utilisateur.getEmail());
             motdepasseTF.setText(utilisateur.getMotdepasse());
-            telephoneTF.setText(utilisateur.getTelephone());
+            // Extract the 8 digits after the 216 prefix
+            String telephone = utilisateur.getTelephone();
+            if (telephone != null && telephone.startsWith(PHONE_PREFIX)) {
+                telephoneTF.setText(telephone.substring(PHONE_PREFIX.length()));
+            } else {
+                telephoneTF.setText("");
+            }
             adresseTF.setText(utilisateur.getAdresse());
             roleCB.setValue(utilisateur.getRole());
             profilePictureTF.setText(utilisateur.getProfilePicture());
@@ -182,7 +198,9 @@ public class ModifierUtilisateurController {
     }
 
     private boolean validateProfilePicture() {
-        String picture = profilePictureTF.getText().trim();
+        String picture = profilePictureTF.getText();
+        if (picture == null) picture = "";
+        picture = picture.trim();
         if (picture.isEmpty()) {
             showError(profilePictureTF, profilePictureError, "Une photo est requise");
             return false;
@@ -213,7 +231,7 @@ public class ModifierUtilisateurController {
         utilisateur.setPrenom(prenomTF.getText().trim());
         utilisateur.setEmail(emailTF.getText().trim());
         utilisateur.setMotdepasse(motdepasseTF.getText().trim());
-        utilisateur.setTelephone(telephoneTF.getText().trim());
+        utilisateur.setTelephone(PHONE_PREFIX + telephoneTF.getText().trim()); // Combine prefix with user input
         utilisateur.setAdresse(adresseTF.getText().trim());
         utilisateur.setRole(roleCB.getValue());
         utilisateur.setProfilePicture(profilePictureTF.getText().trim());

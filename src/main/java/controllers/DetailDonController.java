@@ -26,7 +26,7 @@ public class DetailDonController {
 
 
     private Don don;
-    private AfficherDonController afficherDonController;
+    private controllers.AfficherDonController afficherDonController;
     private final DonService donService = new DonService();
 
     public void setDon(Don don) {
@@ -34,7 +34,7 @@ public class DetailDonController {
         remplirChamps();
     }
 
-    public void setAfficherDonController(AfficherDonController controller) {
+    public void setAfficherDonController(controllers.AfficherDonController controller) {
         this.afficherDonController = controller;
     }
 

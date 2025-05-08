@@ -56,9 +56,9 @@
                     <TextArea fx:id="descriptionFx" onKeyReleased="#validateForm" prefHeight="150.0" promptText="Entrez la description de la réclamation" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A;" styleClass="form-field" wrapText="true" />
                     <Label fx:id="descriptionError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
                 </VBox>
-            <rowConstraints>
-               <RowConstraints />
-            </rowConstraints>
+                <rowConstraints>
+                    <RowConstraints />
+                </rowConstraints>
             </GridPane>
 
             <!-- Form Buttons -->

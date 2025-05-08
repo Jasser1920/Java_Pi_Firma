@@ -13,7 +13,7 @@
         <Label text="Date Livraison :" />
         <DatePicker fx:id="dateLivraisonPicker" />
         <Label text="Statut :" />
-        <ComboBox fx:id="statutCombo" promptText="Choisir un statut" />
+        <ComboBox fx:id="statutLivraisonCombo" promptText="Choisir un statut" /> <!-- Changement de statutCombo à statutLivraisonCombo -->
 
         <!-- Boutons d'action -->
         <HBox spacing="10.0">

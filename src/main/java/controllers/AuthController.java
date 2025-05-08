@@ -40,6 +40,11 @@ public class AuthController {
                 return false;
             }
             System.out.println("User found: " + user.getEmail() + ", hashed password: " + user.getMotdepasse());
+            // Validate that the stored password is a valid BCrypt hash
+            if (!isValidBCryptHash(user.getMotdepasse())) {
+                System.out.println("Login failed for email: " + email + " - Invalid password hash format");
+                return false;
+            }
             if (BCrypt.checkpw(password, user.getMotdepasse()) && user.isVerified()) {
                 currentUser = user;
                 System.out.println("User logged in successfully: " + user.getEmail());
@@ -52,7 +57,19 @@ public class AuthController {
             System.err.println("SQLException during login: " + e.getMessage());
             e.printStackTrace();
             return false;
+        } catch (IllegalArgumentException e) {
+            System.err.println("Invalid password hash for email: " + email + ": " + e.getMessage());
+            return false;
         }
+    }
+
+    // Helper method to validate BCrypt hash format
+    private boolean isValidBCryptHash(String hash) {
+        if (hash == null || hash.isEmpty()) {
+            return false;
+        }
+        // BCrypt hashes start with $2a$ or $2b$ and are 60 characters long
+        return hash.matches("^\\$2[ab]\\$\\d{2}\\$[./A-Za-z0-9]{53}$");
     }
 
     public boolean signup(Utilisateur user) {

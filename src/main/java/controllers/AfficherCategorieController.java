@@ -78,7 +78,7 @@ public class AfficherCategorieController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterCategorie.fxml"));
             Parent root = loader.load();
 
-            AjouterCategorieController controller = loader.getController();
+            controllers.AjouterCategorieController controller = loader.getController();
             controller.setAfficherCategorieController(this);
 
             Stage stage = new Stage();
@@ -102,7 +102,7 @@ public class AfficherCategorieController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/DetailCategorie.fxml"));
             Parent root = loader.load();
 
-            DetailCategorieController controller = loader.getController();
+            controllers.DetailCategorieController controller = loader.getController();
             controller.setCategorie(selected);
             controller.setAfficherCategorieController(this);
             controller.initComboBox();

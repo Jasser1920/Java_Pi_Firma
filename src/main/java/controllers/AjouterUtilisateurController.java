@@ -1,5 +1,6 @@
 package controllers;
 
+import Models.Role;
 import Models.Utilisateur;
 import Services.UtilisateurService;
 import javafx.collections.FXCollections;
@@ -10,11 +11,13 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class AjouterUtilisateurController {
     @FXML
@@ -30,7 +33,7 @@ public class AjouterUtilisateurController {
     @FXML
     private TextField adresseTF;
     @FXML
-    private ChoiceBox<String> roleCB;
+    private ChoiceBox<Models.Role> roleCB;
     @FXML
     private TextField profilePictureTF;
     @FXML
@@ -56,11 +59,32 @@ public class AjouterUtilisateurController {
     private Label profilePictureError;
 
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
-    private static final Pattern PHONE_PATTERN = Pattern.compile("^\\d{8}$");
+    private static final Pattern PHONE_PATTERN = Pattern.compile("^\\d{8}$"); // Only validate the 8 digits
+    private static final String PHONE_PREFIX = "216";
 
     @FXML
     void initialize() {
-        roleCB.setItems(FXCollections.observableArrayList("Agriculture", "Client", "Association"));
+        // Filter out the "Admin" role
+        roleCB.setItems(FXCollections.observableArrayList(
+                java.util.Arrays.stream(Role.values())
+                        .filter(role -> !role.getLabel().equalsIgnoreCase("Admin"))
+                        .collect(Collectors.toList())
+        ));
+        roleCB.setConverter(new javafx.util.StringConverter<Models.Role>() {
+            @Override
+            public String toString(Models.Role role) {
+                return role != null ? role.getLabel() : "";
+            }
+            @Override
+            public Models.Role fromString(String string) {
+                return Role.fromString(string);
+            }
+        });
+
+        // Bind ImageView size to a fraction of the parent VBox width
+        imagePreview.fitWidthProperty().bind(((VBox) imagePreview.getParent()).widthProperty().multiply(0.4));
+        imagePreview.fitHeightProperty().bind(imagePreview.fitWidthProperty());
+
         validateForm();
     }
 
@@ -193,15 +217,19 @@ public class AjouterUtilisateurController {
         if (field != null) {
             field.setStyle("-fx-border-color: #F44336; -fx-border-width: 1.5px;");
         }
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
+        if (errorLabel != null) {
+            errorLabel.setText(message);
+            errorLabel.setVisible(true);
+        }
     }
 
     private void clearError(TextField field, Label errorLabel) {
         if (field != null) {
             field.setStyle("-fx-border-color: #4CAF50; -fx-border-width: 1.5px;");
         }
-        errorLabel.setVisible(false);
+        if (errorLabel != null) {
+            errorLabel.setVisible(false);
+        }
     }
 
     @FXML
@@ -209,38 +237,35 @@ public class AjouterUtilisateurController {
         if (!validateForm()) return;
 
         UtilisateurService us = new UtilisateurService();
-        AuthController authController = AuthController.getInstance(); // Use singleton instance
+        AuthController authController = AuthController.getInstance();
         String nom = nomTF.getText().trim();
         String prenom = prenomTF.getText().trim();
         String email = emailTF.getText().trim();
         String motdepasse = motdepasseTF.getText().trim();
-        String telephone = telephoneTF.getText().trim();
+        String telephone = PHONE_PREFIX + telephoneTF.getText().trim(); // Combine prefix with user input
         String adresse = adresseTF.getText().trim();
-        String role = roleCB.getValue();
+        Models.Role role = roleCB.getValue();
         String profilePicture = profilePictureTF.getText().trim();
 
         Utilisateur u = new Utilisateur(0, nom, prenom, email, motdepasse, telephone, adresse, role, profilePicture, false, false, null);
         try {
             if (authController.signup(u)) {
-                // Clear form
                 nomTF.clear();
                 prenomTF.clear();
                 emailTF.clear();
                 motdepasseTF.clear();
-                telephoneTF.clear();
+                telephoneTF.clear(); // Clear only the editable part
                 adresseTF.clear();
                 roleCB.setValue(null);
                 profilePictureTF.clear();
                 imagePreview.setImage(null);
                 imagePreview.setVisible(false);
 
-                // Show success message
                 Alert a = new Alert(Alert.AlertType.INFORMATION);
                 a.setTitle("Succès");
                 a.setContentText("Utilisateur ajouté avec succès. Veuillez vérifier votre email.");
                 a.showAndWait();
 
-                // Redirect to code confirmation page
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/codeConfirmation.fxml"));
                 Parent root = loader.load();
                 CodeConfirmationController controller = loader.getController();

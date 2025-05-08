@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RentTerrainController">
+    <children>
+        <!-- Header -->
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#4CAF50" height="50.0" width="400.0" />
+        <Label layoutX="20.0" layoutY="10.0" text="Louer un Terrain" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="20.0" />
+            </font>
+        </Label>
+
+        <!-- Form -->
+        <GridPane layoutX="20.0" layoutY="70.0" hgap="10" vgap="10">
+            <children>
+                <Label text="Sélectionner Terrain :" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold;" />
+                <ChoiceBox fx:id="terrainChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="250.0" />
+                <Label text="Date de Début :" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold;" />
+                <DatePicker fx:id="startDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="250.0" />
+                <Label text="Date de Fin :" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold;" />
+                <DatePicker fx:id="endDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" prefWidth="250.0" />
+            </children>
+        </GridPane>
+
+        <!-- Buttons -->
+        <HBox layoutX="20.0" layoutY="250.0" spacing="10">
+            <Button fx:id="rentButton" text="Louer" onAction="#handleRent" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" />
+            <Button fx:id="cancelButton" text="Annuler" onAction="#handleCancel" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" />
+        </HBox>
+
+        <!-- Footer -->
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="15.0" layoutY="285.0" width="400.0" />
+    </children>
+</AnchorPane>

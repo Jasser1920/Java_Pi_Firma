@@ -18,12 +18,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="1000.0" prefWidth="700.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterUtilisateurController">
+<AnchorPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="1000.0" prefWidth="700.0" style="-fx-background-color: #45595b;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterUtilisateurController">
     <stylesheets>
         <URL value="@css/styles.css" />
     </stylesheets>
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="1000.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1000.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="25.0" layoutY="24.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="58.0" />
         <Button layoutX="34.0" layoutY="32.0" mnemonicParsing="false" onAction="#goToSignIn" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: #85c20a; -fx-border-radius: 50;" text="🏠" textAlignment="CENTER" textFill="WHITE">
             <font>
@@ -32,7 +31,9 @@
         </Button>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="93.0" layoutY="24.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 30;" width="897.0" />
         <Text fill="WHITE" layoutX="124.8" layoutY="60.188671875" text="Ajouter un Nouvel Utilisateur" AnchorPane.leftAnchor="124.8" AnchorPane.topAnchor="31.799999999999997">
-
+            <font>
+                <Font name="Impact" size="21.0" />
+            </font>
         </Text>
 
         <VBox spacing="20" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="110.0">
@@ -43,37 +44,39 @@
                 </columnConstraints>
 
                 <VBox prefHeight="730.0" prefWidth="426.0" spacing="10" GridPane.columnIndex="0">
-                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Nom" />
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fillLey: #ffffff;" styleClass="form-label" text="Nom" />
                     <TextField fx:id="nomTF" onKeyReleased="#validateForm" promptText="Entrez le nom" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
-                    <Label fx:id="nomError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
 
                     <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fillLey: #ffffff;" styleClass="form-label" text="Prénom" />
                     <TextField fx:id="prenomTF" onKeyReleased="#validateForm" promptText="Entrez le prénom" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
                     <Label fx:id="prenomError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
 
-                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Email" />
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fillLey: #ffffff;" styleClass="form-label" text="Email" />
                     <TextField fx:id="emailTF" onKeyReleased="#validateForm" promptText="Entrez l'email" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
                     <Label fx:id="emailError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
 
-                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Mot de passe" />
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fillLey: #ffffff;" styleClass="form-label" text="Mot de passe" />
                     <PasswordField fx:id="motdepasseTF" onKeyReleased="#validateForm" promptText="Entrez le mot de passe" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
                     <Label fx:id="motdepasseError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
                 </VBox>
 
                 <VBox spacing="10" GridPane.columnIndex="1">
-                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Téléphone" />
-                    <TextField fx:id="telephoneTF" onKeyReleased="#validateForm" promptText="Entrez le téléphone" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fillLey: #ffffff;" styleClass="form-label" text="Téléphone" />
+                    <HBox alignment="CENTER_LEFT" spacing="5">
+                        <Label text="216" style="-fx-font-size: 14px; -fx-text-fill: #ffffff;" />
+                        <TextField fx:id="telephoneTF" onKeyReleased="#validateForm" promptText="Entrez le numéro (8 chiffres)" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
+                    </HBox>
                     <Label fx:id="telephoneError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
 
-                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Adresse" />
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fillLey: #ffffff;" styleClass="form-label" text="Adresse" />
                     <TextField fx:id="adresseTF" onKeyReleased="#validateForm" promptText="Entrez l'adresse" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
                     <Label fx:id="adresseError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
 
-                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Rôle" />
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fillLey: #ffffff;" styleClass="form-label" text="Rôle" />
                     <ChoiceBox fx:id="roleCB" onAction="#validateForm" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
                     <Label fx:id="roleError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" />
 
-                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" styleClass="form-label" text="Photo de profil" />
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fillLey: #ffffff;" styleClass="form-label" text="Photo de profil" />
                     <HBox alignment="CENTER_LEFT" spacing="10">
                         <Button onAction="#uploadPicture" style="-fx-background-color: #85C20A; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Choisir Image">
                             <font>

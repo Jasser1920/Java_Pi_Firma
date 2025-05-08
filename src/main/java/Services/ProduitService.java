@@ -90,4 +90,67 @@ public class ProduitService implements IService<Produit> {
 
         return produits;
     }
+
+    public int countByCategorie(int categorieId) {
+        int count = 0;
+        try {
+            String sql = "SELECT COUNT(*) FROM produit WHERE categorie_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, categorieId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public int sumQuantiteByCategorie(int categorieId) {
+        int sum = 0;
+        String sql = "SELECT SUM(quantite) FROM produit WHERE categorie_id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, categorieId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                sum = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return sum;
+    }
+
+    public double avgPrixByCategorie(int categorieId) {
+        double moyenne = 0;
+        String sql = "SELECT AVG(prix) FROM produit WHERE categorie_id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, categorieId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                moyenne = rs.getDouble(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return moyenne;
+    }
+
+    public List<Produit> afficher() {
+        try {
+            return rechercher(); // ta méthode déjà existante
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+
+
+
 }

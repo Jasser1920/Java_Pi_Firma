@@ -21,13 +21,13 @@ public class DetailCategorieController {
     private Button retourFX;
 
     private Categorie categorie;
-    private AfficherCategorieController afficherCategorieController;
+    private controllers.AfficherCategorieController afficherCategorieController;
 
     public void setCategorie(Categorie categorie) {
         this.categorie = categorie;
     }
 
-    public void setAfficherCategorieController(AfficherCategorieController controller) {
+    public void setAfficherCategorieController(controllers.AfficherCategorieController controller) {
         this.afficherCategorieController = controller;
     }
 

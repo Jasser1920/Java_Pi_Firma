@@ -1,9 +1,12 @@
 package controllers;
 
+
 import Models.Categorie;
 import Models.Produit;
 import Services.CategorieService;
 import Services.ProduitService;
+import Utils.CohereTextImprover;
+import Utils.PrixScraper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -25,11 +28,20 @@ public class AjouterProduitController {
     @FXML private TextArea descriptionFX;
     @FXML private ComboBox<Categorie> menuCategorieFX;
     @FXML private Button retourFX;
+    @FXML private TextArea descriptionAmelioreeFX;
+    @FXML private Button btnAmeliorerFX;
+    @FXML private Button btnRevenirFX;
+    private String ancienneDescription = "";
+    @FXML
+    private Label prixSuggereLabel;
 
 
-    private AfficherProduitController afficherProduitController;
 
-    public void setAfficherProduitController(AfficherProduitController controller) {
+
+
+    private controllers.AfficherProduitController afficherProduitController;
+
+    public void setAfficherProduitController(controllers.AfficherProduitController controller) {
         this.afficherProduitController = controller;
     }
 
@@ -37,6 +49,11 @@ public class AjouterProduitController {
     public void initialize() throws SQLException {
         CategorieService cs = new CategorieService();
         menuCategorieFX.getItems().addAll(cs.rechercher());
+        nomFX.textProperty().addListener((obs, oldVal, newVal) -> {
+            String suggestion = PrixScraper.getPrixPourProduit(newVal);
+            prixSuggereLabel.setText(suggestion != null ? "💡 Prix suggéré : " + suggestion : "");
+        });
+
     }
 
     @FXML
@@ -147,4 +164,34 @@ public class AjouterProduitController {
         stage.close(); // ou une autre logique si tu veux revenir à une vue précise
     }
 
+    @FXML
+    private void handleImproveDescription() {
+        String input = descriptionFX.getText();
+        if (input == null || input.isEmpty()) {
+            descriptionAmelioreeFX.setText("Écris une description d’abord !");
+            return;
+        }
+
+        String result = CohereTextImprover.improveText(input);
+        descriptionAmelioreeFX.setText(result);
+    }
+
+    @FXML
+    private void ameliorerDescription() {
+        String input = descriptionFX.getText();
+        if (input == null || input.isEmpty()) {
+            showAlert("Écris une description d’abord !");
+            return;
+        }
+
+        ancienneDescription = input;
+        String result = CohereTextImprover.improveText(input);
+        descriptionFX.setText(result);
+    }
+    @FXML
+    private void restaurerDescription() {
+        if (!ancienneDescription.isEmpty()) {
+            descriptionFX.setText(ancienneDescription);
+        }
+    }
 }

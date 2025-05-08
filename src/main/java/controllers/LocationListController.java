@@ -5,7 +5,6 @@ import Models.Terrain;
 import Services.LocationService;
 import Services.TerrainService;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -19,7 +18,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -29,14 +27,13 @@ import java.util.logging.Logger;
 public class LocationListController {
 
     @FXML private TableView<Location> locationTable;
-    @FXML private TableColumn<Location, Integer> idColumn;
     @FXML private TableColumn<Location, String> terrainColumn;
     @FXML private TableColumn<Location, Date> dateDebutColumn;
     @FXML private TableColumn<Location, Date> dateFinColumn;
     @FXML private TableColumn<Location, Double> prixTotalColumn;
     @FXML private TableColumn<Location, String> modePaiementColumn;
     @FXML private TableColumn<Location, Void> actionColumn;
-    @FXML private Button createLocationButton;
+    @FXML private Button homeFX;
 
     private LocationService locationService = new LocationService();
     private TerrainService terrainService = new TerrainService();
@@ -48,7 +45,6 @@ public class LocationListController {
     }
 
     private void setupTableColumns() {
-        idColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
         terrainColumn.setCellValueFactory(cellData -> {
             Terrain terrain = cellData.getValue().getTerrain();
             return new SimpleStringProperty(terrain != null ? terrain.getDescription() : "N/A");
@@ -67,11 +63,11 @@ public class LocationListController {
                 hBox.setSpacing(5);
                 editButton.setOnAction(event -> {
                     Location location = getTableView().getItems().get(getIndex());
-                    handleEditLocation(location);
+                    handleEditLocationFromSidebar(location);
                 });
                 deleteButton.setOnAction(event -> {
                     Location location = getTableView().getItems().get(getIndex());
-                    handleDeleteLocation(location);
+                    handleDeleteLocationFromSidebar(location);
                 });
             }
 
@@ -105,7 +101,7 @@ public class LocationListController {
             stage.setScene(new Scene(root));
             stage.setTitle("Sélectionner un Terrain");
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initOwner(createLocationButton.getScene().getWindow());
+            stage.initOwner(locationTable.getScene().getWindow()); // Updated to use locationTable
             stage.showAndWait();
 
             loadLocationData();
@@ -115,15 +111,19 @@ public class LocationListController {
         }
     }
 
-    private void handleEditLocation(Location location) {
+    @FXML
+    private void handleEditLocationFromSidebar() {
+        Location selectedLocation = locationTable.getSelectionModel().getSelectedItem();
+        if (selectedLocation == null) {
+            showAlert("Erreur", "Veuillez sélectionner une location à modifier.");
+            return;
+        }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditLocation.fxml"));
             Parent root = loader.load();
-
             EditLocationController controller = loader.getController();
-            controller.setLocation(location);
+            controller.setLocation(selectedLocation);
             controller.setRefreshCallback(this::loadLocationData);
-
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Modifier Location");
@@ -136,12 +136,40 @@ public class LocationListController {
         }
     }
 
-    private void handleDeleteLocation(Location location) {
+    private void handleEditLocationFromSidebar(Location location) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditLocation.fxml"));
+            Parent root = loader.load();
+            EditLocationController controller = loader.getController();
+            controller.setLocation(location);
+            controller.setRefreshCallback(this::loadLocationData);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Modifier Location");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(locationTable.getScene().getWindow());
+            stage.show();
+        } catch (IOException e) {
+            Logger.getLogger(LocationListController.class.getName()).log(Level.SEVERE, null, e);
+            showAlert("Erreur", "Impossible d'ouvrir la fenêtre de modification");
+        }
+    }
+
+    @FXML
+    private void handleDeleteLocationFromSidebar() {
+        Location selectedLocation = locationTable.getSelectionModel().getSelectedItem();
+        if (selectedLocation == null) {
+            showAlert("Erreur", "Veuillez sélectionner une location à supprimer.");
+            return;
+        }
+        handleDeleteLocationFromSidebar(selectedLocation);
+    }
+
+    private void handleDeleteLocationFromSidebar(Location location) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText("Supprimer la location");
         alert.setContentText("Êtes-vous sûr de vouloir supprimer cette location ?");
-
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 try {
@@ -167,19 +195,18 @@ public class LocationListController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    @FXML private Button homeFX;
+
     @FXML
     private void ouvrirHome() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Home.fxml"));
             Parent root = loader.load();
-            Stage stage = (Stage) homeFX.getScene().getWindow(); // remplace la scène actuelle
+            Stage stage = (Stage) homeFX.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Accueil");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-
         }
     }
 }

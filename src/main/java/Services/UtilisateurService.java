@@ -1,5 +1,6 @@
 package Services;
 
+import Models.Role;
 import Models.Utilisateur;
 import Utils.MyDatabase;
 
@@ -18,6 +19,30 @@ public class UtilisateurService implements IService<Utilisateur> {
 
     private Connection connection = MyDatabase.getInstance().getConnection();
 
+    public Utilisateur findById(int id) throws SQLException {
+        String req = "SELECT * FROM utilisateur WHERE id = ?";
+        PreparedStatement ps = connection.prepareStatement(req);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return new Utilisateur(
+                    rs.getInt("id"),
+                    rs.getString("nom"),
+                    rs.getString("prenom"),
+                    rs.getString("email"),
+                    rs.getString("motdepasse"),
+                    rs.getString("telephone"),
+                    rs.getString("adresse"),
+                    Role.fromString(rs.getString("role")),
+                    rs.getString("profile_picture"),
+                    rs.getBoolean("blocked"),
+                    rs.getBoolean("is_verified"),
+                    rs.getString("confirmation_code")
+            );
+        }
+        return null;
+    }
+
     public Utilisateur findByEmail(String email) throws SQLException {
         String req = "SELECT * FROM utilisateur WHERE email = ?";
         PreparedStatement ps = connection.prepareStatement(req);
@@ -32,7 +57,7 @@ public class UtilisateurService implements IService<Utilisateur> {
                     rs.getString("motdepasse"),
                     rs.getString("telephone"),
                     rs.getString("adresse"),
-                    rs.getString("role"),
+                    Role.fromString(rs.getString("role")), // Use fromString instead of valueOf
                     rs.getString("profile_picture"),
                     rs.getBoolean("blocked"),
                     rs.getBoolean("is_verified"),
@@ -53,7 +78,7 @@ public class UtilisateurService implements IService<Utilisateur> {
         ps.setString(4, utilisateur.getMotdepasse());
         ps.setString(5, utilisateur.getTelephone());
         ps.setString(6, utilisateur.getAdresse());
-        ps.setString(7, utilisateur.getRole());
+        ps.setString(7, utilisateur.getRole().name());
         ps.setString(8, utilisateur.getProfilePicture());
         ps.setBoolean(9, utilisateur.isBlocked());
         ps.setBoolean(10, utilisateur.isVerified());
@@ -73,7 +98,7 @@ public class UtilisateurService implements IService<Utilisateur> {
         ps.setString(4, utilisateur.getMotdepasse());
         ps.setString(5, utilisateur.getTelephone());
         ps.setString(6, utilisateur.getAdresse());
-        ps.setString(7, utilisateur.getRole());
+        ps.setString(7, utilisateur.getRole().name());
         ps.setString(8, utilisateur.getProfilePicture());
         ps.setBoolean(9, utilisateur.isBlocked());
         ps.setBoolean(10, utilisateur.isVerified());
@@ -101,6 +126,8 @@ public class UtilisateurService implements IService<Utilisateur> {
         PreparedStatement ps = connection.prepareStatement(req);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
+            String roleString = rs.getString("role");
+            Role role = Role.fromString(roleString); // Use fromString instead of valueOf
             Utilisateur utilisateur = new Utilisateur(
                     rs.getInt("id"),
                     rs.getString("nom"),
@@ -109,7 +136,7 @@ public class UtilisateurService implements IService<Utilisateur> {
                     rs.getString("motdepasse"),
                     rs.getString("telephone"),
                     rs.getString("adresse"),
-                    rs.getString("role"),
+                    role,
                     rs.getString("profile_picture"),
                     rs.getBoolean("blocked"),
                     rs.getBoolean("is_verified"),

@@ -17,6 +17,7 @@
             <TableColumn fx:id="totalColumn" prefWidth="80.0" text="Total" />
             <TableColumn fx:id="statutColumn" prefWidth="100.0" text="Statut" />
             <TableColumn fx:id="actionColumn" prefWidth="150.0" text="Actions" /> <!-- Augmenté la largeur pour accueillir deux boutons -->
+            <TableColumn fx:id="actionFactureColumn" prefWidth="150" text="Facture" />
         </columns>
     </TableView>
     <HBox layoutX="14.0" layoutY="320.0" spacing="10.0" />
@@ -26,12 +27,13 @@
             <Font name="Arial Rounded MT Bold" size="30.0" />
         </font>
     </Label>
-    <Button fx:id="homeFX" layoutX="27.0" layoutY="24.0" mnemonicParsing="false" onAction="#ouvrirHome" prefHeight="49.0" prefWidth="57.0" style="-fx-background-color: #85c20a; -fx-background-radius: 100;" text="🏠" textFill="#f8f8f8">
+    <Button layoutX="14.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #85c20a; -fx-background-radius: 100;" text="🏠" textFill="WHITE">
         <font>
             <Font name="Arial Rounded MT Bold" size="23.0" />
         </font>
     </Button>
     <Button layoutX="218.0" layoutY="403.0" onAction="#goToAfficherLivraison" style="-fx-background-color: #ffb524; -fx-background-radius: 20;" text="Gérer Livraisons" textFill="#45595b" />
     <Button fx:id="addButton" layoutX="69.0" layoutY="403.0" onAction="#goToAjouterCommande" style="-fx-background-color: #45595b; -fx-background-radius: 20;" text="Ajouter une Commande" textFill="#ffb524" />
+    <Button fx:id="statsButton" layoutX="367.0" layoutY="403.0" onAction="#goToStatistiques" style="-fx-background-color: #85c20a; -fx-background-radius: 20; -fx-text-fill: white;" text="Statistiques" prefWidth="140.0" />
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="26.0" layoutY="675.0" stroke="#45595b" strokeType="INSIDE" width="1000.0" />
 </AnchorPane>

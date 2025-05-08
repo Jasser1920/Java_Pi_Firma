@@ -67,7 +67,10 @@
                     <children>
                         <Label fx:id="telephoneError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" visible="false" />
                         <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Téléphone" />
-                        <TextField fx:id="telephoneTF" onKeyReleased="#validateForm" promptText="Entrez le numéro de téléphone" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
+                        <HBox alignment="CENTER_LEFT" spacing="5">
+                            <Label text="216" style="-fx-font-size: 14px; -fx-text-fill: #ffffff;" />
+                            <TextField fx:id="telephoneTF" onKeyReleased="#validateForm" promptText="Entrez le numéro (8 chiffres)" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #ffffff;" styleClass="form-field" />
+                        </HBox>
                         <Label fx:id="adresseError" style="-fx-text-fill: #ff4d4d;" styleClass="error-label" visible="false" />
 
                         <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Adresse" />

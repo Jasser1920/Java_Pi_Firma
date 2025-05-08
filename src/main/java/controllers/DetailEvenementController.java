@@ -24,7 +24,7 @@ public class DetailEvenementController {
 
 
     private Evenemment evenement;
-    private AfficherEvenementController afficherEvenementController;
+    private controllers.AfficherEvenementController afficherEvenementController;
 
     public void setEvenement(Evenemment evenement) {
         this.evenement = evenement;
@@ -38,7 +38,7 @@ public class DetailEvenementController {
 
     }
 
-    public void setAfficherEvenementController(AfficherEvenementController controller) {
+    public void setAfficherEvenementController(controllers.AfficherEvenementController controller) {
         this.afficherEvenementController = controller;
     }
 

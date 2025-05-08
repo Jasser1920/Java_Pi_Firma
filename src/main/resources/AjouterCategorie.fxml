@@ -10,8 +10,8 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterCategorieController">
 
     <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="15.0" layoutY="389.0" stroke="#45595b" strokeType="INSIDE" width="600.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="33.0" layoutX="64.0" layoutY="30.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 30;" width="516.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="15.0" layoutY="389.0" stroke="#45595b" strokeType="INSIDE" width="600.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="33.0" layoutX="64.0" layoutY="30.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 30;" width="516.0" />
         <Label layoutX="75.0" layoutY="32.0" text="Ajouter une Catégorie" textFill="#f8f8f8">
             <font>
                 <Font name="Arial Rounded MT Bold" size="20.0" />
@@ -23,10 +23,10 @@
 
         <Button fx:id="btnAjouter" layoutX="482.0" layoutY="327.0" onAction="#ajouterCategorie" prefWidth="80.0" style="-fx-background-radius: 20; -fx-background-color: #FFB524;" text="Ajouter" textFill="#45595a" />
         <Button fx:id="btnAnnuler" layoutX="38.0" layoutY="326.0" onAction="#annulerAjout" prefWidth="80.0" style="-fx-background-radius: 20; -fx-background-color: #F8F8F8; -fx-border-color: #45595B; -fx-border-radius: 20;" text="Annuler" textFill="#45595b" />
-      <Button fx:id="retourFX" layoutX="20.0" layoutY="31.0" mnemonicParsing="false" style="-fx-background-color: #85C20A; -fx-background-radius: 100;" text="⬅" textAlignment="CENTER" textFill="WHITE" onAction="#retour">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
+        <Button fx:id="retourFX" layoutX="20.0" layoutY="31.0" mnemonicParsing="false" style="-fx-background-color: #85C20A; -fx-background-radius: 100;" text="⬅" textAlignment="CENTER" textFill="WHITE" onAction="#retour">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Button>
     </children>
 </AnchorPane>

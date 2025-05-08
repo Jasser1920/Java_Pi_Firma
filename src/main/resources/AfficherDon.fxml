@@ -13,14 +13,14 @@
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherDonController">
 
     <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f8f8f8" height="50.0" layoutX="328.0" layoutY="99.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="361.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="93.0" layoutY="24.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="897.0" />
-      <Label layoutX="118.0" layoutY="31.0" text="Liste des dons" textFill="#f8f8f8">
-         <font>
-            <Font name="Arial Rounded MT Bold" size="30.0" />
-         </font>
-      </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="26.0" layoutY="675.0" stroke="#45595b" strokeType="INSIDE" width="1000.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f8f8f8" height="50.0" layoutX="328.0" layoutY="99.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="361.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="93.0" layoutY="24.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="897.0" />
+        <Label layoutX="118.0" layoutY="31.0" text="Liste des dons" textFill="#f8f8f8">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="30.0" />
+            </font>
+        </Label>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="26.0" layoutY="675.0" stroke="#45595b" strokeType="INSIDE" width="1000.0" />
         <Label fx:id="nbDonLabel" layoutX="401.0" layoutY="111.0" text="Nombre de dons : 0" textFill="#ffb524">
             <font>
                 <Font name="Arial Rounded MT Bold" size="21.0" />
@@ -55,10 +55,10 @@
         <Button fx:id="btnAjouter" layoutX="708.0" layoutY="609.0" prefWidth="80.0" style="-fx-background-color: #ffb524; -fx-background-radius: 20;" text="Ajouter" textFill="#45595b" />
         <Button fx:id="btnVoir" layoutX="808.0" layoutY="609.0" prefWidth="80.0" style="-fx-background-color: #45595b; -fx-background-radius: 20;" text="Voir" textFill="#ffb524" />
         <Button fx:id="btnRetour" layoutX="128.0" layoutY="608.0" prefHeight="27.0" prefWidth="87.0" style="-fx-background-color: #f8f8f8; -fx-background-radius: 20; -fx-border-color: #45595b; -fx-border-radius: 20;" text="Evènements" />
-      <Button fx:id="homeFX" layoutX="27.0" layoutY="24.0" mnemonicParsing="false" onAction="#ouvrirHome" prefHeight="49.0" prefWidth="57.0" style="-fx-background-color: #85c20a; -fx-background-radius: 100;" text="🏠" textFill="#f8f8f8">
-         <font>
-            <Font name="Arial Rounded MT Bold" size="23.0" />
-         </font>
-      </Button>
+        <Button fx:id="homeFX" layoutX="27.0" layoutY="24.0" mnemonicParsing="false" onAction="#ouvrirHome" prefHeight="49.0" prefWidth="57.0" style="-fx-background-color: #85c20a; -fx-background-radius: 100;" text="🏠" textFill="#f8f8f8">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="23.0" />
+            </font>
+        </Button>
     </children>
 </AnchorPane>

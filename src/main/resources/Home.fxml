@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
@@ -9,56 +10,59 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.control.Hyperlink?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeController">
+<AnchorPane prefHeight="700.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeController">
+
+    <stylesheets>
+        <URL value="@style.css" />
+    </stylesheets>
     <children>
-        <!-- Barre verte -->
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="16.0" layoutY="14.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="964.0" />
-
-        <!-- Navigation Bar -->
-        <HBox layoutX="16.0" layoutY="14.0" prefHeight="50.0" prefWidth="964.0" alignment="CENTER_LEFT" spacing="10">
-            <padding>
-                <Insets left="10.0" right="10.0" />
-            </padding>
+        <!-- Modern Navigation Bar -->
+        <HBox alignment="CENTER_LEFT" layoutX="16.0" layoutY="14.0" prefHeight="130.0" prefWidth="1442.0" spacing="18" style="-fx-background-color: white; -fx-background-radius: 18; -fx-padding: 0 24 0 24; -fx-effect: dropshadow(gaussian, #d3d3d3, 6, 0.15, 0, 2);">
             <!-- Logo -->
-            <ImageView fitHeight="50.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                 <image><Image url="@Images/logoblanc.png" /></image>
             </ImageView>
-
             <!-- Titre -->
-            <Label text="Firma" textFill="WHITE">
-                <font><Font name="Arial Rounded MT Bold" size="23.0" /></font>
-            </Label>
+            <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #85c20a;" text="Firma" />
 
-            <!-- Hyperlinks avec fx:id -->
-            <Hyperlink fx:id="produitLink" text="Produit" textFill="WHITE">
-                <font><Font name="Arial Rounded MT Bold" size="13.0" /></font>
-            </Hyperlink>
-            <Hyperlink fx:id="reclamationLink" text="Reclamation" textFill="WHITE">
-                <font><Font name="Arial Rounded MT Bold" size="13.0" /></font>
-            </Hyperlink>
-            <Hyperlink fx:id="reponseLink" text="Response" textFill="WHITE">
-                <font><Font name="Arial Rounded MT Bold" size="13.0" /></font>
-            </Hyperlink>
+            <!-- Navigation Links -->
+            <Hyperlink fx:id="produitLink" style="-fx-text-fill: #333; -fx-font-size: 15px; -fx-underline: false;" text="Produit" />
+            <Hyperlink fx:id="reclamationLink" style="-fx-text-fill: #333; -fx-font-size: 15px; -fx-underline: false;" text="Reclamation" />
+            <Hyperlink fx:id="reponseLink" style="-fx-text-fill: #333; -fx-font-size: 15px; -fx-underline: false;" text="Response" />
+            <Hyperlink fx:id="terrainLink" style="-fx-text-fill: #333; -fx-font-size: 15px; -fx-underline: false;" text="Terrain" />
+            <Hyperlink fx:id="commandLink" style="-fx-text-fill: #333; -fx-font-size: 15px; -fx-underline: false;" text="Commande" />
+            <Hyperlink fx:id="donLink" style="-fx-text-fill: #333; -fx-font-size: 15px; -fx-underline: false;" text="Don" />
+            <Hyperlink fx:id="evenementLink" style="-fx-text-fill: #333; -fx-font-size: 15px; -fx-underline: false;" text="Evenement" />
 
-            <!-- Spacer to push user info to the right -->
-            <HBox HBox.hgrow="ALWAYS" />
+            <!-- Spacer -->
+            <Pane HBox.hgrow="ALWAYS" />
 
-            <!-- User Name Label -->
-            <Label fx:id="userNameLabel" textFill="WHITE">
-                <font><Font name="Arial Rounded MT Bold" size="13.0" /></font>
-            </Label>
+            <!-- Welcome Label -->
+            <Label fx:id="welcomeLabel" style="-fx-font-size: 15px; -fx-text-fill: #555;" />
+            <!-- User Role Label -->
+            <Label fx:id="userRoleLabel" style="-fx-font-size: 14px; -fx-text-fill: #888;" />
+            <!-- Current User Name -->
+            <Label fx:id="userNameLabel" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333;" />
+
+            <!-- Admin Panel -->
+            <VBox fx:id="adminPanel" spacing="5" visible="false">
+                <Button fx:id="profileButton" onAction="#handleProfile" text="Profile" />
+                <Button fx:id="reclamationsButton" onAction="#handleReclamations" text="Reclamations" />
+                <Button fx:id="logoutButton" onAction="#handleLogout" text="Logout" />
+            </VBox>
 
             <!-- User Icon with Dropdown Menu -->
             <MenuButton fx:id="userMenu" style="-fx-background-color: transparent;" text="👤">
                 <items>
-                    <MenuItem fx:id="profileItem" text="Profile" onAction="#showProfile" />
-                    <MenuItem fx:id="reclamationItem" text="Reclamation" onAction="#showReclamation" />
-                    <MenuItem fx:id="logoutItem" text="Logout" onAction="#logout" />
+                    <MenuItem fx:id="profileItem" onAction="#showProfile" text="Profile" />
+                    <MenuItem fx:id="reclamationItem" onAction="#showReclamation" text="Reclamation" />
+                    <MenuItem fx:id="logoutItem" onAction="#logout" text="Logout" />
                 </items>
                 <font><Font name="Arial Rounded MT Bold" size="16.0" /></font>
             </MenuButton>
@@ -82,32 +86,32 @@
         </Label>
 
         <!-- Rectangle jaune et image fruits (à droite) -->
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffb524" height="277.0" layoutX="556.0" layoutY="124.0" stroke="#ffb524" width="413.0" />
-        <ImageView fitHeight="286.0" fitWidth="399.0" layoutX="563.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffb524" height="277.0" layoutX="990.0" layoutY="164.0" stroke="#ffb524" width="413.0" />
+        <ImageView fitHeight="286.0" fitWidth="399.0" layoutX="997.0" layoutY="167.0" pickOnBounds="true" preserveRatio="true">
             <image><Image url="@Images/fruits.png" /></image>
         </ImageView>
 
         <!-- Bandeau bas bleu -->
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="89.0" layoutY="611.0" stroke="#45595b" strokeType="INSIDE" strokeWidth="2.0" width="1000.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="89.0" layoutY="611.0" stroke="#45595b" strokeType="INSIDE" strokeWidth="2.0" width="1470.0" />
         <Circle fill="#ffb524" layoutX="229.0" layoutY="516.0" radius="67.0" stroke="#ffb524" strokeType="INSIDE" />
-        <Circle fill="#ffb524" layoutX="500.0" layoutY="516.0" radius="67.0" stroke="#ffb524" strokeType="INSIDE" />
-        <Circle fill="#ffb524" layoutX="770.0" layoutY="516.0" radius="67.0" stroke="#ffb524" strokeType="INSIDE" />
+        <Circle fill="#ffb524" layoutX="637.0" layoutY="522.0" radius="67.0" stroke="#ffb524" strokeType="INSIDE" />
+        <Circle fill="#ffb524" layoutX="1149.0" layoutY="516.0" radius="67.0" stroke="#ffb524" strokeType="INSIDE" />
         <Label layoutX="14.0" layoutY="621.0" text="Firma" textFill="#85c20a">
             <font><Font name="Arial Rounded MT Bold" size="42.0" /></font>
         </Label>
         <Label layoutX="16.0" layoutY="663.0" text="Produits frais" textFill="#ffb323">
             <font><Font name="Arial Rounded MT Bold" size="15.0" /></font>
         </Label>
-        <Label layoutX="764.0" layoutY="646.0" text="Email : firmaprojectpi@gmail.com" textFill="#d3d3d3">
+        <Label layoutX="1244.0" layoutY="646.0" text="Email : firmaprojectpi@gmail.com" textFill="#d3d3d3">
             <font><Font name="Arial Rounded MT Bold" size="13.0" /></font>
         </Label>
-        <Label layoutX="764.0" layoutY="668.0" text="Adresse : Esprit, Petite Ariana" textFill="#d3d3d3">
+        <Label layoutX="1244.0" layoutY="668.0" text="Adresse : Esprit, Petite Ariana" textFill="#d3d3d3">
             <font><Font name="Arial Rounded MT Bold" size="13.0" /></font>
         </Label>
-        <Label layoutX="669.0" layoutY="628.0" text="Contact" textFill="#f8f8f8">
+        <Label layoutX="1149.0" layoutY="628.0" text="Contact" textFill="#f8f8f8">
             <font><Font name="Arial Rounded MT Bold" size="16.0" /></font>
         </Label>
-        <Label layoutX="764.0" layoutY="628.0" text="Phone : +216 28 742 873" textFill="#d3d3d3">
+        <Label layoutX="1244.0" layoutY="628.0" text="Phone : +216 28 742 873" textFill="#d3d3d3">
             <font><Font name="Arial Rounded MT Bold" size="13.0" /></font>
         </Label>
     </children>

@@ -27,9 +27,9 @@ public class AjouterDonController {
     @FXML private Button retourFX;
 
 
-    private AfficherDonController afficherDonController;
+    private controllers.AfficherDonController afficherDonController;
 
-    public void setAfficherDonController(AfficherDonController controller) {
+    public void setAfficherDonController(controllers.AfficherDonController controller) {
         this.afficherDonController = controller;
     }
 

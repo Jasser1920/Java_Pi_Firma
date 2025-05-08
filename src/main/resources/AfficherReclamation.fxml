@@ -10,20 +10,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="885.0" prefWidth="986.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherReclamationController">
+<AnchorPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="885.0" prefWidth="986.0" style="-fx-background-color: #45595b;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherReclamationController">
     <stylesheets>
+        <URL value="@style.css" />
         <URL value="@css/styles.css" />
     </stylesheets>
     <children>
-        <!-- Background Rectangle -->
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="866.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1000.0" />
 
         <!-- Header Green Rectangles -->
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="25.0" layoutY="24.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="58.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="93.0" layoutY="24.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 30;" width="897.0" />
 
         <!-- Home Button -->
-        <Button fx:id="homeFX" layoutX="27.0" layoutY="24.0" mnemonicParsing="false" onAction="#ouvrirHome" prefHeight="49.0" prefWidth="57.0" style="-fx-background-color: #85c20a; -fx-background-radius: 100;" text="🏠" textFill="#f8f8f8">
+        <Button fx:id="homeButton" layoutX="27.0" layoutY="24.0" mnemonicParsing="false" onAction="#navigateHome" prefHeight="49.0" prefWidth="57.0" style="-fx-background-color: #85c20a; -fx-background-radius: 100;" text="🏠" textFill="#f8f8f8">
             <font>
                 <Font name="Arial Rounded MT Bold" size="23.0" />
             </font>
@@ -37,7 +36,7 @@
         </Text>
 
         <!-- Search Bar with Black Text -->
-        <TextField fx:id="searchField" onKeyReleased="#filterReclamations" prefWidth="200.0" promptText="Rechercher par titre..." style="-fx-background-color: transparent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: #000000;" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="110.0" />
+        <TextField fx:id="searchField" onKeyReleased="#filterReclamations" prefHeight="35.0" prefWidth="605.0" promptText="Rechercher par titre..." style="-fx-background-color: white; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #85C20A; -fx-text-fill: black;" styleClass="form-field" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="110.0" />
 
         <!-- Buttons -->
         <Button fx:id="refreshButton" layoutX="663.0" layoutY="110.0" mnemonicParsing="false" onAction="#refreshList" style="-fx-background-color: #ffb524; -fx-border-radius: 20; -fx-text-fill: #ffffff;" text="Rafraîchir" AnchorPane.rightAnchor="242.6025390625001" AnchorPane.topAnchor="110.0">

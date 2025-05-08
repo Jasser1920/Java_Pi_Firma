@@ -8,14 +8,18 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
@@ -46,6 +50,11 @@ public class AfficherProduitController {
     @FXML private Button btnCategorieFX;
     @FXML private Button homeFX;
 
+    @FXML private Button btnStatistiquesFX;
+    @FXML
+    private TableColumn<Produit, Void> colAlerteFX;
+
+
 
     private final ProduitService produitService = new ProduitService();
     private final CategorieService categorieService = new CategorieService();
@@ -62,6 +71,61 @@ public class AfficherProduitController {
         coldateFX.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDateExpiration()));
         colcategorieFX.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCategorie().getNomCategorie()));
 
+        // Colonne des alertes avec ImageView
+        colAlerteFX.setCellFactory(col -> new TableCell<>() {
+            private final Tooltip tooltip = new Tooltip();
+            private final ImageView iconView = new ImageView();
+
+            {
+                iconView.setFitWidth(20);
+                iconView.setFitHeight(20);
+                setGraphic(iconView);
+                setTooltip(tooltip);
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    iconView.setImage(null);
+                    tooltip.setText("");
+                } else {
+                    Produit p = getTableView().getItems().get(getIndex());
+                    long joursRestants = java.time.temporal.ChronoUnit.DAYS.between(
+                            java.time.LocalDate.now(),
+                            p.getDateExpiration().toLocalDate()
+                    );
+
+                    boolean expBientot = joursRestants <= 3;
+                    boolean quantiteBasse = p.getQuantite() < 5;
+                    boolean surstock = p.getQuantite() > 20;
+
+                    if (expBientot && surstock) {
+                        InputStream imgStream = getClass().getResourceAsStream("/Images/alert-red.png");
+                        if (imgStream == null) {
+                            System.err.println("Image not found: /Images/alert-red.png");
+                            iconView.setImage(null);
+                        } else {
+                            iconView.setImage(new Image(imgStream));
+                        }
+                        tooltip.setText("Produit à écouler rapidement : expiration proche + grande quantité.");
+                    } else if (quantiteBasse) {
+                        InputStream imgStream = getClass().getResourceAsStream("/Images/alert-orange.png");
+                        if (imgStream == null) {
+                            System.err.println("Image not found: /Images/alert-orange.png");
+                            iconView.setImage(null);
+                        } else {
+                            iconView.setImage(new Image(imgStream));
+                        }
+                        tooltip.setText("Stock critique : quantité faible.");
+                    } else {
+                        iconView.setImage(null);
+                        tooltip.setText("");
+                    }
+                }
+            }
+        });
+
         try {
             categorieComboBox.setItems(FXCollections.observableArrayList(categorieService.rechercher()));
         } catch (SQLException e) {
@@ -76,6 +140,8 @@ public class AfficherProduitController {
 
         rafraichirTable();
     }
+
+
 
     public void rafraichirTable() {
         try {
@@ -140,7 +206,7 @@ public class AfficherProduitController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/DetaillerProduit.fxml"));
             Parent root = loader.load();
-            DetaillerProduitController controller = loader.getController();
+            controllers.DetaillerProduitController controller = loader.getController();
             controller.setProduit(selected);
             controller.setAfficherProduitController(this);
 
@@ -158,7 +224,7 @@ public class AfficherProduitController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterProduit.fxml"));
             Parent root = loader.load();
-            AjouterProduitController controller = loader.getController();
+            controllers.AjouterProduitController controller = loader.getController();
             controller.setAfficherProduitController(this);
 
             Stage stage = new Stage();
@@ -208,6 +274,20 @@ public class AfficherProduitController {
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Erreur lors de l'ouverture de la page d'accueil.");
+        }
+    }
+
+    @FXML
+    public void ouvrirStatistiques(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/StatProduit.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Statistiques des produits");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

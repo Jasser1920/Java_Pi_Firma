@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.ReclamationTableController"
+            style="-fx-background-color: #f5f5f5;">
+
+    <VBox spacing="15" AnchorPane.topAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10">
+        <!-- Filtres -->
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-padding: 10; -fx-background-radius: 5;">
+            <TextField fx:id="searchField" promptText="Rechercher par titre, description ou email..." HBox.hgrow="ALWAYS" style="-fx-background-radius: 5;"/>
+            <ComboBox fx:id="statusFilter" promptText="Statut" prefWidth="150"/>
+            <DatePicker fx:id="dateFilter" promptText="Date" prefWidth="150"/>
+            <TextField fx:id="emailFilter" promptText="Email utilisateur" prefWidth="200"/>
+            <ComboBox fx:id="sortOrder" promptText="Trier par date" prefWidth="150"/>
+            <Button text="Filtrer" onAction="#handleFilter" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+            <Button text="Réinitialiser" onAction="#resetFilters" style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
+        </HBox>
+
+        <!-- Table -->
+        <TableView fx:id="reclamationTable" VBox.vgrow="ALWAYS" style="-fx-background-color: white; -fx-background-radius: 5;">
+            <columns>
+                <TableColumn fx:id="userIdColumn" text="Email Utilisateur" prefWidth="200"/>
+                <TableColumn fx:id="idColumn" text="N°" prefWidth="50"/>
+                <TableColumn fx:id="titleColumn" text="Titre" prefWidth="150"/>
+                <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="200"/>
+                <TableColumn fx:id="statusColumn" text="Statut" prefWidth="100"/>
+                <TableColumn fx:id="dateColumn" text="Date" prefWidth="100"/>
+                <TableColumn fx:id="actionColumn" text="Action" prefWidth="100"/>
+            </columns>
+        </TableView>
+    </VBox>
+</AnchorPane>

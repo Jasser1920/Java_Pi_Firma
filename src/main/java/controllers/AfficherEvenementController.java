@@ -1,43 +1,77 @@
 package controllers;
 
 import Models.Evenemment;
+import Models.Participation;
+import Models.Utilisateur;
 import Services.EvenemmentService;
+import Services.ParticipationService;
+import Utils.QRCodeAPI;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class AfficherEvenementController {
 
-    @FXML private TableView<Evenemment> evenementTable;
-    @FXML private TableColumn<Evenemment, String> titreColumn;
-    @FXML private TableColumn<Evenemment, String> descriptionColumn;
-    @FXML private TableColumn<Evenemment, String> dateColumn;
-    @FXML private TableColumn<Evenemment, String> lieuxColumn;
-    @FXML private Button btnAjouter;
-    @FXML private Button btnVoir;
-    @FXML private Button btnSupprimer;
-    @FXML private Button btnDons;
-    @FXML private Button btnFiltrer;
-    @FXML private Button btnReset;
-    @FXML private TextField titreField;
-    @FXML private TextField lieuxField;
-    @FXML private DatePicker dateMinPicker;
-    @FXML private DatePicker dateMaxPicker;
-    @FXML private Button homeFX;
+
+    @FXML
+    private Button btnParticiper;
+    @FXML
+    private Button btnCalendrier;
+    @FXML
+    private TableView<Evenemment> evenementTable;
+    @FXML
+    private TableColumn<Evenemment, String> titreColumn;
+    @FXML
+    private TableColumn<Evenemment, String> descriptionColumn;
+    @FXML
+    private TableColumn<Evenemment, String> dateColumn;
+    @FXML
+    private TableColumn<Evenemment, String> lieuxColumn;
+    @FXML
+    private Button btnAjouter;
+    @FXML
+    private Button btnVoir;
+    @FXML
+    private Button btnSupprimer;
+    @FXML
+    private Button btnDons;
+    @FXML
+    private Button btnFiltrer;
+    @FXML
+    private Button btnReset;
+    @FXML
+    private TextField titreField;
+    @FXML
+    private TextField lieuxField;
+    @FXML
+    private DatePicker dateMinPicker;
+    @FXML
+    private DatePicker dateMaxPicker;
+    @FXML
+    private Button homeFX;
+    @FXML
+    private TableColumn<Evenemment, Void> chronoColumn;
 
 
     private final EvenemmentService service = new EvenemmentService();
     private List<Evenemment> tousLesEvenements;
+    private Utilisateur utilisateurConnecte;
+
 
     @FXML
     public void initialize() {
@@ -48,7 +82,41 @@ public class AfficherEvenementController {
             return new javafx.beans.property.SimpleStringProperty(sdf.format(cellData.getValue().getDate()));
         });
         lieuxColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getLieux()));
+        chronoColumn.setCellFactory(col -> new TableCell<>() {
+            private final ImageView chronoIcon = new ImageView(getClass().getResource("/icons/chrono.png").toExternalForm());
+            private final Tooltip tooltip = new Tooltip();
 
+            {
+                chronoIcon.setFitWidth(24);
+                chronoIcon.setFitHeight(24);
+                setGraphic(chronoIcon);
+                setTooltip(tooltip);
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                try {
+                    if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                        setGraphic(null);
+                        setTooltip(null);
+                    } else {
+                        Evenemment ev = getTableRow().getItem();
+                        LocalDate eventDate = ((java.sql.Date) ev.getDate()).toLocalDate();
+                        long daysLeft = ChronoUnit.DAYS.between(LocalDate.now(), eventDate);
+
+                        tooltip.setText(daysLeft >= 0 ? daysLeft + " jour(s) restant(s)" : "Événement passé");
+
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    setText("");
+                    setTooltip(null);
+                }
+            }
+
+        });
         btnAjouter.setOnAction(event -> ouvrirFormulaireAjout());
         btnVoir.setOnAction(event -> voirEvenement());
         btnSupprimer.setOnAction(event -> supprimerEvenement());
@@ -170,6 +238,7 @@ public class AfficherEvenementController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
     @FXML
     private void ouvrirHome() {
         try {
@@ -186,6 +255,91 @@ public class AfficherEvenementController {
             showAlert("Erreur lors de l'ouverture de la page d'accueil.");
         }
     }
+
+    @FXML
+    private void ouvrirCalendrier() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CalendrierEvenement.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Calendrier des événements");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setUtilisateurConnecte(Utilisateur utilisateur) {
+        this.utilisateurConnecte = utilisateur;
+    }
+
+
+    @FXML
+    private void participerEvenement() {
+        Evenemment selected = evenementTable.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Aucun événement sélectionné");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez sélectionner un événement pour participer.");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            String contenuQR = "📅 Événement : " + selected.getTitre() + "\n" +
+                    "📝 Description : " + selected.getDesecription() + "\n" +
+                    "📍 Lieu : " + selected.getLieux() + "\n" +
+                    "📆 Date : " + selected.getDate();
+
+            // Générer l’image QR (on ajoutera la méthode plus tard si pas encore faite)
+            Image qrImage = QRCodeAPI.generateQRCode(contenuQR, 250, 250);
+
+            ParticipationService participationService = new ParticipationService();
+            Participation participation = new Participation(
+                    0, // id auto-incrémenté
+                    utilisateurConnecte,
+                    selected,
+                    new java.util.Date()
+            );
+            participationService.ajouter(participation);
+
+            // Charger la page AfficherQR.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherQR.fxml"));
+            Parent root = loader.load();
+
+            // Passer les données au contrôleur QR
+            AfficherQRController qrController = loader.getController();
+            String titre = selected.getTitre();
+            String emailParticipant = utilisateurConnecte.getEmail();
+            String prenom = utilisateurConnecte.getPrenom();
+            qrController.setQRCodeData(qrImage, contenuQR, titre, emailParticipant, prenom);
+
+
+
+            // Ouvrir une nouvelle fenêtre
+            Stage stage = new Stage();
+            stage.setTitle("QR de participation");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Impossible de générer le QR");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+
+
+
+
+
 
 
 }

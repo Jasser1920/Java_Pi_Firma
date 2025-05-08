@@ -31,8 +31,8 @@
             <Label fx:id="totalLabel" text="0.0" />
         </HBox>
 
-<!--        <Label text="Statut de la Commande" />-->
-<!--        <ComboBox fx:id="statutCombo" promptText="Statut Commande" />-->
+        <!--        <Label text="Statut de la Commande" />-->
+        <!--        <ComboBox fx:id="statutCombo" promptText="Statut Commande" />-->
 
         <HBox spacing="10.0">
             <Button onAction="#updateCommande" text="Modifier Commande" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />

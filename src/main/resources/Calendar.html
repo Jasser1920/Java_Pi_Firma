@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Calendrier</title>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <style>
+        body {
+            margin: 20px;
+            font-family: Arial;
+        }
+        #calendar {
+            max-width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<h2 style="text-align: center; color: #85c20a;">Calendrier des Événements</h2>
+<div id="calendar"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'fr',
+            events: [
+                { title: 'Conférence agricole', date: '2025-05-05' },
+                { title: 'Salon bio', date: '2025-05-08' },
+                { title: 'Atelier permaculture', date: '2025-05-14' }
+            ]
+        });
+        calendar.render();
+    });
+</script>
+</body>
+</html>

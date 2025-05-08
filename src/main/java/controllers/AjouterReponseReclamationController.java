@@ -2,6 +2,7 @@ package controllers;
 
 import Models.ReponseReclamation;
 import Models.Reclammation;
+import Models.Statut;
 import Services.ReponseReclamationService;
 import Services.ReclammationService;
 import javafx.event.ActionEvent;
@@ -11,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -38,6 +40,9 @@ public class AjouterReponseReclamationController {
     @FXML
     private Label messageError;
 
+    @FXML
+    private ComboBox<String> statutComboBox;
+
     private final ReponseReclamationService reponseService = new ReponseReclamationService();
     private final ReclammationService reclammationService = new ReclammationService();
     private ReponseReclamation reponseToEdit;
@@ -45,6 +50,10 @@ public class AjouterReponseReclamationController {
 
     @FXML
     public void initialize() {
+        // Initialiser la ComboBox avec les statuts
+        statutComboBox.getItems().addAll("Résolue", "Rejetée");
+        statutComboBox.setValue("Résolue"); // Valeur par défaut
+
         if (reponseToEdit != null) {
             reclamationIdFx.setText(String.valueOf(reponseToEdit.getReclamation() != null ? reponseToEdit.getReclamation().getId() : ""));
             messageFx.setText(reponseToEdit.getMessage());
@@ -54,8 +63,10 @@ public class AjouterReponseReclamationController {
 
     @FXML
     public void AjouterReponse(ActionEvent actionEvent) {
+        System.out.println("[DEBUG] Entered AjouterReponse method");
         String reclamationIdStr = reclamationIdFx.getText().trim();
         String message = messageFx.getText().trim();
+        String statutStr = statutComboBox.getValue();
 
         if (!validateForm()) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez corriger les erreurs dans le formulaire.");
@@ -76,24 +87,30 @@ public class AjouterReponseReclamationController {
             return;
         }
 
+        System.out.println("[DEBUG] Loaded reclamation: " + (reclamation != null ? reclamation.getId() : "null"));
+        if (reclamation != null && reclamation.getUtilisateur() != null) {
+            System.out.println("[DEBUG] Reclamation user: " + reclamation.getUtilisateur().getEmail() + ", phone: " + reclamation.getUtilisateur().getTelephone());
+        } else {
+            System.out.println("[DEBUG] No user attached to this reclamation.");
+        }
+
         if (reclamation == null) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Aucune réclamation trouvée avec l'ID : " + reclamationId);
             return;
         }
 
         try {
-            if (reponseToEdit != null) {
-                reponseToEdit.setReclamation(reclamation);
-                reponseToEdit.setMessage(message);
-                reponseService.modifier(reponseToEdit);
-                showAlert(Alert.AlertType.INFORMATION, "Succès", "Réponse modifiée avec succès !");
-            } else {
-                ReponseReclamation reponse = new ReponseReclamation(
-                        0, reclamation, message, new Date()
-                );
-                reponseService.ajouter(reponse);
-                showAlert(Alert.AlertType.INFORMATION, "Succès", "Réponse ajoutée avec succès !");
-            }
+            ReponseReclamation reponse = new ReponseReclamation(
+                    0, reclamation, message, new Date()
+            );
+
+            // Déterminer le statut
+            Statut statut = statutStr.equals("Résolue") ? Statut.RESOLUE : Statut.REJETEE;
+
+            // Ajouter la réponse avec le statut
+            reclammationService.ajouterReponse(reponse, statut);
+
+            showAlert(Alert.AlertType.INFORMATION, "Succès", "Réponse ajoutée avec succès !");
             Stage stage = (Stage) reclamationIdFx.getScene().getWindow();
             stage.close();
         } catch (Exception e) {

@@ -54,14 +54,12 @@ public class TerrainService implements IService<Terrain> {
 
     @Override
     public void supprimer(Terrain terrain) throws SQLException {
-        // First delete related locations
         String req = "DELETE FROM location WHERE terrain_id=?";
         try (PreparedStatement ps = connection.prepareStatement(req)) {
             ps.setInt(1, terrain.getId());
             ps.executeUpdate();
         }
 
-        // Then delete the terrain
         req = "DELETE FROM terrain WHERE id=?";
         try (PreparedStatement ps = connection.prepareStatement(req)) {
             ps.setInt(1, terrain.getId());
@@ -78,7 +76,7 @@ public class TerrainService implements IService<Terrain> {
             while (rs.next()) {
                 Terrain terrain = new Terrain(
                         rs.getInt("id"),
-                        null, // User not loaded by default
+                        null,
                         rs.getString("description"),
                         rs.getDouble("superficie"),
                         rs.getObject("latitude") != null ? rs.getDouble("latitude") : null,
@@ -101,7 +99,7 @@ public class TerrainService implements IService<Terrain> {
                 if (rs.next()) {
                     return new Terrain(
                             rs.getInt("id"),
-                            null, // User not loaded by default
+                            null,
                             rs.getString("description"),
                             rs.getDouble("superficie"),
                             rs.getObject("latitude") != null ? rs.getDouble("latitude") : null,

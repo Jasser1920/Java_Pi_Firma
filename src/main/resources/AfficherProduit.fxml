@@ -13,8 +13,8 @@
 <AnchorPane fx:id="tableauFX" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #F8F8F8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherProduitController">
 
     <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="93.0" layoutY="24.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="897.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="26.0" layoutY="675.0" stroke="#45595b" strokeType="INSIDE" width="1000.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#85c20a" height="50.0" layoutX="93.0" layoutY="24.0" stroke="#85c20a" strokeType="INSIDE" style="-fx-arc-height: 300; -fx-arc-width: 50;" width="897.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#45595b" height="26.0" layoutY="675.0" stroke="#45595b" strokeType="INSIDE" width="1000.0" />
         <Label layoutX="118.0" layoutY="31.0" text="Liste des Produits" textFill="#f8f8f8">
             <font>
                 <Font name="Arial Rounded MT Bold" size="30.0" />
@@ -49,17 +49,19 @@
                 <TableColumn fx:id="colimageFX" prefWidth="125.0" text="Image" />
                 <TableColumn fx:id="colquantiteFX" prefWidth="73.0" text="Quantité" />
                 <TableColumn fx:id="coldateFX" prefWidth="130.0" text="Date d'expiration" />
-                <TableColumn fx:id="colcategorieFX" prefWidth="167.0" text="Catégorie" />
+                <TableColumn fx:id="colcategorieFX" prefWidth="135.199951171875" text="Catégorie" />
+                <TableColumn fx:id="colAlerteFX" prefWidth="112.0" text=" " />
             </columns>
         </TableView>
 
         <Button fx:id="btnVoirFX" layoutX="924.0" layoutY="606.0" prefHeight="25.0" prefWidth="49.0" style="-fx-background-color: #45595b; -fx-background-radius: 20;" text="Voir" textFill="#ffb524" />
         <Button fx:id="btnajouterFX" layoutX="850.0" layoutY="606.0" style="-fx-background-color: #ffb524; -fx-background-radius: 20;" text="Ajouter" textFill="#45595b" />
         <Button fx:id="btnCategorieFX" layoutX="19.0" layoutY="606.0" style="-fx-background-color: #f8f8f8; -fx-background-radius: 20; -fx-border-color: #45595b; -fx-border-radius: 20;" text="Catégories" textFill="#45595b" />
-      <Button fx:id="homeFX" layoutX="27.0" layoutY="24.0" mnemonicParsing="false" onAction="#ouvrirHome" prefHeight="50.0" prefWidth="60.0" style="-fx-background-color: #85c20a; -fx-background-radius: 100;" text="🏠" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Arial Rounded MT Bold" size="23.0" />
-         </font>
-      </Button>
+        <Button fx:id="homeFX" layoutX="27.0" layoutY="24.0" mnemonicParsing="false" onAction="#ouvrirHome" prefHeight="50.0" prefWidth="60.0" style="-fx-background-color: #85c20a; -fx-background-radius: 100;" text="🏠" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="23.0" />
+            </font>
+        </Button>
+        <Button fx:id="btnStatistiquesFX" layoutX="117.0" layoutY="608.0" onAction="#ouvrirStatistiques" style="-fx-background-color: #ffb524; -fx-background-radius: 20;" text="Statistiques" textFill="#45595b" />
     </children>
 </AnchorPane>

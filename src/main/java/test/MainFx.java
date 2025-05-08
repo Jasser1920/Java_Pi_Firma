@@ -1,5 +1,6 @@
 package test;
 
+import Utils.StripeConfig;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +10,8 @@ import javafx.stage.Stage;
 public class MainFx extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // Initialisation de Stripe
+        StripeConfig.init();
         // Load signin.fxml instead of home.fxml
         Parent root = FXMLLoader.load(getClass().getResource("/Signin.fxml"));
         primaryStage.setScene(new Scene(root));
@@ -17,6 +20,7 @@ public class MainFx extends Application {
     }
 
     public static void main(String[] args) {
+      
         launch(args);
     }
 }
